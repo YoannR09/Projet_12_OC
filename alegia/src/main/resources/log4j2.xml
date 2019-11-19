@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration status="WARN">
+<appenders>
+    <Console name="Console" target="SYSTEM_OUT">
+        <PatternLayout pattern="%d{HH:mm:ss.SSS} [Projet 7] %-5level %logger{36} - %msg%n"/>
+    </Console>
+    <File name="File" fileName="../logs/applicationLogs.log" immediateFlush="true">
+        <PatternLayout pattern="%d{HH:mm:ss.SSS} [Projet 7] %-5level %logger{36} - %msg%n"/>
+    </File>
+</appenders>
+<loggers>
+    <root level="error">
+        <AppenderRef ref="Console" />
+        <AppenderRef ref="File" />
+    </root>
+</loggers>
+</configuration>
