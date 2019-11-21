@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Classe pour récupérer les données du MicroserviceArticle
  */
-@FeignClient(value = "microservice-article", url = "localhost:9095")
+@FeignClient(value = "microservice-article", url = "192.168.1.61:9002")
 public interface MicroserviceArticleProxy {
 
     /**
@@ -23,12 +23,12 @@ public interface MicroserviceArticleProxy {
 
 
     /**
-     * Méthode pour récupérer un article via un numéro
-     * @param numero
+     * Méthode pour récupérer un article via l'id d'une catégorie
+     * @param categorieId
      * @return
      */
-    @GetMapping(value = "/Article/numero/{numero}")
-    Article getArticleByNumero(@PathVariable("numero") String numero);
+    @GetMapping(value = "/Article/Categorie/{categorieId}")
+    List<Article> getArticleByCategorieId(@PathVariable("categorieId") int categorieId);
 
     /**
      * Méthode pour récupérer la liste des articles

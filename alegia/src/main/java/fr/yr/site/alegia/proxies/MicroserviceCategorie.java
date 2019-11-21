@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import java.util.List;
 
 /**
- * Classe pour récupérer les données du MicroserviceAdresse
+ * Classe pour récupérer les données du MicroserviceCategorie
  */
-@FeignClient(value = "microservice-categorie", url = "localhost:9015")
+@FeignClient(value = "microservice-categorie", url = "192.168.1.61:9015")
 public interface MicroserviceCategorie {
 
     @GetMapping(value = "/Categorie/{id}")

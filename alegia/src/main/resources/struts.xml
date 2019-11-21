@@ -12,7 +12,7 @@
     <package name="base" abstract="true" extends="struts-default">
 
         <interceptors>
-            <interceptor name="auth" class="fr.oc.projet.bibliothequeclient.interceptor.AuthInterceptor" />
+            <interceptor name="auth" class="fr.yr.site.alegia.interceptor.AuthInterceptor" />
             <interceptor-stack name="authenticatedStack">
                 <interceptor-ref name="auth" />
                 <interceptor-ref name="defaultStack" />
@@ -45,7 +45,7 @@
     <package name="public" extends="base">
 
         <interceptors>
-            <interceptor name="auth" class="fr.oc.projet.bibliothequeclient.interceptor.AuthInterceptor" />
+            <interceptor name="auth" class="fr.yr.site.alegia.interceptor.AuthInterceptor" />
             <interceptor-stack name="authenticatedStack">
                 <interceptor-ref name="auth" />
                 <interceptor-ref name="defaultStack" />
@@ -54,33 +54,38 @@
 
         <default-action-ref name="index" />
 
-        <action name="index" class="fr.oc.projet.bibliothequeclient.action.GestionIndexAction" method="execute">
-            <result name="success">/jsp/index.jsp</result>
+        <action name="index" class="fr.yr.site.alegia.action.GestionIndexAction" method="accueil">
+            <result name="success">jsp/index.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
         </action>
 
-        <action name="login">
+        <action name="login" class="fr.yr.site.alegia.action.GestionLoginAction" method="pageLogin">
             <interceptor-ref name="store">
                 <param name="operationMode">STORE</param>
             </interceptor-ref>
             <interceptor-ref name="defaultStack" />
-            <result>/jsp/login/login.jsp</result>
+            <result name="success">jsp/login/login.jsp</result>
+            <result name="error">jsp/login/login.jsp</result>
         </action>
 
-        <action name="doLogin" class="fr.oc.projet.bibliothequeclient.action.LoginAction" method="doLogin">
+        <action name="doLogin" class="fr.yr.site.alegia.action.LoginAction" method="doLogin">
             <result name="success">/jsp/index.jsp</result>
             <result name="error">/jsp/login/login.jsp</result>
+        </action>
+
+        <action name="doListArticleByCategorieId" class="fr.yr.site.alegia.action.GestionCategorieAction" method="doListArticleByCategorieId">
+            <result name="success">jsp/categorie/listArticle.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
         </action>
     </package>
 
     <package name="private" extends="base">
-    <default-interceptor-ref name="authenticatedStack" />
-
+    <default-interceptor-ref name="authenticatedStack"/>
         <action name="addPretLivreUnique"
-                class="fr.oc.projet.bibliothequeclient.action.AjouterPretAction"
+                class="fr.yr.site.alegia.action.AjouterPretAction"
                 method="doAjouterPret">
             <result name="success">/jsp/index.jsp</result>
             <result name="error">/jsp/error/error.jsp</result>
         </action>
-
     </package>
 </struts>

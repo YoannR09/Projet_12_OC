@@ -11,15 +11,32 @@
 <head>
     <%@ include file="./_include/head.jsp"%>
     <style type="text/css">
-
+        #blocCenter
+        {
+            display: flex;
+            justify-content: center;
+            margin-top: 75px;
+        }
+        body
+        {
+            margin:0;
+            padding:0;
+            background: url(../image/fond.png) no-repeat center fixed;
+            -webkit-background-size: cover; /* pour anciens Chrome et Safari */
+            background-size: cover; /* version standardisée */
+        }
 
     </style>
 </head>
 <body>
-<header>
     <%@ include file="./_include/header.jsp"%>
-</header>
-
+    <div id="blocCenter" style="display: flex;justify-content: center">
+    <div class="col-8 bg-dark" style="height: 400px;opacity: 0">
+    </div>
+    </div>
+    <footer>
+        <%@ include file="_include/footer.jsp"%>
+    </footer>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>

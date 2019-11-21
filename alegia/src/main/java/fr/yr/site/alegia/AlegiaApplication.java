@@ -8,8 +8,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 
+@EnableFeignClients
 @SpringBootApplication
 public class AlegiaApplication extends SpringBootServletInitializer {
 
@@ -19,8 +21,7 @@ public class AlegiaApplication extends SpringBootServletInitializer {
 
 	@Override
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder application) {
-		final Logger logger = LogManager.getLogger();
-		return application.sources(BibliothequeClientApplication.class);
+		return application.sources(AlegiaApplication.class);
 	}
 
 	@Bean
