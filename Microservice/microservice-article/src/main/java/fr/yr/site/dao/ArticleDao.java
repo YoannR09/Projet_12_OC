@@ -9,7 +9,7 @@ public interface ArticleDao extends JpaRepository<Article,Integer> {
 
     Article findById(int id);
 
-    Article findByNumero(String numero);
+    List<Article> findByCategorieId(int categorieId);
 
     List<Article> findAll();
 }

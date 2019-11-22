@@ -25,13 +25,30 @@
 <div id="blocCenter" style="display: flex;justify-content: center;">
     <div class="col-8">
         <section class="row">
-        <s:iterator value="articleList">
-            <li class="nav-item col-3" style="text-align: center;">
-                <s:a action=""><img class="d-block w-100" src="../../image/t-shirt.jpg"><s:param name="articleId" value="id"/></s:a>
-                <p style="font-size: 0.8em;font-weight: bolder"> <s:property value="nom"/> </p>
-                <p style="font-size: 0.7em;color: darkgray"> <s:property value="prixTtc"/> €</p>
-            </li>
-        </s:iterator>
+            <s:iterator value="articleList">
+                <li class="nav-item col-3" style="text-align: center;">
+                    <s:iterator value="imageList">
+                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                        <div class="carousel-inner" style="height: 100%">
+                            <s:if test="%{#imageList.count == 1}">
+                            <div class="carousel-item active" style="width: 100%;height: 100%">
+                                <img class="d-block w-100" src="./image/<s:param value="url"/>"
+                                     alt="First slide">
+                                </s:if>
+                                <s:elseif test="%{#imageList.count > 1}">
+                            </div>
+                            <div class="carousel-item" style="width: 100%;height: 100%">
+                                <img class="d-block w-100" src="../../image/<s:param value="url"/>">
+                            </div>
+                            </s:elseif>
+                        </div>
+                    </div>
+                        </s:iterator>
+                        <s:a action=""><img class="d-block w-100" src="../../image/t-shirt.jpg"><s:param name="articleId" value="id"/></s:a>
+                        <p style="font-size: 0.8em;font-weight: bolder"> <s:property value="nom"/> </p>
+                        <p style="font-size: 0.7em;color: darkgray"> <s:property value="prixTtc"/> €</p>
+                </li>
+            </s:iterator>
         </section>
     </div>
 </div>

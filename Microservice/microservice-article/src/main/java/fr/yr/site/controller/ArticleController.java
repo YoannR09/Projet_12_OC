@@ -39,14 +39,14 @@ public class ArticleController {
     }
 
     /**
-     * Méthode pour récupérer un article via un numéro
-     * @param numero
+     * Méthode pour récupérer un article via l'id d'une catégorie
+     * @param categorieId
      * @return
      */
-    @GetMapping(value = "/Article/numero/{numero}")
-    public Article getArticleByNumero(@PathVariable String numero){
+    @GetMapping(value = "/Article/Categorie/{categorieId}")
+    public List<Article> getArticleByCategorieId(@PathVariable int categorieId){
         try {
-            return articleDao.findByNumero(numero);
+            return articleDao.findByCategorieId(categorieId);
         }catch (Exception e){
             logger.error(e);
             return null;

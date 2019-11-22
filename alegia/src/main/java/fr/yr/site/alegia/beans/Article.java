@@ -1,5 +1,7 @@
 package fr.yr.site.alegia.beans;
 
+import java.util.List;
+
 public class Article {
 
     private String nom;
@@ -7,6 +9,7 @@ public class Article {
     private Integer categorieId;
     private Float prixHt;
     private Float prixTtc;
+    private List<Image> imageList;
 
     public String getNom() {
         return nom;
@@ -46,5 +49,13 @@ public class Article {
 
     public void setPrixTtc(Float prixTtc) {
         this.prixTtc = prixTtc;
+    }
+
+    public List<Image> getImageList() {
+        return imageList;
+    }
+
+    public void setImageList(List<Image> imageList) {
+        this.imageList = imageList;
     }
 }

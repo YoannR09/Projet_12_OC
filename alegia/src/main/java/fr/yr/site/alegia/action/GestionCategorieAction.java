@@ -5,6 +5,7 @@ import fr.yr.site.alegia.beans.Article;
 import fr.yr.site.alegia.beans.Categorie;
 import fr.yr.site.alegia.proxies.MicroserviceArticleProxy;
 import fr.yr.site.alegia.proxies.MicroserviceCategorie;
+import fr.yr.site.alegia.proxies.MicroserviceImageProxy;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -19,6 +20,8 @@ public class GestionCategorieAction extends ActionSupport {
     MicroserviceArticleProxy microserviceArticleProxy;
     @Autowired
     MicroserviceCategorie microserviceCategorie;
+    @Autowired
+    MicroserviceImageProxy microserviceImageProxy;
 
     private         Integer         categorieId;
     private         List<Article>   articleList;
@@ -31,6 +34,9 @@ public class GestionCategorieAction extends ActionSupport {
     public String doListArticleByCategorieId(){
         try {
             articleList = microserviceArticleProxy.getArticleByCategorieId(categorieId);
+            for (Article article:articleList){
+                article.setImageList(microserviceImageProxy.findByArticleId(article.getId()));
+            }
             categorieList = microserviceCategorie.findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
