@@ -34,20 +34,6 @@ public class ArticleControllerTest {
         assertEquals(articleTest.getNom(),"test");
     }
 
-    @Test
-    public void getArticleByNumero(){
-
-        // GIVEN
-        Article article = new Article();
-        article.setNom("test");
-        when(dao.findByNumero(anyString())).thenReturn(article);
-
-        // WHEN
-        Article articleTest = controller.getArticleByNumero("555e1qda6");
-
-        // THEN
-        assertEquals(articleTest.getNom(),"test");
-    }
 
     @Test
     public void findAll(){

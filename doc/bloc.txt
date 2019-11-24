@@ -1,0 +1,13 @@
+Faire un systeme de selection de taille avec des checkbox pendant la création d'une categorie.
+
+Mettre en place un systeme d'envoie de mail avec la boite mail de l'alegia
+ à chaque changement de statut d'une commande.
+
+A la création d'un compte un panier est crée automatiquement.
+
+Pour la séléction de la taille, fonctionne avec une sorte de checkbox, une fois que la personne à cliqué sur une
+taille celle-ci change de couleur. Avec du JQuery.
+
+Ajout un sélécteur de quantité pour choisir le nombre d'article ajouté au panier. 
+
+Si trop compliqué pour un système de bouton mettre en place un select à la place.

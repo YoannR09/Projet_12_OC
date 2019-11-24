@@ -11,14 +11,13 @@ import java.util.List;
 /**
  * Classe pour récupérer les données du MicroserviceListTaille
  */
-@FeignClient(value = "microservice-ligne", url = "localhost:9016")
+@FeignClient(value = "microservice-list", url = "192.168.1.61:9016")
 public interface MicroserviceListTaille {
 
     @GetMapping(value = "/ListTaille/{id}")
-    ListTaille findById(@PathVariable int id);
+    ListTaille findById(@PathVariable("id") int id);
 
 
-
-    @GetMapping(value = "/ListTaille/Categorie/{categorieId}")
-    List<ListTaille> findByCategorieId(@PathVariable int categorieId);
+    @GetMapping(value = "/ListTaille/Article/{articleId}")
+    List<ListTaille> findByArticleId(@PathVariable("articleId") int articleId);
 }

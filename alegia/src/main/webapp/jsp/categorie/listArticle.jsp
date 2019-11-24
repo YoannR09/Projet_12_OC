@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: El-ra
-  Date: 28/06/2019
-  Time: 11:09
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -23,30 +16,36 @@
 <body>
 <%@ include file="../_include/header.jsp"%>
 <div id="blocCenter" style="display: flex;justify-content: center;">
-    <div class="col-8">
+    <div class="col-xs-5 col-8">
         <section class="row">
             <s:iterator value="articleList">
+                <s:set var="articleId" value="id"/>
                 <li class="nav-item col-3" style="text-align: center;">
-                    <s:iterator value="imageList">
-                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style=" margin-bottom: 5px">
                         <div class="carousel-inner" style="height: 100%">
-                            <s:if test="%{#imageList.count == 1}">
-                            <div class="carousel-item active" style="width: 100%;height: 100%">
-                                <img class="d-block w-100" src="./image/<s:param value="url"/>"
-                                     alt="First slide">
+                            <s:iterator value="imageList" status="imageList">
+                                <s:if test="%{#imageList.count == 1}">
+                                    <div class="carousel-item active border" style="width: 100%;height: 100%;">
+                                        <s:a action="doDetailArticle">
+                                            <s:param name="articleId" value="articleId"/>
+                                            <img class="d-block w-100" src="./image/<s:property value="url"/>"
+                                                 alt="First slide">
+                                        </s:a>
+                                    </div>
                                 </s:if>
                                 <s:elseif test="%{#imageList.count > 1}">
-                            </div>
-                            <div class="carousel-item" style="width: 100%;height: 100%">
-                                <img class="d-block w-100" src="../../image/<s:param value="url"/>">
-                            </div>
-                            </s:elseif>
+                                    <div class="carousel-item border" style="width: 100%;height: 100%">
+                                        <s:a action="doDetailArticle">
+                                            <s:param name="articleId" value="articleId"/>
+                                            <img class="d-block w-100 " src="./image/<s:property value="url"/>">
+                                        </s:a>
+                                    </div>
+                                </s:elseif>
+                            </s:iterator>
                         </div>
                     </div>
-                        </s:iterator>
-                        <s:a action=""><img class="d-block w-100" src="../../image/t-shirt.jpg"><s:param name="articleId" value="id"/></s:a>
-                        <p style="font-size: 0.8em;font-weight: bolder"> <s:property value="nom"/> </p>
-                        <p style="font-size: 0.7em;color: darkgray"> <s:property value="prixTtc"/> €</p>
+                    <p style="font-size: 0.8em;font-weight: bolder"> <s:property value="nom"/> </p>
+                    <p style="font-size: 0.8em;color: darkgray"> <s:property value="prixTtc"/> €</p>
                 </li>
             </s:iterator>
         </section>

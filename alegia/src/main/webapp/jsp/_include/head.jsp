@@ -46,6 +46,6 @@
     }
     em
     {
-        color : white;
+        color : darkgray;
     }
 </style>

@@ -69,8 +69,13 @@
         </action>
 
         <action name="doLogin" class="fr.yr.site.alegia.action.LoginAction" method="doLogin">
-            <result name="success">/jsp/index.jsp</result>
-            <result name="error">/jsp/login/login.jsp</result>
+            <result name="success">jsp/index.jsp</result>
+            <result name="error">jsp/login/login.jsp</result>
+        </action>
+
+        <action name="doDetailArticle" class="fr.yr.site.alegia.action.GestionArticleAction" method="doDetailArticle">
+            <result name="success">jsp/article/detailArticle.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
         </action>
 
         <action name="doListArticleByCategorieId" class="fr.yr.site.alegia.action.GestionCategorieAction" method="doListArticleByCategorieId">

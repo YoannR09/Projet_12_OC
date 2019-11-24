@@ -6,7 +6,6 @@ public class Image {
     private String url;
     private String libelle;
     private Integer articleId;
-    private Article article;
 
 
     public Integer getId() {

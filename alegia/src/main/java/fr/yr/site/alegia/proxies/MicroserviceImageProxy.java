@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Classe pour récupérer les données du MicroserviceImage
  */
-@FeignClient(value = "microservice-image", url = "localhost:9095")
+@FeignClient(value = "microservice-image", url = "192.168.1.61:9021")
 public interface MicroserviceImageProxy {
 
     @GetMapping(value = "/Image/Article/{articleId}")

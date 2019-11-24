@@ -3,6 +3,7 @@ package fr.yr.site.alegia.action;
 import com.opensymphony.xwork2.ActionSupport;
 import fr.yr.site.alegia.beans.Article;
 import fr.yr.site.alegia.beans.Categorie;
+import fr.yr.site.alegia.beans.Image;
 import fr.yr.site.alegia.proxies.MicroserviceArticleProxy;
 import fr.yr.site.alegia.proxies.MicroserviceCategorie;
 import fr.yr.site.alegia.proxies.MicroserviceImageProxy;
@@ -36,6 +37,11 @@ public class GestionCategorieAction extends ActionSupport {
             articleList = microserviceArticleProxy.getArticleByCategorieId(categorieId);
             for (Article article:articleList){
                 article.setImageList(microserviceImageProxy.findByArticleId(article.getId()));
+                if (article.getImageList().size() == 0 ){
+                    Image image = new Image();
+                    image.setUrl("indisponible.jpg");
+                    article.getImageList().add(image);
+                }
             }
             categorieList = microserviceCategorie.findAll();
             return ActionSupport.SUCCESS;
@@ -45,6 +51,7 @@ public class GestionCategorieAction extends ActionSupport {
         }
     }
 
+    
     //----------- GETTERS ET SETTERS ----------------
 
 

@@ -3,7 +3,7 @@ package fr.yr.site.alegia.beans;
 public class Taille {
 
     private Integer numero;
-    private String libelle;
+    private String taille;
 
     public Integer getNumero() {
         return numero;
@@ -13,11 +13,11 @@ public class Taille {
         this.numero = numero;
     }
 
-    public String getLibelle() {
-        return libelle;
+    public String getTaille() {
+        return taille;
     }
 
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
+    public void setTaille(String taille) {
+        this.taille = taille;
     }
 }

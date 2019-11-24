@@ -4,8 +4,9 @@ package fr.yr.site.alegia.beans;
 public class ListTaille {
 
     private Integer id;
-    private Integer categorieId;
+    private Integer articleId;
     private Integer tailleId;
+    private Taille  taille;
 
 
     public Integer getId() {
@@ -16,12 +17,12 @@ public class ListTaille {
         this.id = id;
     }
 
-    public Integer getCategorieId() {
-        return categorieId;
+    public Integer getArticleId() {
+        return articleId;
     }
 
-    public void setCategorieId(Integer categorieId) {
-        this.categorieId = categorieId;
+    public void setArticleId(Integer articleId) {
+        this.articleId = articleId;
     }
 
     public Integer getTailleId() {
@@ -30,5 +31,13 @@ public class ListTaille {
 
     public void setTailleId(Integer tailleId) {
         this.tailleId = tailleId;
+    }
+
+    public Taille getTaille() {
+        return taille;
+    }
+
+    public void setTaille(Taille taille) {
+        this.taille = taille;
     }
 }
