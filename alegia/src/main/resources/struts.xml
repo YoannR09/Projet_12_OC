@@ -7,9 +7,12 @@
 
     <constant name="struts.devMode" value="true" />
     <constant name="struts.objectFactory" value="spring" />
+    <constant name="struts.multipart.maxSize" value="20000000" />
 
+    <constant name="struts.multipart.saveDir" value="C:/Users/El-ra/Documents/Projet_12_OC/alegia/src/main/webapp/image/" />
 
     <package name="base" abstract="true" extends="struts-default">
+
 
         <interceptors>
             <interceptor name="auth" class="fr.yr.site.alegia.interceptor.AuthInterceptor" />
@@ -44,15 +47,64 @@
 
     <package name="public" extends="base">
 
-        <interceptors>
-            <interceptor name="auth" class="fr.yr.site.alegia.interceptor.AuthInterceptor" />
-            <interceptor-stack name="authenticatedStack">
-                <interceptor-ref name="auth" />
-                <interceptor-ref name="defaultStack" />
-            </interceptor-stack>
-        </interceptors>
-
         <default-action-ref name="index" />
+
+        <!-- !!!!!!!!!!!!!!!!!!!!! A deplacer !!!!!!!!!!! -->
+        <action name="gestion" class="fr.yr.site.alegia.action.GestionSiteAction" method="doGestion">
+            <result>/jsp/gestion/gestion.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
+        <action name="formAddCategorie" class="fr.yr.site.alegia.action.GestionSiteAction" method="doGestion">
+            <result>/jsp/gestion/categorie/addCategorie.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
+        <action name="formAddArticle" class="fr.yr.site.alegia.action.GestionSiteAction" method="formAddArticle">
+            <result>/jsp/gestion/article/addArticle.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
+        <action name="gestionArticle" class="fr.yr.site.alegia.action.GestionSiteAction" method="gestionArticle">
+            <result>/jsp/gestion/article/gestionArticle.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
+        <action name="gestionCategorie" class="fr.yr.site.alegia.action.GestionSiteAction" method="gestionCategorie">
+            <result>/jsp/gestion/categorie/gestionCategorie.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
+        <action name="addCategorie" class="fr.yr.site.alegia.action.GestionCategorieAction" method="addCategorie">
+            <result name="success">/jsp/index.jsp</result>
+            <result name="error">/jsp/gestion/categorie/addCategorie.jsp</result>
+        </action>
+
+        <action name="doAddArticle" class="fr.yr.site.alegia.action.GestionArticleAction" method="addArticle">
+            <result name="success">/jsp/index.jsp</result>
+            <result name="error">/jsp/gestion/article/addArticle.jsp</result>
+        </action>
+
+        <action name="doArticleDisponible" class="fr.yr.site.alegia.action.GestionArticleAction" method="doDiponible">
+            <result>/jsp/gestion/article/gestionArticle.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doArticleIndosponible" class="fr.yr.site.alegia.action.GestionArticleAction" method="doIndiponible">
+            <result>/jsp/gestion/article/gestionArticle.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doArticleSupprimer" class="fr.yr.site.alegia.action.GestionArticleAction" method="doSupprimer">
+            <result>/jsp/gestion/article/gestionArticle.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+        <!-- !!!!!!!!!!!!!!!!!!!!! A deplacer !!!!!!!!!!! -->
+
+        <action name="doLogin" class="fr.yr.site.alegia.action.GestionLoginAction" method="doLogin">
+            <result name="success">/jsp/index.jsp</result>
+            <result name="error">/jsp/login/login.jsp</result>
+        </action>
 
         <action name="index" class="fr.yr.site.alegia.action.GestionIndexAction" method="accueil">
             <result name="success">jsp/index.jsp</result>
@@ -85,7 +137,36 @@
     </package>
 
     <package name="private" extends="base">
-    <default-interceptor-ref name="authenticatedStack"/>
+
+        <interceptors>
+            <interceptor name="auth" class="fr.yr.site.alegia.interceptor.AuthInterceptor" />
+            <interceptor-stack name="authenticatedStack">
+                <interceptor-ref name="auth" />
+                <interceptor-ref name="defaultStack" />
+            </interceptor-stack>
+        </interceptors>
+
+        <default-interceptor-ref name="authenticatedStack" />
+
+        <action name="addPretLivreUnique"
+                class="fr.yr.site.alegia.action.AjouterPretAction"
+                method="doAjouterPret">
+            <result name="success">/jsp/index.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+    </package>
+
+    <package name="admin" extends="base">
+        <interceptors>
+            <interceptor name="authAdmin" class="fr.yr.site.alegia.interceptor.AuthInterceptorAdmin" />
+            <interceptor-stack name="authenticatedStackAdmin">
+                <interceptor-ref name="auth" />
+                <interceptor-ref name="defaultStack" />
+            </interceptor-stack>
+        </interceptors>
+
+        <default-interceptor-ref name="authenticatedStackAdmin" />
+
         <action name="addPretLivreUnique"
                 class="fr.yr.site.alegia.action.AjouterPretAction"
                 method="doAjouterPret">

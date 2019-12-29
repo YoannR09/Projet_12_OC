@@ -5,10 +5,12 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.List;
+
 /**
  * Classe pour récupérer les données du MicroserviceTaille
  */
-@FeignClient(value = "microservice-taille", url = "192.168.1.61:9009")
+@FeignClient(value = "microservice-taille", url = "localhost:9009")
 public interface MicroserviceTailleProxy {
 
     @GetMapping(value = "/Taille/{id}")
@@ -16,4 +18,11 @@ public interface MicroserviceTailleProxy {
 
     @GetMapping(value = "/Taille/Taille/{taille}")
     Taille findByTaille(@PathVariable("taille") String taille);
+
+    /**
+     * Méthode pour récupérer la liste des tailles exitantes
+     * @return
+     */
+    @GetMapping(value = "/Taille")
+    List<Taille> findAll();
 }

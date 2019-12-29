@@ -12,16 +12,14 @@
         {
             margin:0;
             padding:0;
-            background: url(../../image/fond.png) repeat center fixed;
-            -webkit-background-size: cover; /* pour anciens Chrome et Safari */
-            background-size: cover; /* version standardisée */
         }
         #cadreLogin
         {
+            color: black;
             margin-top: 100px;
             margin-bottom: 20px;
             border-radius: 10px;
-            background-color: rgba(0, 0, 0, 0.40);
+            border: 1px lightgrey solid;
             width: 350px;
         }
         #bottom
@@ -30,18 +28,20 @@
             justify-content: space-around;
             width: 100%;
         }
-        #labelRecherche
+        #label
         {
             left: 10px;
             font-size: 1.2em;
-            margin: 10px;
+            margin-top: 10px;
+            margin-left: 10px;
             font-weight: bold;
-            color: white;
+            color: black;
         }
         #cadreLog
         {
             width: 100%;
-            padding: 20px ;
+            padding: 10px ;
+            margin-bottom: 10px;
         }
         #message
         {
@@ -58,22 +58,23 @@
 </header>
 <div id="page">
     <div id="bottom" >
-        <div id="cadreLogin" >
-            <label class="form-check-label" id="labelRecherche"> Connectez-vous </label>
+        <div id="cadreLogin">
+            <label class="form-check-label" id="label"> Connectez-vous </label>
             <em id="message" ><s:actionmessage/></em>
             <div class="col-12 container" id="cadreLog">
                 <s:form action="doLogin">
                     <div class="form-group" style="margin: 20px;">
-                        <label for="inputPseudo" style="color: white;">Adresse éléctronique</label>
+                        <label for="inputPseudo" style="color: black;">Adresse éléctronique</label>
                         <input name="identifiant" type="text" class="form-control" id="inputPseudo" required>
                     </div>
                     <div class="form-group " style="margin: 20px">
-                        <label for="inputPassword" style="color: white;">Mot de passe</label>
+                        <label for="inputPassword" style="color: black;">Mot de passe</label>
                         <input name="motDePasse" type="password" class="form-control" id="inputPassword" required>
                     </div>
                     <div style="display: flex;justify-content: space-between;padding-top: 25px">
-                        <s:a action="formInscription" class="btn btn-outline-warning">S'inscrire</s:a>
-                        <button type="submit" class="btn btn-outline-warning">Connexion</button>
+                        <s:a action="formInscription" style="font-size: 0.7em" class="btn btn-dark">S'inscrire</s:a>
+                        <s:a action="formInscription" style="font-size: 0.7em;color:orange;">Mot de passe oublié</s:a>
+                        <button type="submit" style="font-size: 0.7em" class="btn btn-dark">Connexion</button>
                     </div>
                 </s:form>
             </div>

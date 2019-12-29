@@ -11,5 +11,7 @@ public interface ArticleDao extends JpaRepository<Article,Integer> {
 
     List<Article> findByCategorieId(int categorieId);
 
+    List<Article> findByCategorieIdAndDisponible(int categorieId,Boolean dispo);
+
     List<Article> findAll();
 }

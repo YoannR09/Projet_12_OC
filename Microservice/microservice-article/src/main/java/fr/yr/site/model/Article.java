@@ -12,9 +12,11 @@ public class Article {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
     private String nom;
+    private String description;
     private Integer categorieId;
     private Float prixHt;
     private Float prixTtc;
+    private Boolean disponible;
 
 
     public String getNom() {
@@ -55,5 +57,21 @@ public class Article {
 
     public void setPrixTtc(Float prixTtc) {
         this.prixTtc = prixTtc;
+    }
+
+    public Boolean getDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(Boolean disponible) {
+        this.disponible = disponible;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

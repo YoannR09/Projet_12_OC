@@ -5,9 +5,7 @@ import fr.yr.site.model.Article;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -67,4 +65,59 @@ public class ArticleController {
         }
     }
 
+    /**
+     * Méthode pour récupérer une liste d'articles
+     * en fonction de la disponibilité et l'id d'une categorie
+     * @param categorieId
+     * @param dispo
+     * @return
+     */
+    @GetMapping(value = "/Article/CategorieAndDispo/{categorieId},{dispo}")
+    List<Article> findByCategorieIdAndDisponible(@PathVariable int categorieId,@PathVariable Boolean dispo){
+        try {
+            return articleDao.findByCategorieIdAndDisponible(categorieId,dispo);
+        }catch (Exception e){
+            logger.error(e);
+            return null;
+        }
+    }
+
+    /**
+     * Méthode pour ajouter un article
+     * @param article
+     */
+    @PostMapping(value = "/Article")
+    public void add(@RequestBody Article article){
+        try {
+                articleDao.save(article);
+        }catch (Exception e){
+            logger.error(e);
+        }
+    }
+
+    /**
+     * Méthode pour mettre à jour un article
+     * @param article
+     */
+    @PutMapping(value = "/Article")
+    public void update(@RequestBody Article article){
+        try {
+            articleDao.save(article);
+        }catch (Exception e){
+            logger.error(e);
+        }
+    }
+
+    /**
+     * %éthode pour supprimer un article
+     * @param id
+     */
+    @DeleteMapping(value = "/Article/{id}")
+    public void delete(@PathVariable Integer id){
+        try {
+            articleDao.deleteById(id);
+        }catch (Exception e){
+            logger.error(e);
+        }
+    }
 }

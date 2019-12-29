@@ -4,9 +4,8 @@ public class Image {
 
     private Integer id;
     private String url;
-    private String libelle;
+    private String labelle;
     private Integer articleId;
-
 
     public Integer getId() {
         return id;
@@ -24,12 +23,12 @@ public class Image {
         this.url = url;
     }
 
-    public String getLibelle() {
-        return libelle;
+    public String getLabelle() {
+        return labelle;
     }
 
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
+    public void setLabelle(String labelle) {
+        this.labelle = labelle;
     }
 
     public Integer getArticleId() {

@@ -1,10 +1,18 @@
 package fr.yr.site.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Image {
 
+    @Id
+    @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
     private String url;
-    private String libelle;
+    private String labelle;
     private Integer articleId;
 
 
@@ -24,12 +32,12 @@ public class Image {
         this.url = url;
     }
 
-    public String getLibelle() {
-        return libelle;
+    public String getLabelle() {
+        return labelle;
     }
 
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
+    public void setLabelle(String labelle) {
+        this.labelle = labelle;
     }
 
     public Integer getArticleId() {

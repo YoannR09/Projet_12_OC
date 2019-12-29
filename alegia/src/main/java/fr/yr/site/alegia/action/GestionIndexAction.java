@@ -32,10 +32,7 @@ public class GestionIndexAction extends ActionSupport {
         return vResult;
     }
 
-
-
     //----------- GETTERS ET SETTERS ----------------
-
 
     public List<Categorie> getCategorieList() {
         return categorieList;

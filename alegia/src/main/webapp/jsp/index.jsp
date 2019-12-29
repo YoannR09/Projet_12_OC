@@ -21,9 +21,6 @@
         {
             margin:0;
             padding:0;
-            background: url(../image/fond.png) no-repeat center fixed;
-            -webkit-background-size: cover; /* pour anciens Chrome et Safari */
-            background-size: cover; /* version standardisée */
         }
 
     </style>
@@ -31,7 +28,7 @@
 <body>
     <%@ include file="./_include/header.jsp"%>
     <div id="blocCenter" style="display: flex;justify-content: center">
-    <div class="col-8 bg-dark" style="height: 400px;opacity: 0">
+    <div class="col-8 bg-dark" style="height: 200px;opacity: 0">
     </div>
     </div>
     <footer>

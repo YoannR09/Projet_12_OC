@@ -5,6 +5,8 @@ public class Categorie {
     private Integer id;
     private String nom;
     private String labelle;
+    private Boolean disponible;
+    private Integer countArticle;
 
     public Integer getId() {
         return id;
@@ -28,5 +30,21 @@ public class Categorie {
 
     public void setLabelle(String labelle) {
         this.labelle = labelle;
+    }
+
+    public Boolean getDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(Boolean disponible) {
+        this.disponible = disponible;
+    }
+
+    public Integer getCountArticle() {
+        return countArticle;
+    }
+
+    public void setCountArticle(Integer countArticle) {
+        this.countArticle = countArticle;
     }
 }

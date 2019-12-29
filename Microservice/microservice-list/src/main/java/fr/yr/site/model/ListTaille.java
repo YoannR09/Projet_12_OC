@@ -11,7 +11,7 @@ public class ListTaille {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Integer id;
-    private Integer categorieId;
+    private Integer articleId;
     private Integer tailleId;
 
 
@@ -23,12 +23,12 @@ public class ListTaille {
         this.id = id;
     }
 
-    public Integer getCategorieId() {
-        return categorieId;
+    public Integer getArticleId() {
+        return articleId;
     }
 
-    public void setCategorieId(Integer categorieId) {
-        this.categorieId = categorieId;
+    public void setArticleId(Integer articleId) {
+        this.articleId = articleId;
     }
 
     public Integer getTailleId() {

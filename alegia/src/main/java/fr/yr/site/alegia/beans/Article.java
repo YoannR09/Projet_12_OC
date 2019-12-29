@@ -5,10 +5,13 @@ import java.util.List;
 public class Article {
 
     private String nom;
+    private String description;
     private Integer id;
     private Integer categorieId;
     private Float prixHt;
     private Float prixTtc;
+    private Boolean disponible;
+    private Boolean supprimable;
     private List<Image> imageList;
 
     public String getNom() {
@@ -57,5 +60,29 @@ public class Article {
 
     public void setImageList(List<Image> imageList) {
         this.imageList = imageList;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Boolean getDisponible() {
+        return disponible;
+    }
+
+    public void setDisponible(Boolean disponible) {
+        this.disponible = disponible;
+    }
+
+    public Boolean getSupprimable() {
+        return supprimable;
+    }
+
+    public void setSupprimable(Boolean supprimable) {
+        this.supprimable = supprimable;
     }
 }

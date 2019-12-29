@@ -48,4 +48,8 @@
     {
         color : darkgray;
     }
+    label
+    {
+        font-weight: bold;
+    }
 </style>

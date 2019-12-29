@@ -17,10 +17,10 @@
 <%@ include file="../_include/header.jsp"%>
 <div id="blocCenter" style="display: flex;justify-content: center;">
     <div class="col-xs-5 col-8">
-        <section class="row">
+        <section class="row" style="margin: auto;justify-content: space-around">
             <s:iterator value="articleList">
                 <s:set var="articleId" value="id"/>
-                <li class="nav-item col-3" style="text-align: center;">
+                <li class="nav-item" style="text-align: center;width: 200px;;margin :15px">
                     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style=" margin-bottom: 5px">
                         <div class="carousel-inner" style="height: 100%">
                             <s:iterator value="imageList" status="imageList">
