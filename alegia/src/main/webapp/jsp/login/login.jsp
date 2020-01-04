@@ -45,10 +45,11 @@
         }
         #message
         {
-            float: right;
-            font-size: 1.1em;
-            margin-top: 15px;
-            color: white;
+            color: black;
+        }
+        label
+        {
+            font-size: 0.8em;
         }
     </style>
 </head>
@@ -64,15 +65,15 @@
             <div class="col-12 container" id="cadreLog">
                 <s:form action="doLogin">
                     <div class="form-group" style="margin: 20px;">
-                        <label for="inputPseudo" style="color: black;">Adresse éléctronique</label>
-                        <input name="identifiant" type="text" class="form-control" id="inputPseudo" required>
+                        <label for="inputEmail" style="color: black;">Adresse éléctronique</label>
+                        <input name="email" type="text" class="form-control" id="inputEmail" required>
                     </div>
                     <div class="form-group " style="margin: 20px">
                         <label for="inputPassword" style="color: black;">Mot de passe</label>
                         <input name="motDePasse" type="password" class="form-control" id="inputPassword" required>
                     </div>
                     <div style="display: flex;justify-content: space-between;padding-top: 25px">
-                        <s:a action="formInscription" style="font-size: 0.7em" class="btn btn-dark">S'inscrire</s:a>
+                        <s:a action="doInscription" style="font-size: 0.7em" class="btn btn-dark">S'inscrire</s:a>
                         <s:a action="formInscription" style="font-size: 0.7em;color:orange;">Mot de passe oublié</s:a>
                         <button type="submit" style="font-size: 0.7em" class="btn btn-dark">Connexion</button>
                     </div>

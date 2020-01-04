@@ -164,7 +164,24 @@ public class GestionArticleAction extends ActionSupport {
             }else if(radio.equals("Indisponible")){
                 articleList = microserviceArticleProxy.findByCategorieIdAndDisponible(a.getCategorieId(),false);
             }
-            competeArticleList(articleList);
+            completeArticleList(articleList);
+            categorieList = microserviceCategorie.findAll();
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            categorieList = microserviceCategorie.findAll();
+            e.printStackTrace();
+            return ActionSupport.ERROR;
+        }
+    }
+
+    /**
+     * Méthode pour afficher le formulaire de modification d'un article
+     * @return
+     */
+    public String formModifArticle(){
+        try {
+            article = microserviceArticleProxy.getArticle(articleId);
+            completeArticle(article);
             categorieList = microserviceCategorie.findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
@@ -178,18 +195,22 @@ public class GestionArticleAction extends ActionSupport {
         microserviceArticleProxy.update(article);
         articleList = microserviceArticleProxy.findByCategorieIdAndDisponible(article.getCategorieId(),dispo);
         categorieList = microserviceCategorie.findAll();
-        competeArticleList(articleList);
+        completeArticleList(articleList);
     }
 
-    private void competeArticleList(List<Article> vList){
+    private void completeArticleList(List<Article> vList){
         for (Article a : vList) {
-            a.setImageList(microserviceImageProxy.findByArticleId(a.getId()));
-            a.setSupprimable(true);
-            if (a.getImageList().size() == 0) {
-                Image image = new Image();
-                image.setUrl("indisponible.jpg");
-                a.getImageList().add(image);
-            }
+            completeArticle(a);
+        }
+    }
+
+    private void completeArticle(Article a){
+        a.setImageList(microserviceImageProxy.findByArticleId(a.getId()));
+        a.setSupprimable(true);
+        if (a.getImageList().size() == 0) {
+            Image image = new Image();
+            image.setUrl("indisponible.jpg");
+            a.getImageList().add(image);
         }
     }
 

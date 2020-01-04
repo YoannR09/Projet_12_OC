@@ -5,9 +5,9 @@ import fr.yr.site.model.Compte;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class CompteController {
@@ -33,6 +33,42 @@ public class CompteController {
             return dao.findByEmail(email);
         }catch (Exception e){
             return null;
+        }
+    }
+
+    @GetMapping(value = "/Compte")
+    public List<Compte> findAll(){
+        try {
+            return dao.findAll();
+        }catch (Exception e){
+            logger.error(e);
+            return null;
+        }
+    }
+
+    /**
+     * Méthode pour ajouter un compte
+     * @param compte
+     */
+    @PostMapping(value = "/Compte")
+    public void add(@RequestBody Compte compte){
+        try {
+            dao.save(compte);
+        }catch (Exception e){
+            logger.error(e);
+        }
+    }
+
+    /**
+     * Méthode pour mettre à jour un compte
+     * @param compte
+     */
+    @PutMapping(value = "/Compte")
+    public void update(@RequestBody Compte compte){
+        try {
+            dao.save(compte);
+        }catch (Exception e){
+            logger.error(e);
         }
     }
 }

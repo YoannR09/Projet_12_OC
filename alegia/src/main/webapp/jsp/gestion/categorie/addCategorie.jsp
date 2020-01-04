@@ -50,6 +50,10 @@
             margin-top: 15px;
             color: white;
         }
+        label
+        {
+            font-size: 0.8em;
+        }
     </style>
 </head>
 <body>

@@ -1,10 +1,3 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: El-ra
-  Date: 28/06/2019
-  Time: 11:09
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -15,20 +8,19 @@
             display: flex;
             justify-content: space-around;
         }
-        *
+        body
         {
-            font-family: "Microsoft YaHei UI Light";
-        }
-
-        em
-        {
-            color : gray;
-            text-align: left;
+            margin:0;
+            padding:0;
         }
         #cadreLogin
         {
-            margin-top: 50px;
+            color: black;
+            margin-top: 100px;
             margin-bottom: 20px;
+            border-radius: 10px;
+            border: 1px lightgrey solid;
+            width: 350px;
         }
         #bottom
         {
@@ -36,91 +28,106 @@
             justify-content: space-around;
             width: 100%;
         }
-        #labelRecherche
+        #label
         {
             left: 10px;
-            font-size: 1.5em;
-            margin: 10px;
+            font-size: 1.2em;
+            margin-top: 10px;
+            margin-left: 10px;
             font-weight: bold;
+            color: black;
         }
         #cadreLog
         {
             width: 100%;
-            border: darkgray 1px solid;
-        }
-        label
-        {
-            text-align: right;
-            margin-left: 15px;
-            font-weight: 600;
+            padding: 10px ;
+            margin-bottom: 10px;
         }
         #message
         {
             float: right;
             font-size: 1.1em;
             margin-top: 15px;
+            color: white;
         }
-
-
-
+        label
+        {
+            font-size: 0.8em;
+        }
     </style>
 </head>
 <body>
 <header>
     <%@ include file="../_include/header.jsp"%>
 </header>
-
 <div id="page">
     <div id="bottom" >
-        <div id="cadreLogin" class="col-xl-4 col-lg-5 col-md-6 col-sm-7">
-            <label class="form-check-label" id="labelRecherche"> Inscription </label>
-            <div class="col-12 container bg-light" id="cadreLog">
-                <em id="message" class="text-info"><s:actionmessage/></em>
+        <div id="cadreLogin">
+            <label class="form-check-label" id="label"> S'inscrire </label>
+            <em id="message" ><s:actionmessage/></em>
+            <div class="col-12 container" id="cadreLog">
                 <s:form action="doInscription">
                     <div class="form-group" style="margin: 20px;">
-                        <label for="inputPseudo">Pseudo</label>
-                        <input name="pseudo" type="pseudo" class="form-control" id="inputPseudo" required value="<s:property value="pseudo"/>">
+                        <label for="inputNom" style="color: black;">Nom</label>
+                        <input name="nom" type="text" class="form-control" id="inputNom" required>
+                    </div>
+                    <div class="form-group" style="margin: 20px;">
+                        <label for="inputPrenom" style="color: black;">Prénom</label>
+                        <input name="prenom" type="text" class="form-control" id="inputPrenom" required>
+                    </div>
+                    <div class="form-group" style="margin: 20px;">
+                        <label for="inputNumeroTelephone" style="color: black;">Numéro de téléphone</label>
+                        <input name="numeroTelephone" type="text" class="form-control" id="inputNumeroTelephone" required>
+                    </div>
+                    <div class="form-group" style="margin: 20px;">
+                        <label for="inputEmail" style="color: black;">Adresse éléctronique</label>
+                        <input name="email" type="text" class="form-control" id="inputEmail" required>
+                    </div>
+                    <div class="form-group" style="margin: 20px;">
+                        <label for="inputVerifEmail" style="color: black;">Confirmer l'adresse éléctronique</label>
+                        <input type="text" class="form-control" id="inputVerifEmail" required>
                     </div>
                     <div class="form-group " style="margin: 20px">
-                        <label for="inputPassword">Mot de passe</label>
-                        <input name="newMdp" type="password" class="form-control" id="inputPassword" required >
+                        <label for="inputPassword" style="color: black;">Mot de passe</label>
+                        <input name="motDePasse" type="password" class="form-control" id="inputPassword" required>
                     </div>
                     <div class="form-group " style="margin: 20px">
-                        <label for="inputPasswordVerif">Confirmation</label>
-                        <input name="newMdpVerif" type="password" class="form-control" id="inputPasswordVerif" required>
+                        <label for="inputPassword" style="color: black;">Confirmer le mot de passe</label>
+                        <input type="password" class="form-control" id="inputVerifPassword" required>
+                    </div>
+
+                    Votre adresse
+                    <div class="form-group " style="margin: 20px">
+                        <label for="inputVille" style="color: black;">Ville</label>
+                        <input name="ville" type="text" class="form-control" id="inputVille" required>
                     </div>
                     <div class="form-group " style="margin: 20px">
-                        <label for="inputNom">Nom</label>
-                        <input name="nom" type="text" class="form-control" id="inputNom" required value="<s:property value="nom"/>">
+                        <label for="inputCodePostal" style="color: black;">Code postal</label>
+                        <input name="codePostal" type="text" class="form-control" id="inputCodePostal" required>
                     </div>
                     <div class="form-group " style="margin: 20px">
-                        <label for="inputPrenom">Prénom</label>
-                        <input name="prenom" type="text" class="form-control" id="inputPrenom" required value="<s:property value="prenom"/>">
+                        <label for="inputNumero" style="color: black;">Numéro</label>
+                        <input name="numero" type="text" class="form-control" id="inputNumero" required>
                     </div>
                     <div class="form-group " style="margin: 20px">
-                        <label for="inputEmail">Adresse électronique</label>
-                        <input name="newEmail" type="text" class="form-control" id="inputEmail" required value="<s:property value="newEmail"/>">
+                        <label for="inputRue" style="color: black;">Rue</label>
+                        <input name="rue" type="text" class="form-control" id="inputRue" required>
                     </div>
                     <div class="form-group " style="margin: 20px">
-                        <label for="inputNumero">Numéro de télèphone</label>
-                        <input name="numero" type="text" class="form-control" id="inputNumero" required value="<s:property value="numero"/>">
+                        <label for="inputRue" style="color: black;">Informations supplémentaire</label>
+                        <textarea name="info"  class="form-control"  rows="3" required></textarea>
                     </div>
-                    <div style=" margin: 20px" class="form-group">
-                        <label for="selectBibliotheque">Bibliothèque favorite</label>
-                        <select id="selectBibliotheque" name="bibliotheque" class="form-control">
-                            <s:iterator value="bibliothequeList" status="list">
-                                <option value="<s:property value="id"/>"><s:property value="nom"/></option>
-                            </s:iterator>
-                        </select>
-                    </div>
-                    <div style="text-align: right;margin: 10px;">
-                        <button type="submit" class="btn btn-outline-info">Valider</button>
+
+                    <div style="display: flex;justify-content:space-around;padding-top: 25px">
+                        <button type="submit" style="font-size: 0.7em" class="btn btn-dark">Confirmer</button>
                     </div>
                 </s:form>
             </div>
         </div>
     </div>
 </div>
-
+<footer>
+    <%@ include file="../_include/footer.jsp"%>
+</footer>
 </body>
 </html>

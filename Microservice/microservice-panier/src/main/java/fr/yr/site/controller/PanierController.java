@@ -5,9 +5,7 @@ import fr.yr.site.model.Panier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class PanierController {
@@ -38,6 +36,19 @@ public class PanierController {
         }catch (Exception e){
             logger.error(e);
             return null;
+        }
+    }
+
+    /**
+     * Méthode pour créer un panier
+     * @param panier
+     */
+    @PostMapping(value = "/Panier")
+    public void add(@RequestBody Panier panier){
+        try {
+            dao.save(panier);
+        }catch (Exception e){
+            logger.error(e);
         }
     }
 }

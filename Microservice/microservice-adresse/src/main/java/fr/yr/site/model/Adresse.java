@@ -14,6 +14,7 @@ public class Adresse {
     private String rue;
     private String codePostal;
     private String ville;
+    private String numero;
     private String info;
 
     public Integer getId() {
@@ -54,5 +55,13 @@ public class Adresse {
 
     public void setInfo(String info) {
         this.info = info;
+    }
+
+    public String getNumero() {
+        return numero;
+    }
+
+    public void setNumero(String numero) {
+        this.numero = numero;
     }
 }

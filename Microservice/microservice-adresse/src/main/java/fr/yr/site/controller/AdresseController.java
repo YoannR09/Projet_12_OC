@@ -5,9 +5,9 @@ import fr.yr.site.model.Adresse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 public class AdresseController {
@@ -22,6 +22,20 @@ public class AdresseController {
     }
 
     /**
+     * Méthode pour rechercher ka liste des adresses
+     * @return
+     */
+    @GetMapping(value = "/Adresse")
+    public List<Adresse> findAll(){
+        try {
+            return dao.findAll();
+        }catch (Exception e){
+            logger.error(e);
+            return null;
+        }
+    }
+
+    /**
      * Méthode pour récupérer une adresse via un id
      * @param id
      * @return
@@ -33,6 +47,33 @@ public class AdresseController {
         }catch (Exception e){
             logger.error(e);
             return null;
+        }
+    }
+
+
+    /**
+     * Méthode pour ajouter une adresse
+     * @param adresse
+     */
+    @PostMapping(value = "/Adresse")
+    public void add(@RequestBody Adresse adresse){
+        try {
+            dao.save(adresse);
+        }catch (Exception e){
+            logger.error(e);
+        }
+    }
+
+    /**
+     * Méthode pour mettre à jour une adresse existante
+     * @param adresse
+     */
+    @PutMapping(value = "/Adresse")
+    public void update(@RequestBody Adresse adresse){
+        try {
+            dao.save(adresse);
+        }catch (Exception e){
+            logger.error(e);
         }
     }
 }

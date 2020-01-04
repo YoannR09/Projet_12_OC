@@ -76,7 +76,7 @@
                             </s:iterator>
                         </div>
                     </div>
-                    <s:a action="" class="btn btn-dark btnUnder">
+                    <s:a action="formModifArticle" class="btn btn-dark btnUnder">
                         Modifier
                         <s:param name="articleId" value="id"/>
                     </s:a>

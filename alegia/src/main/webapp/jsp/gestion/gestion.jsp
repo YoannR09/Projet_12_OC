@@ -14,6 +14,7 @@
         {
             font-size: 0.8em;
             width: 200px;
+            margin: 10px;
         }
         .titre
         {
@@ -24,12 +25,13 @@
             border-left: orange solid 1px;
             font-size: 1.1em;
         }
+
     </style>
 </head>
 <body>
 <%@ include file="../_include/header.jsp"%>
 <div id="blocCenter" style="display: flex;justify-content: center;">
-    <div class="col-5">
+    <div class="col-5" style="max-width: 600px">
         <h5 class="titre"> Categorie </h5>
         <div style="display: flex;justify-content: space-around">
             <s:a action="gestionCategorie" class="btn btn-dark btnType">Gestion des catégories</s:a>

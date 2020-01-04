@@ -50,6 +50,10 @@
             margin-top: 15px;
             color: white;
         }
+        label
+        {
+            font-size: 0.8em;
+        }
     </style>
 </head>
 <body>
@@ -92,7 +96,7 @@
                                     listLabelKey="taille" style="width:51%" listKey="taille"/>
 
                     <div style="display: flex;justify-content:space-around;padding-top: 25px">
-                        <s:submit value="Confirmer" style="font-size: 0.7em" class="btn btn-dark"/>
+                        <button type="submit" style="font-size: 0.7em" class="btn btn-dark">Confirmer</button>
                     </div>
                 </s:form>
             </div>

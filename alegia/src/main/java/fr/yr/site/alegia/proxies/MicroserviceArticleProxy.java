@@ -48,6 +48,14 @@ public interface MicroserviceArticleProxy {
                                                   @PathVariable Boolean dispo);
 
     /**
+     * Méthode pour récupérer tout les articles disponibles
+     * @param dispo
+     * @return
+     */
+    @GetMapping(value = "/Article/Dispo/{dispo}")
+    List<Article> findByDisponibleOrderById(@PathVariable Boolean dispo);
+
+    /**
      * Méthode pour ajouter un article
      * @param article
      */

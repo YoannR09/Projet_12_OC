@@ -11,7 +11,7 @@ public class Compte {
     private String numeroTelephone;
     private Adresse adresse;
     private Integer adresseId;
-    private Integer niveauId;
+    private Integer niveauAccesId;
 
     public NiveauAcces getNiveauAcces() {
         return niveauAcces;
@@ -85,11 +85,11 @@ public class Compte {
         this.adresseId = adresseId;
     }
 
-    public Integer getNiveauId() {
-        return niveauId;
+    public Integer getNiveauAccesId() {
+        return niveauAccesId;
     }
 
-    public void setNiveauId(Integer niveauId) {
-        this.niveauId = niveauId;
+    public void setNiveauAccesId(Integer niveauAccesId) {
+        this.niveauAccesId = niveauAccesId;
     }
 }

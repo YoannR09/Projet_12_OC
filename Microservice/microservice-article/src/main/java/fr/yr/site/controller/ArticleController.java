@@ -73,9 +73,24 @@ public class ArticleController {
      * @return
      */
     @GetMapping(value = "/Article/CategorieAndDispo/{categorieId},{dispo}")
-    List<Article> findByCategorieIdAndDisponible(@PathVariable int categorieId,@PathVariable Boolean dispo){
+    public List<Article> findByCategorieIdAndDisponible(@PathVariable int categorieId,@PathVariable Boolean dispo){
         try {
             return articleDao.findByCategorieIdAndDisponible(categorieId,dispo);
+        }catch (Exception e){
+            logger.error(e);
+            return null;
+        }
+    }
+
+    /**
+     * Méthode pour récupérer tout les articles disponibles
+     * @param dispo
+     * @return
+     */
+    @GetMapping(value = "/Article/Dispo/{dispo}")
+    public List<Article> findByDisponibleOrderById(@PathVariable Boolean dispo){
+        try {
+            return articleDao.findByDisponibleOrderById(dispo);
         }catch (Exception e){
             logger.error(e);
             return null;

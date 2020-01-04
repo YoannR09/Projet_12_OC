@@ -95,6 +95,16 @@
             <result name="error">jsp/error/error.jsp</result>
         </action>
 
+        <action name="formModifArticle" class="fr.yr.site.alegia.action.GestionArticleAction" method="formModifArticle">
+            <result>/jsp/gestion/article/modifArticle.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doModifArticle" class="fr.yr.site.alegia.action.GestionArticleAction" method="doModifArticle">
+            <result>/jsp/gestion/article/modifArticle.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
         <action name="doArticleSupprimer" class="fr.yr.site.alegia.action.GestionArticleAction" method="doSupprimer">
             <result>/jsp/gestion/article/gestionArticle.jsp</result>
             <result name="error">jsp/error/error.jsp</result>
@@ -104,6 +114,12 @@
         <action name="doLogin" class="fr.yr.site.alegia.action.GestionLoginAction" method="doLogin">
             <result name="success">/jsp/index.jsp</result>
             <result name="error">/jsp/login/login.jsp</result>
+        </action>
+
+        <action name="doInscription" class="fr.yr.site.alegia.action.GestionLoginAction" method="doInscription">
+            <result name="success">/jsp/index.jsp</result>
+            <result name="input">/jsp/login/inscription.jsp</result>
+            <result name="error">/jsp/login/inscription.jsp</result>
         </action>
 
         <action name="index" class="fr.yr.site.alegia.action.GestionIndexAction" method="accueil">
@@ -120,7 +136,7 @@
             <result name="error">jsp/login/login.jsp</result>
         </action>
 
-        <action name="doLogin" class="fr.yr.site.alegia.action.LoginAction" method="doLogin">
+        <action name="doLogin" class="fr.yr.site.alegia.action.GestionLoginAction" method="doLogin">
             <result name="success">jsp/index.jsp</result>
             <result name="error">jsp/login/login.jsp</result>
         </action>
