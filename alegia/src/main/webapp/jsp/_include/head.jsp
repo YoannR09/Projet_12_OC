@@ -19,6 +19,8 @@
         width: 100%;
         height: 100%;
         margin: 0; padding: 0;
+        min-width: 1200px;
+        min-height: 100%;
     }
     li
     {
@@ -39,6 +41,7 @@
     body {
         display : table;
         width: 100%;
+        background-image:url(/image/fondTest.png);
     }
     footer {
         display : table-row;

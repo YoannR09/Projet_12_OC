@@ -8,8 +8,16 @@ public class Commande {
     private List<LigneDeCommande> ligneDeCommandeList;
     private String numero;
     private StatutCommande statutCommande;
+    private Integer compteId;
     private Integer statutId;
 
+    public Integer getCompteId() {
+        return compteId;
+    }
+
+    public void setCompteId(Integer compteId) {
+        this.compteId = compteId;
+    }
 
     public Integer getId() {
         return id;

@@ -4,9 +4,8 @@ import com.opensymphony.xwork2.ActionSupport;
 import fr.yr.site.alegia.beans.Article;
 import fr.yr.site.alegia.beans.Categorie;
 import fr.yr.site.alegia.beans.Image;
-import fr.yr.site.alegia.proxies.MicroserviceArticleProxy;
-import fr.yr.site.alegia.proxies.MicroserviceCategorie;
-import fr.yr.site.alegia.proxies.MicroserviceImageProxy;
+import fr.yr.site.alegia.configuration.Factory;
+import fr.yr.site.alegia.configuration.GenerateMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -14,13 +13,10 @@ import java.util.List;
 
 public class GestionIndexAction extends ActionSupport {
 
-    // --- Microservices ---
     @Autowired
-    MicroserviceCategorie microserviceCategorie;
-    @Autowired
-    MicroserviceArticleProxy microserviceArticleProxy;
-    @Autowired
-    MicroserviceImageProxy microserviceImageProxy;
+    Factory factory;
+
+    private     GenerateMethod      gm = new GenerateMethod();
 
     private     List<Categorie>     categorieList;
     private     Integer             categorieId;
@@ -36,8 +32,8 @@ public class GestionIndexAction extends ActionSupport {
     public String accueil(){
         String vResult;
         try {
-            articleList = microserviceArticleProxy.findByDisponibleOrderById(true);
-            completeArticle(articleList);
+            articleList = factory.getArticleProxy().findByDisponibleOrderById(true);
+            gm.completeArticleList(factory,articleList);
             actuArticleList = new ArrayList<>();
             if (articleList.size() < 5){
                 for(int i=0;i<articleList.size();i++){
@@ -48,7 +44,7 @@ public class GestionIndexAction extends ActionSupport {
                     actuArticleList.add(articleList.get(i));
                 }
             }
-            categorieList = microserviceCategorie.findAll();
+            categorieList = factory.getCategorieProxy().findAll();
             vResult = ActionSupport.SUCCESS;
         }catch (Exception e){
             e.printStackTrace();
@@ -57,20 +53,6 @@ public class GestionIndexAction extends ActionSupport {
         return vResult;
     }
 
-    /**
-     * Méthode pour remplir la liste d'image d'un article
-     * @param a
-     */
-    private void completeArticle(List<Article> vList){
-        for (Article a : vList) {
-            a.setImageList(microserviceImageProxy.findByArticleId(a.getId()));
-            if (a.getImageList().size() == 0) {
-                Image image = new Image();
-                image.setUrl("indisponible.jpg");
-                a.getImageList().add(image);
-            }
-        }
-    }
 
     //----------- GETTERS ET SETTERS ----------------
 

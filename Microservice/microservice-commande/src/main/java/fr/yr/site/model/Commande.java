@@ -15,6 +15,7 @@ public class Commande {
     private Integer id;
     private String numero;
     private Integer statutId;
+    private Integer compteId;
 
     public Integer getId() {
         return id;
@@ -38,5 +39,13 @@ public class Commande {
 
     public void setStatutId(Integer statutId) {
         this.statutId = statutId;
+    }
+
+    public Integer getCompteId() {
+        return compteId;
+    }
+
+    public void setCompteId(Integer compteId) {
+        this.compteId = compteId;
     }
 }

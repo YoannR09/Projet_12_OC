@@ -2,31 +2,16 @@ package fr.yr.site.alegia.beans;
 
 public class LigneDeCommande {
 
-    private Article article;
-    private Panier panier;
     private Integer quantite;
-    private Float prixHT;
-    private Float prixTTC;
     private String designation;
     private Commande commande;
     private Integer commandeId;
-    private Integer panierId;
+    private String taille;
+    private Float montantHt;
+    private Float montantTtc;
+    private Float prixUnitHt;
+    private Float prixUnitTtc;
 
-    public Article getArticle() {
-        return article;
-    }
-
-    public void setArticle(Article article) {
-        this.article = article;
-    }
-
-    public Panier getPanier() {
-        return panier;
-    }
-
-    public void setPanier(Panier panier) {
-        this.panier = panier;
-    }
 
     public Integer getQuantite() {
         return quantite;
@@ -36,20 +21,36 @@ public class LigneDeCommande {
         this.quantite = quantite;
     }
 
-    public Float getPrixHT() {
-        return prixHT;
+    public Float getPrixUnitHt() {
+        return prixUnitHt;
     }
 
-    public void setPrixHT(Float prixHT) {
-        this.prixHT = prixHT;
+    public void setPrixUnitHt(Float prixUnitHt) {
+        this.prixUnitHt = prixUnitHt;
     }
 
-    public Float getPrixTTC() {
-        return prixTTC;
+    public Float getPrixUnitTtc() {
+        return prixUnitTtc;
     }
 
-    public void setPrixTTC(Float prixTTC) {
-        this.prixTTC = prixTTC;
+    public void setPrixUnitTtc(Float prixUnitTtc) {
+        this.prixUnitTtc = prixUnitTtc;
+    }
+
+    public Float getMontantHt() {
+        return montantHt;
+    }
+
+    public void setMontantHt(Float montantHt) {
+        this.montantHt = montantHt;
+    }
+
+    public Float getMontantTtc() {
+        return montantTtc;
+    }
+
+    public void setMontantTtc(Float montantTtc) {
+        this.montantTtc = montantTtc;
     }
 
     public String getDesignation() {
@@ -76,11 +77,11 @@ public class LigneDeCommande {
         this.commandeId = commandeId;
     }
 
-    public Integer getPanierId() {
-        return panierId;
+    public String getTaille() {
+        return taille;
     }
 
-    public void setPanierId(Integer panierId) {
-        this.panierId = panierId;
+    public void setTaille(String taille) {
+        this.taille = taille;
     }
 }

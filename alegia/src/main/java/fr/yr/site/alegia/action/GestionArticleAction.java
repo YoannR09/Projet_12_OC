@@ -2,6 +2,8 @@ package fr.yr.site.alegia.action;
 
 import com.opensymphony.xwork2.ActionSupport;
 import fr.yr.site.alegia.beans.*;
+import fr.yr.site.alegia.configuration.Factory;
+import fr.yr.site.alegia.configuration.GenerateMethod;
 import fr.yr.site.alegia.proxies.*;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,35 +19,30 @@ import java.util.List;
  */
 public class GestionArticleAction extends ActionSupport {
 
+    // --- Microservices ---
     @Autowired
-    MicroserviceArticleProxy microserviceArticleProxy;
-    @Autowired
-    MicroserviceListTaille microserviceListTaille;
-    @Autowired
-    MicroserviceTailleProxy microserviceTailleProxy;
-    @Autowired
-    MicroserviceImageProxy microserviceImageProxy;
-    @Autowired
-    MicroserviceCategorie microserviceCategorie;
+    Factory factory;
 
-    private      String      destPath = "C:/Users/El-ra/Documents/Projet_12_OC/alegia/src/main/webapp/image/";
+    private         GenerateMethod      gm = new GenerateMethod();
 
-    private Article article;
-    private Integer articleId;
-    private List<ListTaille> listTailles;
-    private List<String>    tailleSelect;
-    private List<Taille>    tailleList;
-    private List<Article>   articleList;
-    private List<Image> imageList;
-    private List<Categorie> categorieList;
-    private String categorieSelect;
-    private String nom;
-    private String prixTtc;
-    private String prixHt;
-    private String description;
-    private String radio;
-    private List<Taille> tailles;
-    private     List<String>            radioList = Arrays.asList("Disponible","Indisponible");
+    private         Article             article;
+    private         Integer             articleId;
+    private         List<ListTaille>    listTailles;
+    private         List<String>        tailleSelect;
+    private         List<Taille>        tailleList;
+    private         List<Article>       articleList;
+    private         List<Image>         imageList;
+    private         List<Categorie>     categorieList;
+    private         String              categorieSelect;
+    private         String              nom;
+    private         String              prixTtc;
+    private         String              prixHt;
+    private         String              description;
+    private         String              radio;
+    private         List<Taille>        tailles;
+    private         List<String>        radioList = Arrays.asList("Disponible","Indisponible");
+    private         String              destPath = "C:/Users/El-ra/Documents" +
+            "/Projet_12_OC/alegia/src/main/webapp/image/";
 
     /**
      * Méthode pour afficher kes détails d'un article sélectionné
@@ -53,18 +50,18 @@ public class GestionArticleAction extends ActionSupport {
      */
     public String doDetailArticle(){
         try {
-            article = microserviceArticleProxy.getArticle(articleId);
-            listTailles = microserviceListTaille.findByArticleId(articleId);
-            imageList = microserviceImageProxy.findByArticleId(articleId);
+            article = factory.getArticleProxy().getArticle(articleId);
+            listTailles =factory.getListTailleProxy().findByArticleId(articleId);
+            imageList = factory.getImageProxy().findByArticleId(articleId);
             if (imageList.size() == 0 ){
                 Image image = new Image();
                 image.setUrl("indisponible.jpg");
                 imageList.add(image);
             }
             for(ListTaille lt:listTailles){
-                lt.setTaille(microserviceTailleProxy.findById(lt.getTailleId()));
+                lt.setTaille(factory.getTailleProxy().findById(lt.getTailleId()));
             }
-            categorieList = microserviceCategorie.findAll();
+            generateCategorieList();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
@@ -84,23 +81,23 @@ public class GestionArticleAction extends ActionSupport {
                 Article article = new Article();
                 article.setNom(nom);
                 article.setDescription(description);
-                Integer categorieId = microserviceCategorie.findByNom(categorieSelect).getId();
+                Integer categorieId = factory.getCategorieProxy().findByNom(categorieSelect).getId();
                 article.setCategorieId(categorieId);
                 article.setPrixHt(Float.parseFloat(prixHt));
                 article.setPrixTtc(Float.parseFloat(prixTtc));
                 article.setDisponible(false);
-                microserviceArticleProxy.add(article);
-                List<Article> vList = microserviceArticleProxy.getArticleByCategorieId(categorieId);
+                factory.getArticleProxy().add(article);
+                List<Article> vList = factory.getArticleProxy().getArticleByCategorieId(categorieId);
                 Article newArticle = vList.get(vList.size()-1);
 
                 // Ajout des tailles
                 if(tailleSelect != null){
                     for(String t: tailleSelect){
                         ListTaille lt = new ListTaille();
-                        Taille taille = microserviceTailleProxy.findByTaille(t);
+                        Taille taille = factory.getTailleProxy().findByTaille(t);
                         lt.setTailleId(taille.getId());
                         lt.setArticleId(newArticle.getId());
-                        microserviceListTaille.add(lt);
+                        factory.getListTailleProxy().add(lt);
                     }
                 }
                 // vResult = ActionSupport.SUCCESS;
@@ -111,8 +108,8 @@ public class GestionArticleAction extends ActionSupport {
             e.printStackTrace();
             // vResult = ActionSupport.ERROR;
         }
-        tailleList = microserviceTailleProxy.findAll();
-        categorieList = microserviceCategorie.findAll();
+        tailleList = factory.getTailleProxy().findAll();
+        generateCategorieList();
         return ActionSupport.SUCCESS;
     }
 
@@ -122,12 +119,12 @@ public class GestionArticleAction extends ActionSupport {
      */
     public String doDiponible(){
         try {
-            Article article = microserviceArticleProxy.getArticle(articleId);
+            Article article = factory.getArticleProxy().getArticle(articleId);
             article.setDisponible(true);
             updateArticle(article,false);
             return ActionSupport.SUCCESS;
         }catch (Exception e){
-            categorieList = microserviceCategorie.findAll();
+            generateCategorieList();
             e.printStackTrace();
             return ActionSupport.ERROR;
         }
@@ -139,12 +136,12 @@ public class GestionArticleAction extends ActionSupport {
      */
     public String doIndiponible(){
         try {
-            Article article = microserviceArticleProxy.getArticle(articleId);
+            Article article = factory.getArticleProxy().getArticle(articleId);
             article.setDisponible(false);
             updateArticle(article,true);
             return ActionSupport.SUCCESS;
         }catch (Exception e){
-            categorieList = microserviceCategorie.findAll();
+            generateCategorieList();
             e.printStackTrace();
             return ActionSupport.ERROR;
         }
@@ -156,19 +153,19 @@ public class GestionArticleAction extends ActionSupport {
      */
     public String doSupprimer(){
         try {
-            Article a = microserviceArticleProxy.getArticle(articleId);
-            microserviceListTaille.deleteByArticleId(articleId);
-            microserviceArticleProxy.delete(articleId);
+            Article a = factory.getArticleProxy().getArticle(articleId);
+            factory.getListTailleProxy().deleteByArticleId(articleId);
+            factory.getArticleProxy().delete(articleId);
             if (radio.equals("Disponible")){
-                articleList = microserviceArticleProxy.findByCategorieIdAndDisponible(a.getCategorieId(),true);
+                articleList = factory.getArticleProxy().findByCategorieIdAndDisponible(a.getCategorieId(),true);
             }else if(radio.equals("Indisponible")){
-                articleList = microserviceArticleProxy.findByCategorieIdAndDisponible(a.getCategorieId(),false);
+                articleList = factory.getArticleProxy().findByCategorieIdAndDisponible(a.getCategorieId(),false);
             }
             completeArticleList(articleList);
-            categorieList = microserviceCategorie.findAll();
+            generateCategorieList();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
-            categorieList = microserviceCategorie.findAll();
+            generateCategorieList();
             e.printStackTrace();
             return ActionSupport.ERROR;
         }
@@ -180,37 +177,27 @@ public class GestionArticleAction extends ActionSupport {
      */
     public String formModifArticle(){
         try {
-            article = microserviceArticleProxy.getArticle(articleId);
-            completeArticle(article);
-            categorieList = microserviceCategorie.findAll();
+            article = factory.getArticleProxy().getArticle(articleId);
+            gm.completeArticle(factory,article);
+            generateCategorieList();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
-            categorieList = microserviceCategorie.findAll();
+            generateCategorieList();
             e.printStackTrace();
             return ActionSupport.ERROR;
         }
     }
 
     private void updateArticle(Article article, Boolean dispo) {
-        microserviceArticleProxy.update(article);
-        articleList = microserviceArticleProxy.findByCategorieIdAndDisponible(article.getCategorieId(),dispo);
-        categorieList = microserviceCategorie.findAll();
+        factory.getArticleProxy().update(article);
+        articleList = factory.getArticleProxy().findByCategorieIdAndDisponible(article.getCategorieId(),dispo);
+        categorieList = factory.getCategorieProxy().findAll();
         completeArticleList(articleList);
     }
 
     private void completeArticleList(List<Article> vList){
         for (Article a : vList) {
-            completeArticle(a);
-        }
-    }
-
-    private void completeArticle(Article a){
-        a.setImageList(microserviceImageProxy.findByArticleId(a.getId()));
-        a.setSupprimable(true);
-        if (a.getImageList().size() == 0) {
-            Image image = new Image();
-            image.setUrl("indisponible.jpg");
-            a.getImageList().add(image);
+            gm.completeArticle(factory,a);
         }
     }
 
@@ -222,7 +209,14 @@ public class GestionArticleAction extends ActionSupport {
         image.setUrl(file.getName());
         image.setArticleId(newArticleId);
         image.setLabelle("Image de l'article à l'id suivant : "+newArticleId);
-        microserviceImageProxy.add(image);
+        factory.getImageProxy().add(image);
+    }
+
+    /**
+     * Méthode pour générer la liste des catégories
+     */
+    public void generateCategorieList(){
+        categorieList = factory.getCategorieProxy().findAll();
     }
 
     public Article getArticle() {

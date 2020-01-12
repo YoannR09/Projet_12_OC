@@ -21,6 +21,7 @@
             border-radius: 10px;
             border: 1px lightgrey solid;
             width: 350px;
+            background: rgba(0, 0, 0, 0.5);
         }
         #bottom
         {
@@ -35,7 +36,6 @@
             margin-top: 10px;
             margin-left: 10px;
             font-weight: bold;
-            color: black;
         }
         #cadreLog
         {
@@ -50,6 +50,7 @@
         label
         {
             font-size: 0.8em;
+            color:white;
         }
     </style>
 </head>
@@ -65,11 +66,11 @@
             <div class="col-12 container" id="cadreLog">
                 <s:form action="doLogin">
                     <div class="form-group" style="margin: 20px;">
-                        <label for="inputEmail" style="color: black;">Adresse éléctronique</label>
+                        <label for="inputEmail" >Adresse éléctronique</label>
                         <input name="email" type="text" class="form-control" id="inputEmail" required>
                     </div>
                     <div class="form-group " style="margin: 20px">
-                        <label for="inputPassword" style="color: black;">Mot de passe</label>
+                        <label for="inputPassword" >Mot de passe</label>
                         <input name="motDePasse" type="password" class="form-control" id="inputPassword" required>
                     </div>
                     <div style="display: flex;justify-content: space-between;padding-top: 25px">

@@ -29,7 +29,7 @@ public class PanierController {
         }
     }
 
-    @GetMapping
+    @GetMapping(value = "/Panier/Compte/{compteId}")
     public Panier getPanierByCompteId(@PathVariable int compteId){
         try {
             return dao.findByCompteId(compteId);

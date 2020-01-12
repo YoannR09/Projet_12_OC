@@ -18,8 +18,8 @@ public interface MicroservicePanierProxy {
     @GetMapping(value = "/Panier/{id}")
     Panier getPanier(@PathVariable int id);
 
-    @GetMapping
-    Panier getPanierByCompteId(@PathVariable int compteId);
+    @GetMapping(value = "/Panier/Compte/{compteId}")
+    Panier getPanierByCompteId(@PathVariable("compteId") int compteId);
 
     /**
      * Méthode pour créer un panier

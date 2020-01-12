@@ -5,9 +5,7 @@ import fr.yr.site.model.Commande;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -57,6 +55,15 @@ public class CommandeController {
         }catch (Exception e){
             logger.error(e);
             return null;
+        }
+    }
+
+    @PostMapping(value = "/Commande")
+    public void add(@RequestBody Commande commande){
+        try {
+            commandeDao.save(commande);
+        }catch (Exception e){
+            logger.error(e);
         }
     }
 }

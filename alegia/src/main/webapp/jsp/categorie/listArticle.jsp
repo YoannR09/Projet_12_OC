@@ -16,7 +16,7 @@
 <body>
 <%@ include file="../_include/header.jsp"%>
 <div id="blocCenter" style="display: flex;justify-content: center;">
-    <div class="col-xs-5 col-8">
+    <div class="col-xs-5 col-7">
         <section class="row" style="margin: auto;justify-content: space-around">
             <s:iterator value="articleList">
                 <s:set var="articleId" value="id"/>

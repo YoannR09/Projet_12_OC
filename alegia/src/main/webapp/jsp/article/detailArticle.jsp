@@ -23,13 +23,13 @@
                     <s:iterator value="imageList" status="imageList">
                         <s:if test="%{#imageList.count == 1}">
                             <div class="carousel-item active border" style="width: 100%;height: 100%;">
-                                    <img class="d-block w-100" src="./image/<s:property value="url"/>"
-                                         alt="First slide">
+                                <img class="d-block w-100" src="./image/<s:property value="url"/>"
+                                     alt="First slide">
                             </div>
                         </s:if>
                         <s:elseif test="%{#imageList.count > 1}">
                             <div class="carousel-item border" style="width: 100%;height: 100%">
-                                    <img class="d-block w-100 " src="./image/<s:property value="url"/>">
+                                <img class="d-block w-100 " src="./image/<s:property value="url"/>">
                             </div>
                         </s:elseif>
                     </s:iterator>
@@ -46,17 +46,22 @@
         </div>
         <div class="col-5">
             <s:form action="addPanier" id="formAddPanier">
+                <input id="idArticle" name="articleId" class="form-control" type="number" value="<s:property value="article.id"/>" style="width: 100px;font-size: 0.8em;visibility: revert">
                 <p style="font-size: 1.1em;font-weight: bolder"><s:property value="article.nom"/></p>
                 <p style="font-size: 0.9em;color: darkslategrey"><s:property value="article.description"/></p>
                 <p style="font-size: 0.9em;color: darkslategrey"><s:property value="article.prixTtc"/> €</p>
                 <label for="selectTaille" style="font-size: 0.7em;"><em>Sélectionner une taille</em></label>
                 <br/>
-                <select class="custom-select custom-select-sm" style="width: 100px;font-size: 0.8em;" id="selectTaille">
+                <select class="custom-select custom-select-sm" name="taille" style="width: 100px;font-size: 0.8em;" id="selectTaille">
                     <s:iterator value="listTailles" status="list">
                         <option><s:property value="taille.taille"/></option>
                     </s:iterator>
                 </select>
+                <br/>
+                <label for="inputQuantite" style="font-size: 0.7em;"><em>Quantité</em></label>
+                <input name="quantite" class="form-control" type="number" value="1" id="inputQuantite" style="width: 100px;font-size: 0.8em">
                 <div style="margin-top: 20px">
+                    <s:param value="article.id" name="articleId"/>
                     <button type="submit" class="btn btn-dark btn-sm border mb-2">Ajouter au panier</button>
                 </div>
             </s:form>
@@ -70,7 +75,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
     $(function() {
-
+        $('#idArticle').hide();
     });
 </script>
 </html>

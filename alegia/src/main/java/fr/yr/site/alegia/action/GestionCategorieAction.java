@@ -4,9 +4,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import fr.yr.site.alegia.beans.Article;
 import fr.yr.site.alegia.beans.Categorie;
 import fr.yr.site.alegia.beans.Image;
-import fr.yr.site.alegia.proxies.MicroserviceArticleProxy;
-import fr.yr.site.alegia.proxies.MicroserviceCategorie;
-import fr.yr.site.alegia.proxies.MicroserviceImageProxy;
+import fr.yr.site.alegia.configuration.Factory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -17,13 +15,8 @@ import java.util.List;
 public class GestionCategorieAction extends ActionSupport {
 
     // --- Microservices ---
-
     @Autowired
-    MicroserviceArticleProxy microserviceArticleProxy;
-    @Autowired
-    MicroserviceCategorie microserviceCategorie;
-    @Autowired
-    MicroserviceImageProxy microserviceImageProxy;
+    Factory factory;
 
     private         Integer         categorieId;
     private         List<Article>   articleList;
@@ -37,16 +30,16 @@ public class GestionCategorieAction extends ActionSupport {
      */
     public String doListArticleByCategorieId(){
         try {
-            articleList = microserviceArticleProxy.findByCategorieIdAndDisponible(categorieId,true);
+            articleList = factory.getArticleProxy().findByCategorieIdAndDisponible(categorieId,true);
             for (Article article:articleList){
-                article.setImageList(microserviceImageProxy.findByArticleId(article.getId()));
+                article.setImageList(factory.getImageProxy().findByArticleId(article.getId()));
                 if (article.getImageList().size() == 0 ){
                     Image image = new Image();
                     image.setUrl("indisponible.jpg");
                     article.getImageList().add(image);
                 }
             }
-            categorieList = microserviceCategorie.findAll();
+            categorieList = factory.getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
@@ -66,8 +59,8 @@ public class GestionCategorieAction extends ActionSupport {
             categorie.setNom(nom);
             categorie.setLabelle(labelle);
             categorie.setDisponible(false);
-            if(microserviceCategorie.findByNom(nom) == null){
-                microserviceCategorie.add(categorie);
+            if(factory.getCategorieProxy().findByNom(nom) == null){
+                factory.getCategorieProxy().add(categorie);
                 this.addActionMessage("La catégorie a bien été crée");
                 vResult = ActionSupport.SUCCESS;
             }else {
@@ -75,7 +68,7 @@ public class GestionCategorieAction extends ActionSupport {
                 vResult = ActionSupport.ERROR;
             }
         }
-        categorieList = microserviceCategorie.findAll();
+        categorieList = factory.getCategorieProxy().findAll();
         return vResult;
     }
 

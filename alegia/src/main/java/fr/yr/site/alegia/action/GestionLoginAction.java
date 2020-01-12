@@ -7,6 +7,7 @@ import fr.yr.site.alegia.beans.Categorie;
 import fr.yr.site.alegia.beans.Compte;
 import fr.yr.site.alegia.beans.Panier;
 import fr.yr.site.alegia.configuration.EncryptionUtil;
+import fr.yr.site.alegia.configuration.Factory;
 import fr.yr.site.alegia.proxies.MicroserviceAdresseProxy;
 import fr.yr.site.alegia.proxies.MicroserviceCategorie;
 import fr.yr.site.alegia.proxies.MicroserviceCompteProxy;
@@ -30,13 +31,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
 
     // --- Microservices ---
     @Autowired
-    MicroserviceCategorie microserviceCategorie;
-    @Autowired
-    MicroserviceCompteProxy microserviceCompteProxy;
-    @Autowired
-    MicroserviceAdresseProxy microserviceAdresseProxy;
-    @Autowired
-    MicroservicePanierProxy microservicePanierProxy;
+    Factory factory;
 
     final String secretKey = "ssshhhhhhhhhhh!!!!";
 
@@ -59,7 +54,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
 
     public String pageLogin(){
         try {
-            categorieList = microserviceCategorie.findAll();
+            categorieList = factory.getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             return ActionSupport.ERROR;
@@ -74,10 +69,10 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
 
         String vResult = ActionSupport.ERROR;
 
-        categorieList = microserviceCategorie.findAll();
+        categorieList = factory.getCategorieProxy().findAll();
 
         if (email != null) {
-            compte = microserviceCompteProxy.findByEmail(email);
+            compte = factory.getCompteProxy().findByEmail(email);
         }
         if (compte == null) {
             this.addActionMessage("Identifiant invalide");
@@ -104,38 +99,42 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
 
     public String doInscription() {
         String vResult;
-        categorieList = microserviceCategorie.findAll();
-
+        categorieList = factory.getCategorieProxy().findAll();
         try {
             if (email != null){
-                // Création de l'adresse
-                Adresse adresse = new Adresse();
-                adresse.setCodePostal(codePostal);
-                adresse.setInfo(info);
-                adresse.setNumero(numero);
-                adresse.setRue(rue);
-                adresse.setVille(ville);
-                microserviceAdresseProxy.add(adresse);
+                if(factory.getCompteProxy().findByEmail(email) != null){
+                    this.addActionMessage("Adresse éléctronique déjà utilisée");
+                    vResult = ActionSupport.ERROR;
+                }else {
+                    // Création de l'adresse
+                    Adresse adresse = new Adresse();
+                    adresse.setCodePostal(codePostal);
+                    adresse.setInfo(info);
+                    adresse.setNumero(numero);
+                    adresse.setRue(rue);
+                    adresse.setVille(ville);
+                    factory.getAdresseProxy().add(adresse);
 
-                // Création du compte
-                Compte compte = new Compte();
-                compte.setEmail(email);
-                compte.setMotDePasse(EncryptionUtil.encrypt(motDePasse,secretKey));
-                compte.setNiveauAccesId(1);
-                compte.setNom(nom);
-                compte.setPrenom(prenom);
-                compte.setNumeroTelephone(numeroTelephone);
-                List<Adresse> listAdresse = microserviceAdresseProxy.findAll();
-                compte.setAdresseId(listAdresse.get(listAdresse.size()-1).getId());
-                microserviceCompteProxy.add(compte);
+                    // Création du compte
+                    Compte compte = new Compte();
+                    compte.setEmail(email);
+                    compte.setMotDePasse(EncryptionUtil.encrypt(motDePasse, secretKey));
+                    compte.setNiveauAccesId(1);
+                    compte.setNom(nom);
+                    compte.setPrenom(prenom);
+                    compte.setNumeroTelephone(numeroTelephone);
+                    List<Adresse> listAdresse = factory.getAdresseProxy().findAll();
+                    compte.setAdresseId(listAdresse.get(listAdresse.size() - 1).getId());
+                    factory.getCompteProxy().add(compte);
 
-                // Création du panier
-                Panier panier = new Panier();
-                List<Compte> listCompte = microserviceCompteProxy.findAll();
-                panier.setCompteId(listCompte.get(listCompte.size()-1).getId());
-                microservicePanierProxy.add(panier);
+                    // Création du panier
+                    Panier panier = new Panier();
+                    List<Compte> listCompte = factory.getCompteProxy().findAll();
+                    panier.setCompteId(listCompte.get(listCompte.size() - 1).getId());
+                    factory.getPanierProxy().add(panier);
 
-                vResult = ActionSupport.SUCCESS;
+                    vResult = ActionSupport.SUCCESS;
+                }
             }else {
                 vResult = ActionSupport.INPUT;
             }

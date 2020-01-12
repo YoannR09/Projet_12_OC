@@ -5,26 +5,17 @@ import fr.yr.site.alegia.beans.Article;
 import fr.yr.site.alegia.beans.Categorie;
 import fr.yr.site.alegia.beans.Image;
 import fr.yr.site.alegia.beans.Taille;
-import fr.yr.site.alegia.proxies.MicroserviceArticleProxy;
-import fr.yr.site.alegia.proxies.MicroserviceCategorie;
-import fr.yr.site.alegia.proxies.MicroserviceImageProxy;
-import fr.yr.site.alegia.proxies.MicroserviceTailleProxy;
+import fr.yr.site.alegia.configuration.Factory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class GestionSiteAction extends ActionSupport {
 
+    // Microseervices
     @Autowired
-    MicroserviceCategorie microserviceCategorie;
-    @Autowired
-    MicroserviceTailleProxy microserviceTailleProxy;
-    @Autowired
-    MicroserviceArticleProxy microserviceArticleProxy;
-    @Autowired
-    MicroserviceImageProxy microserviceImageProxy;
+    Factory factory;
 
     private     List<Categorie>         categorieList;
     private     List<Categorie>         categories;
@@ -45,7 +36,7 @@ public class GestionSiteAction extends ActionSupport {
     public String doGestion(){
         String vResult;
         try {
-            categorieList = microserviceCategorie.findAll();
+            categorieList = factory.getCategorieProxy().findAll();
             vResult = ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Une erreur est survenu...");
@@ -61,8 +52,8 @@ public class GestionSiteAction extends ActionSupport {
     public String formAddArticle(){
         String vResult;
         try {
-            tailleList = microserviceTailleProxy.findAll();
-            categorieList = microserviceCategorie.findAll();
+            tailleList = factory.getTailleProxy().findAll();
+            categorieList = factory.getCategorieProxy().findAll();
             vResult = ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Une erreur est survenu...");
@@ -81,14 +72,14 @@ public class GestionSiteAction extends ActionSupport {
         String vResult;
         try {
             if (radio != null){
-                Categorie categorie = microserviceCategorie.findByNom(categorieSelect);
+                Categorie categorie = factory.getCategorieProxy().findByNom(categorieSelect);
                 if (radio.equals("Disponible")){
-                    articleList = microserviceArticleProxy.findByCategorieIdAndDisponible(categorie.getId(),true);
+                    articleList = factory.getArticleProxy().findByCategorieIdAndDisponible(categorie.getId(),true);
                 }else if (radio.equals("Indisponible")){
-                    articleList = microserviceArticleProxy.findByCategorieIdAndDisponible(categorie.getId(),false);
+                    articleList = factory.getArticleProxy().findByCategorieIdAndDisponible(categorie.getId(),false);
                 }
                 for (Article article:articleList){
-                    article.setImageList(microserviceImageProxy.findByArticleId(article.getId()));
+                    article.setImageList(factory.getImageProxy().findByArticleId(article.getId()));
                     article.setSupprimable(true);
                     if (article.getImageList().size() == 0 ){
                         Image image = new Image();
@@ -98,7 +89,7 @@ public class GestionSiteAction extends ActionSupport {
                     }
                 }
             }
-            categorieList = microserviceCategorie.findAll();
+            categorieList = factory.getCategorieProxy().findAll();
             vResult = ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Une erreur est survenu...");
@@ -107,23 +98,29 @@ public class GestionSiteAction extends ActionSupport {
         return vResult;
     }
 
+    /**
+     * Méthode pour la gestion d'une catégorie
+     * Affiche une liste de catégories disponibles ou indisponible
+     * En focntion du choix de l'administrateur
+     * @return
+     */
     public String gestionCategorie(){
         String vResult;
         try {
             if (radio != null){
                 if (radio.equals("Disponible")){
-                    categories = microserviceCategorie.findByDispo(true);
+                    categories = factory.getCategorieProxy().findByDispo(true);
                 }else if (radio.equals("Indisponible")){
-                    categories = microserviceCategorie.findByDispo(false);
+                    categories = factory.getCategorieProxy().findByDispo(false);
                 }
             }
             if (categories != null){
                 for (Categorie cat:categories){
-                    cat.setCountArticle(microserviceArticleProxy
+                    cat.setCountArticle(factory.getArticleProxy()
                             .getArticleByCategorieId(cat.getId()).size());
                 }
             }
-            categorieList = microserviceCategorie.findAll();
+            categorieList = factory.getCategorieProxy().findAll();
             vResult = ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Une erreur est survenu...");
