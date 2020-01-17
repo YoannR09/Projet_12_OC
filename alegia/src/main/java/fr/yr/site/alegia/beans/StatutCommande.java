@@ -3,7 +3,7 @@ package fr.yr.site.alegia.beans;
 public class StatutCommande {
 
     private Integer niveau;
-    private String libelle;
+    private String labelle;
 
     public Integer getNiveau() {
         return niveau;
@@ -13,11 +13,11 @@ public class StatutCommande {
         this.niveau = niveau;
     }
 
-    public String getLibelle() {
-        return libelle;
+    public String getLabelle() {
+        return labelle;
     }
 
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
+    public void setLabelle(String labelle) {
+        this.labelle = labelle;
     }
 }

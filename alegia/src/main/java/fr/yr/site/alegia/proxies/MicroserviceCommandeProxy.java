@@ -1,14 +1,8 @@
 package fr.yr.site.alegia.proxies;
 
 import fr.yr.site.alegia.beans.Commande;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -38,6 +32,17 @@ public interface MicroserviceCommandeProxy {
     @GetMapping(value = "/Commande")
     List<Commande> getListCommande();
 
+    /**
+     * Méthode pour récupérer une commande via l'id d'un compte.
+     * @param compteId
+     * @return
+     */
+    @GetMapping(value = "/Commande/Compte/{compteId}")
+    List<Commande> getCommandeByCompteId(@PathVariable("compteId") int compteId);
+
     @PostMapping(value = "/Commande")
     void add(@RequestBody Commande commande);
+
+    @PutMapping(value = "/Commande")
+    void update(@RequestBody Commande commande);
 }

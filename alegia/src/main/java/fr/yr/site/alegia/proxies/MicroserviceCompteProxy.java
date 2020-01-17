@@ -21,6 +21,7 @@ public interface MicroserviceCompteProxy {
     @GetMapping(value = "/Compte")
     List<Compte> findAll();
 
+
     /**
      * Méthode pour ajouter un compte
      * @param compte

@@ -74,7 +74,7 @@ public class ContenuController {
     @DeleteMapping(value = "/Contenu/{id}")
     public void delete(@PathVariable int id){
         try {
-
+            dao.deleteById(id);
         }catch (Exception e){
 
         }

@@ -1,0 +1,6 @@
+INSERT INTO statut (niveau,labelle) VALUES (1,'EN ATTENTE DE VALIDATION'), (2,'EN COURS DE PREPARATION'),(3,'COMMANDE EXPEDIEE'),(4,'COMMANDE LIVREE'),(5,'COMMANDE ANNULEE');
+
+INSERT INTO niveau_acces (niveau,labelle) VALUES (1,'Client'),(2,'Administrateur');
+
+INSERT INTO taille (taille) VALUES ('Unique'),('XS'),('S'),('M'),('L'),('XL'),('XXL'),('XXXL');
+

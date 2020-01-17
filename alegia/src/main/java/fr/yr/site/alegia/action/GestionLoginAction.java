@@ -109,7 +109,11 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
                     // Création de l'adresse
                     Adresse adresse = new Adresse();
                     adresse.setCodePostal(codePostal);
-                    adresse.setInfo(info);
+                    if (info.equals("") || info == null){
+                        adresse.setInfo("Aucune information");
+                    }else {
+                        adresse.setInfo(info);
+                    }
                     adresse.setNumero(numero);
                     adresse.setRue(rue);
                     adresse.setVille(ville);

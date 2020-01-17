@@ -1,15 +1,53 @@
 package fr.yr.site.alegia.beans;
 
+import java.util.Date;
 import java.util.List;
 
 public class Commande {
 
     private Integer id;
+    private Date date;
+    private String statut;
     private List<LigneDeCommande> ligneDeCommandeList;
     private String numero;
     private StatutCommande statutCommande;
     private Integer compteId;
     private Integer statutId;
+    private Integer adresseId;
+    private String  prixTotal;
+    private Integer countArticle;
+
+    public Integer getCountArticle() {
+        return countArticle;
+    }
+
+    public void setCountArticle(Integer countArticle) {
+        this.countArticle = countArticle;
+    }
+
+    public String getPrixTotal() {
+        return prixTotal;
+    }
+
+    public void setPrixTotal(String prixTotal) {
+        this.prixTotal = prixTotal;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
+    }
+
+    public Integer getAdresseId() {
+        return adresseId;
+    }
+
+    public void setAdresseId(Integer adresseId) {
+        this.adresseId = adresseId;
+    }
 
     public Integer getCompteId() {
         return compteId;
@@ -57,5 +95,13 @@ public class Commande {
 
     public void setStatutId(Integer statutId) {
         this.statutId = statutId;
+    }
+
+    public String getStatut() {
+        return statut;
+    }
+
+    public void setStatut(String statut) {
+        this.statut = statut;
     }
 }

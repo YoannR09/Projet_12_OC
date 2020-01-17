@@ -48,6 +48,21 @@ public class CommandeController {
         }
     }
 
+    /**
+     * Méthode pour récupérer une commande via l'id d'un compte.
+     * @param compteId
+     * @return
+     */
+    @GetMapping(value = "/Commande/Compte/{compteId}")
+    public List<Commande> getCommandeByCompteId(@PathVariable int compteId){
+        try {
+            return commandeDao.findByCompteId(compteId);
+        }catch (Exception e){
+            logger.error(e);
+            return null;
+        }
+    }
+
     @GetMapping(value = "/Commande")
     public List<Commande> getListCommande(){
         try {
@@ -60,6 +75,15 @@ public class CommandeController {
 
     @PostMapping(value = "/Commande")
     public void add(@RequestBody Commande commande){
+        try {
+            commandeDao.save(commande);
+        }catch (Exception e){
+            logger.error(e);
+        }
+    }
+
+    @PutMapping(value = "/Commande")
+    public void update(@RequestBody Commande commande){
         try {
             commandeDao.save(commande);
         }catch (Exception e){

@@ -5,6 +5,8 @@ import fr.yr.site.model.LigneDeCommande;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class LigneDeCommandeController {
 
@@ -16,6 +18,24 @@ public class LigneDeCommandeController {
     public LigneDeCommande findById(@PathVariable int id){
         try {
              return dao.findById(id);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    @GetMapping(value = "/Ligne")
+    public List<LigneDeCommande> findAll(){
+        try {
+            return dao.findAll();
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    @GetMapping(value = "/Ligne/Commande/{commandeId}")
+    public List<LigneDeCommande> findByCommandeId(@PathVariable int commandeId){
+        try {
+            return dao.findByCommandeId(commandeId);
         }catch (Exception e){
             return null;
         }

@@ -15,7 +15,16 @@ public class Commande {
     private Integer id;
     private String numero;
     private Integer statutId;
+    private Integer adresseId;
     private Integer compteId;
+
+    public Integer getAdresseId() {
+        return adresseId;
+    }
+
+    public void setAdresseId(Integer adresseId) {
+        this.adresseId = adresseId;
+    }
 
     public Integer getId() {
         return id;

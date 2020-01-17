@@ -39,7 +39,6 @@
             border-left: orange solid 1px;
             border-radius: 4px;
             margin: 10px;
-            background: rgba(0, 0, 0, 0.5);
         }
         #cadreBtn
         {
@@ -49,11 +48,6 @@
         .lab
         {
             font-size: 0.9em;
-            color: white;
-        }
-        span
-        {
-            color: white;
         }
         .textTop
         {

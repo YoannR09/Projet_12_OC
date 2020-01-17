@@ -3,9 +3,13 @@ package fr.yr.site.dao;
 import fr.yr.site.model.LigneDeCommande;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface LigneDeCommandeDao extends JpaRepository<LigneDeCommandeDao,Integer> {
+import java.util.List;
+
+public interface LigneDeCommandeDao extends JpaRepository<LigneDeCommande,Integer> {
 
     LigneDeCommande findById(int id);
 
-    void save(LigneDeCommande ldc);
+    List<LigneDeCommande> findAll();
+
+    List<LigneDeCommande> findByCommandeId(int commandeId);
 }
