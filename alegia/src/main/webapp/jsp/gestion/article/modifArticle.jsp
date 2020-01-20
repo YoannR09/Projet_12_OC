@@ -1,8 +1,9 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
     <%@ include file="../../_include/head.jsp"%>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <style type="text/css">
         #page {
             display: flex;
@@ -65,7 +66,7 @@
         <div id="cadre">
             <label class="form-check-label" id="label"> Modifier l'article </label>
             <em id="message" ><s:actionmessage/></em>
-            <div class="col-12 container" id="cadreLog">
+            <div class="col-12 container shadow p-3 mb-5 bg-white rounded" id="cadreLog">
                 <div class="col-12">
                     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style=" margin-bottom: 5px">
                         <div class="carousel-inner" style="height: 100%">
@@ -137,10 +138,11 @@
                 </button>
             </div>
             <div class="modal-body" style="text-align: center;">
-                <s:form action="addImageArticle" id="formulaire" method="POST" enctype="multipart/form-data">
-                    <s:textfield value="Description de l'image" style="width: 100%" name="descriptionImage"/>
-                    <s:file id="file" name="myFile" style="margin-top:10px"/>
-                    <s:submit value="Confirmer" id="btn" class="btn btn-dark" style="margin-top:10px"/>
+                <s:form action="doAddImage" method="post" enctype="multipart/form-data">
+                    <input value="Description de l'image" style="width: 100%" name="descriptionImage"/>
+                    <input id="idArticle" name="articleId" value="<s:property value="article.id"/>">
+                    <s:file name="upload" label="File"/>
+                    <s:submit value="Confirmer" />
                 </s:form>
             </div>
         </div>
@@ -179,4 +181,10 @@
     <%@ include file="../../_include/footer.jsp"%>
 </footer>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $(function() {
+        $('#idArticle').hide();
+    });
+</script>
 </html>

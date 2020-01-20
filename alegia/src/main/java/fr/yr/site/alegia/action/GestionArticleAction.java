@@ -41,8 +41,6 @@ public class GestionArticleAction extends ActionSupport {
     private         String              radio;
     private         List<Taille>        tailles;
     private         List<String>        radioList = Arrays.asList("Disponible","Indisponible");
-    private         String              destPath = "C:/Users/El-ra/Documents" +
-            "/Projet_12_OC/alegia/src/main/webapp/image/";
 
     /**
      * Méthode pour afficher kes détails d'un article sélectionné
@@ -199,17 +197,6 @@ public class GestionArticleAction extends ActionSupport {
         for (Article a : vList) {
             gm.completeArticle(factory,a);
         }
-    }
-
-
-    public void ajoutImage(File file,Integer newArticleId) throws IOException {
-        File destFile = new File(destPath+ "/", file.getName());
-        FileUtils.copyFile(file, destFile);
-        Image image = new Image();
-        image.setUrl(file.getName());
-        image.setArticleId(newArticleId);
-        image.setLabelle("Image de l'article à l'id suivant : "+newArticleId);
-        factory.getImageProxy().add(image);
     }
 
     /**

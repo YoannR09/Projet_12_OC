@@ -104,4 +104,17 @@ public class Commande {
     public void setStatut(String statut) {
         this.statut = statut;
     }
+
+    public String generateStatut(){
+        if(this.statutId == 1){
+            this.statut = "EN COURS DE VALIDATION";
+        }else if (this.statutId == 2){
+            this.statut = "EN COURS DE PREPARATION";
+        }else if (this.statutId == 3){
+            this.statut = "EXPEDIEE";
+        }else if (this.statutId == 4){
+            this.statut = "ACHEVEE";
+        }
+        return this.statut;
+    }
 }

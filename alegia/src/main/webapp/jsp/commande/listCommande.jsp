@@ -19,7 +19,7 @@
         th
         {
             text-align: center;
-            font-size: 0.8em;
+            font-size: 0.7em;
         }
         #bottom
         {
@@ -37,7 +37,7 @@
         #cadreArticle
         {
             width: 100%;
-            border-left: orange solid 1px;
+            background-color: whitesmoke;
             border-radius: 4px;
             margin: 10px;
         }
@@ -60,6 +60,12 @@
             font-size: 1.3em;
             margin: 10px;
         }
+        .borderProgress
+        {
+            border-right: 1px solid lightgray;
+
+        }
+
 
     </style>
 </head>
@@ -72,22 +78,22 @@
         <div class="col-12" style="display: flex;justify-content: space-around">
             <div style="width: 800px">
                 <s:iterator value="commandeList">
-                    <div class="col-12 container" id="cadreArticle">
+                    <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreArticle">
                         <section class="row">
                             <div class="col" style="display:flex;justify-content: space-around;padding: 5px">
-                                <div>
+                                <div style="text-align: center">
                                     <em class="lab">COMMANDE EFFECTUEE LE</em><br/>
                                     <span style="font-weight: bold"><s:property value="date"/></span>
                                 </div>
-                                <div>
+                                <div style="text-align: center">
                                     <em class="lab">N° DE COMMANDE</em><br/>
                                     <span style="font-weight: bold"><s:property value="numero"/></span>
                                 </div>
-                                <div>
+                                <div style="text-align: center">
                                     <em class="lab">TOTAL</em><br/>
                                     <span style="font-weight: bold"><s:property value="prixTotal"/>  €</span>
                                 </div>
-                                <div>
+                                <div style="text-align: center">
                                     <em class="lab">STATUT</em><br/>
                                     <span style="font-weight: bold"><s:property value="statut"/></span>
                                 </div>
@@ -96,14 +102,14 @@
                                     id="<s:property value="id"/>"><i class="fas fa-eye"></i></button>
                         </section>
                         <div class="divModal" style="padding: 10px;border-top: 1px solid darkgray" id="commande<s:property value="id"/>">
-                            <table class="table">
-                                <thead class="thead-dark">
+                            <table class="table table-bordered table-hover">
+                                <thead class="thead">
                                 <tr style="max-height: 10px">
-                                    <th scope="col">article</th>
-                                    <th scope="col">prix</th>
-                                    <th scope="col">montant</th>
-                                    <th scope="col">quantité</th>
-                                    <th scope="col">taille</th>
+                                    <th scope="col">ARTICLE</th>
+                                    <th scope="col">PRIX</th>
+                                    <th scope="col">MONTANT</th>
+                                    <th scope="col">QUANTITE</th>
+                                    <th scope="col">TAILLE</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -118,6 +124,46 @@
                                 </s:iterator>
                                 </tbody>
                             </table>
+                            <em style="font-weight: bold;font-size: 0.7em">L'avancée de votre commande </em>
+                            <s:if test="statut.equals('EN ATTENTE DE VALIDATION')">
+                                <div class="progress border">
+                                    <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" style="width:25%">
+                                        <em style="font-size: 0.6em"><s:property value="statut"/></em>
+                                    </div>
+                                    <div style="width:25%;font-size: 0.5em;font-weight: bold;text-align: center">
+                                        EN COURS DE PREPARATION
+                                    </div>
+                                    <div style="width:25%;font-size: 0.5em;font-weight: bold;text-align: center">
+                                        EXPEDIEE
+                                    </div>
+                                    <div style="width:25%;font-size: 0.5em;font-weight: bold;text-align: center">
+                                        LIVREE
+                                    </div>
+                                </div>
+                            </s:if>
+                            <s:elseif test="statut.equals('EN COURS DE PREPARATION')">
+                                <div class="progress border">
+                                    <div class="progress-bar progress-bar-striped borderProgress progress-bar-animated bg-info" style="width:50%">
+                                        <em style="font-size: 0.6em"><s:property value="statut"/></em>
+                                    </div>
+                                    <div class="progress-bar borderProgress bg-light" style="width:25%">
+                                        <em style="font-size: 0.6em;color: black">EXPEDIEE</em>
+                                    </div>
+                                    <div class="progress-bar bg-light" style="width:25%">
+                                        <em style="font-size: 0.6em;color: black">LIVREE</em>
+                                    </div>
+                                </div>
+                            </s:elseif>
+                            <s:elseif test="statut.equals('EXPEDIEE')">
+                                <div class="progress border">
+                                    <div class="progress-bar progress-bar-striped borderProgress progress-bar-animated bg-info" style="width:75%">
+                                        <em style="font-size: 0.6em"><s:property value="statut"/></em>
+                                    </div>
+                                    <div class="progress-bar bg-light" style="width:25%">
+                                        <em style="font-size: 0.6em;color: black">LIVREE</em>
+                                    </div>
+                                </div>
+                            </s:elseif>
                         </div>
                     </div>
                 </s:iterator>

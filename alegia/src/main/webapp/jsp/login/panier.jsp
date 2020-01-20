@@ -36,9 +36,9 @@
         #cadreArticle
         {
             width: 100%;
-            border-left: orange solid 1px;
             border-radius: 4px;
-            margin: 10px;
+            background-color: whitesmoke;
+            margin-bottom: 30px;
         }
         #cadreBtn
         {
@@ -47,12 +47,16 @@
         }
         .lab
         {
-            font-size: 0.9em;
+            font-size: 0.7em;
         }
         .textTop
         {
             font-size: 1.3em;
             margin: 10px;
+        }
+        .spanDonne
+        {
+            font-size: 0.8em;
         }
 
     </style>
@@ -60,16 +64,16 @@
 <body>
 <%@ include file="../_include/header.jsp"%>
 <div id="blocCenter" style="display: flex;justify-content: center;">
-    <div class="col-9">
+    <div class="col-7">
         <s:if test="panierVide"><label class="textTop">Votre panier est vide pour le moment.</label></s:if>
         <s:else><label class="textTop">Mon panier</label></s:else>
         <div class="col-12" style="display: flex;justify-content: space-between">
-            <div style="width: 500px">
+            <div style="width: 350px">
             <s:iterator value="contenuList">
-                <div class="col-12 container" id="cadreArticle">
+                <div class="col-12 container border shadow bg-white rounded" id="cadreArticle">
                     <section class="row">
                         <div style="margin: 5px;text-align: center">
-                            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style=" margin-bottom: 5px">
+                            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
                                 <div class="carousel-inner" style="height: 100%">
                                     <s:iterator value="article.imageList" status="imageList">
                                         <s:if test="%{#imageList.count == 1}">
@@ -93,24 +97,27 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col" style="margin-left: 5px;text-align: left">
-                                <s:a action="doListArticleByCategorieId" style="font-size:0.9em;color:white;margin:10px">
-                                <s:property value="article.nom"/></s:a>
+                        <div class="col" style="padding: 7px;">
+                                <s:a action="doListArticleByCategorieId"
+                                     style="font-size:1em;font-weight: bold;margin-top:10px;">
+                                    <s:param name="articleId" value="article.id"/>
+                                <s:property value="article.nom"/></s:a><br/>
                             <em class="lab">taille :  </em>
-                                <span style="font-weight: bold"><s:property value="taille.taille"/></span><br/>
+                                <span class="spanDonne" style="font-weight: bold"><s:property value="taille.taille"/></span><br/>
                             <em class="lab">prix :  </em>
-                                <span style="font-weight: bold"><s:property value="article.prixTtc"/> €</span><br/>
+                                <span class="spanDonne" style="font-weight: bold"><s:property value="article.prixTtc"/> €</span><br/>
                             <em class="lab">quantité :  </em>
-                                <span style="font-weight: bold"><s:property value="quantite"/></span><br/>
+                                <span class="spanDonne" style="font-weight: bold"><s:property value="quantite"/></span><br/>
                             <span style="position: absolute;right: 10px;bottom: 10px"><s:a action="doListArticleByCategorieId" style="font-size:0.7em;">Supprimer</s:a></span>
                         </div>
                     </section>
                 </div>
             </s:iterator>
             </div>
-            <div style="width: 200px;text-align: center">
-                <p>Prix total : <s:property value="totalPrix"/> €</p>
-                <p>Nombre d'article(s) : <s:property value="countArticle"/></p>
+            <div class="border shadow p-3 mb-5 bg-white rounded" style="width: 200px;height:150px;
+            padding:15px;text-align: center;background-color: whitesmoke">
+                <p><em class="lab">Prix total : </em><s:property value="totalPrix"/> €</p>
+                <p><em class="lab">Nombre d'article(s) : </em><s:property value="countArticle"/></p>
                 <s:a class="btn btn-dark" action="doCommande" style="font-size:0.8em;">Passer la commande</s:a>
             </div>
         </div>

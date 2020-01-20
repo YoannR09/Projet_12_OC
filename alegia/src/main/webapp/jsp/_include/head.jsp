@@ -41,15 +41,12 @@
     body {
         display : table;
         width: 100%;
-        background-image:url(/image/fondTest.png);
+        /* background-image:url(/image/fondTest.png); */
+        background-color: white;
     }
     footer {
         display : table-row;
         height: 100px;
-    }
-    em
-    {
-        color : darkgray;
     }
     label
     {

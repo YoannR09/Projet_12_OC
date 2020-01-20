@@ -57,7 +57,7 @@
         </div>
         <section class="row" style="margin: auto;justify-content: space-around">
             <s:iterator value="articleList">
-                <li class="nav-item border" style="text-align: center;margin: 15px;padding:10px;width:200px">
+                <li class="nav-item border shadow p-3 mb-5 bg-white rounded" style="text-align: center;margin: 15px;padding:10px;width:200px">
                     <p style="font-weight: bold;font-size: 1.1em;"><s:property value="nom"/></p>
                     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style=" margin-bottom: 5px">
                         <div class="carousel-inner" style="height: 100%">

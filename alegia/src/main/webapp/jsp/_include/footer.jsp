@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<div style="width: 100%;margin-top: 150px;background: url(../../image/black.png);
+<div style="box-shadow: 0px -5px 50px -3px rgba(0,0,0,0.49);margin-top: 150px;background: url(../../image/black.png);
     display: flex;justify-content: space-around;">
     <div style="width: 33%;text-align: center;margin: 25px">
     <a href="https://www.facebook.com/Alegia-1428352727440625/?epa=SEARCH_BOX" class="text-warning" style="margin: 20px;font-size: 1.2em">

@@ -26,7 +26,7 @@ public interface MicroserviceCommandeProxy {
      * @param numero
      * @return
      */
-    @GetMapping(value = "/Commande/{numero}")
+    @GetMapping(value = "/Commande/Numero/{numero}")
     Commande getCommandeByNumero(@PathVariable("numero") String numero);
 
     @GetMapping(value = "/Commande")
@@ -39,6 +39,15 @@ public interface MicroserviceCommandeProxy {
      */
     @GetMapping(value = "/Commande/Compte/{compteId}")
     List<Commande> getCommandeByCompteId(@PathVariable("compteId") int compteId);
+
+
+    /**
+     * Méthode pour récupérer une liste de commandes via l'id d'un statut
+     * @param statutId
+     * @return
+     */
+    @GetMapping(value = "/Commande/Statut/{statutId}")
+    List<Commande> getCOmmandeByStatutId(@PathVariable int statutId);
 
     @PostMapping(value = "/Commande")
     void add(@RequestBody Commande commande);

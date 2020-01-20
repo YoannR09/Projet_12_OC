@@ -10,6 +10,7 @@
     <constant name="struts.multipart.maxSize" value="20000000" />
 
     <constant name="struts.multipart.saveDir" value="C:/Users/El-ra/Documents/Projet_12_OC/alegia/src/main/webapp/image/" />
+    <constant name="struts.custom.i18n.resources" value="global" />
 
     <package name="base" abstract="true" extends="struts-default">
 
@@ -110,6 +111,24 @@
             <result name="error">jsp/error/error.jsp</result>
         </action>
         <!-- !!!!!!!!!!!!!!!!!!!!! A deplacer !!!!!!!!!!! -->
+
+        <action name="doAddImage" class="fr.yr.site.alegia.action.GestionSiteAction" method="doAjoutImage">
+            <interceptor-ref name="fileUpload"/>
+            <interceptor-ref name="basicStack"/>
+            <result name="success">/jsp/gestion/article/modifArticle.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
+
+        <action name="doListCommande" class="fr.yr.site.alegia.action.GestionCommandeAdminAction" method="doListCommandeByStatut">
+            <result name="success">/jsp/gestion/commande/listCommande.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doDetailCommande" class="fr.yr.site.alegia.action.GestionCommandeAdminAction" method="doDetailCommande">
+            <result name="success">/jsp/gestion/commande/detailCommande.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
 
         <action name="doLogin" class="fr.yr.site.alegia.action.GestionLoginAction" method="doLogin">
             <result name="success">/jsp/index.jsp</result>

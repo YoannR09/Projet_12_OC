@@ -10,6 +10,10 @@
             justify-content: center;
             margin-top: 75px;
         }
+        em
+        {
+            color : darkgray;
+        }
 
     </style>
 </head>

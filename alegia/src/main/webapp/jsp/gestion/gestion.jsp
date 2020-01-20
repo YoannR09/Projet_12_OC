@@ -45,9 +45,17 @@
         </div>
         <br/>
         <h5 class="titre"> Commande </h5>
-        <div style="display: flex;justify-content: space-around">
-            <s:a action="formInscription" class="btn btn-dark btnType">Commandes en cours</s:a>
-            <s:a action="formInscription" class="btn btn-dark btnType">Commandes achevées</s:a>
+        <div style="text-align: center">
+            <s:a action="doListCommande" class="btn btn-dark btnType">En préparation
+                <s:param name="statut" value="2"/>
+            </s:a>
+            <s:a action="doListCommande" class="btn btn-dark btnType">En cours de livraison
+                <s:param name="statut" value="3"/>
+            </s:a>
+            <s:a action="doListCommande" class="btn btn-dark btnType">Achevées
+                <s:param name="statut" value="4"/>
+            </s:a>
+            <s:a action="formInscription" class="btn btn-dark btnType">Rechercher</s:a>
         </div>
         <br/>
     </div>

@@ -6,8 +6,11 @@ import fr.yr.site.alegia.beans.Categorie;
 import fr.yr.site.alegia.beans.Image;
 import fr.yr.site.alegia.beans.Taille;
 import fr.yr.site.alegia.configuration.Factory;
+import fr.yr.site.alegia.configuration.GenerateMethod;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
@@ -17,15 +20,24 @@ public class GestionSiteAction extends ActionSupport {
     @Autowired
     Factory factory;
 
+    private GenerateMethod gm = new GenerateMethod();
+
     private     List<Categorie>         categorieList;
     private     List<Categorie>         categories;
     private     List<Article>           articleList;
     private     List<Taille>            tailleList;
+    private     Article                 article;
     private     Integer                 categorieId;
     private     Integer                 articleId;
     private     String                  categorieSelect;
+    private     File file;
+    private     String contentType;
+    private     String filename;
+    private     String                  descriptionImage;
     private     String                  radio;
     private     List<String>            radioList = Arrays.asList("Disponible","Indisponible");
+    private     String                  filePath = "C:/Users/El-ra/Documents" +
+            "/Projet_12_OC/alegia/src/main/webapp/image/";
 
 
     /**
@@ -79,14 +91,7 @@ public class GestionSiteAction extends ActionSupport {
                     articleList = factory.getArticleProxy().findByCategorieIdAndDisponible(categorie.getId(),false);
                 }
                 for (Article article:articleList){
-                    article.setImageList(factory.getImageProxy().findByArticleId(article.getId()));
-                    article.setSupprimable(true);
-                    if (article.getImageList().size() == 0 ){
-                        Image image = new Image();
-                        new Image();
-                        image.setUrl("indisponible.jpg");
-                        article.getImageList().add(image);
-                    }
+                    gm.completeArticle(factory,article);
                 }
             }
             categorieList = factory.getCategorieProxy().findAll();
@@ -127,6 +132,27 @@ public class GestionSiteAction extends ActionSupport {
             vResult = ActionSupport.ERROR;
         }
         return vResult;
+    }
+
+    public String doAjoutImage() {
+        try {
+            System.out.println(articleId);
+            System.out.println(file);
+            System.out.println(filename);
+            File fileToCreate = new File(filePath,file.getName());
+            FileUtils.copyFile(file, fileToCreate);
+            Image image = new Image();
+            image.setUrl(file.getName());
+            image.setArticleId(articleId);
+            image.setLabelle("Image de l'article à l'id suivant : " + articleId);
+            factory.getImageProxy().add(image);
+            article = factory.getArticleProxy().getArticle(articleId);
+            gm.completeArticle(factory,article);
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return ActionSupport.ERROR;
+        }
     }
 
 
@@ -202,5 +228,45 @@ public class GestionSiteAction extends ActionSupport {
 
     public void setCategorieSelect(String categorieSelect) {
         this.categorieSelect = categorieSelect;
+    }
+
+    public Article getArticle() {
+        return article;
+    }
+
+    public void setArticle(Article article) {
+        this.article = article;
+    }
+
+    public String getDescriptionImage() {
+        return descriptionImage;
+    }
+
+    public void setDescriptionImage(String descriptionImage) {
+        this.descriptionImage = descriptionImage;
+    }
+
+    public File getFile() {
+        return file;
+    }
+
+    public void setFile(File file) {
+        this.file = file;
+    }
+
+    public String getContentType() {
+        return contentType;
+    }
+
+    public void setContentType(String contentType) {
+        this.contentType = contentType;
+    }
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public void setFilename(String filename) {
+        this.filename = filename;
     }
 }

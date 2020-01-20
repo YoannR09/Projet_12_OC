@@ -1,26 +1,15 @@
 package fr.yr.site.alegia.action;
 
 import com.opensymphony.xwork2.ActionSupport;
-import com.sun.xml.internal.ws.wsdl.writer.document.Import;
 import fr.yr.site.alegia.beans.Adresse;
 import fr.yr.site.alegia.beans.Categorie;
 import fr.yr.site.alegia.beans.Compte;
 import fr.yr.site.alegia.beans.Panier;
 import fr.yr.site.alegia.configuration.EncryptionUtil;
 import fr.yr.site.alegia.configuration.Factory;
-import fr.yr.site.alegia.proxies.MicroserviceAdresseProxy;
-import fr.yr.site.alegia.proxies.MicroserviceCategorie;
-import fr.yr.site.alegia.proxies.MicroserviceCompteProxy;
-import fr.yr.site.alegia.proxies.MicroservicePanierProxy;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.security.PrivateKey;
-import java.security.PublicKey;
 import java.util.List;
 import java.util.Map;
 

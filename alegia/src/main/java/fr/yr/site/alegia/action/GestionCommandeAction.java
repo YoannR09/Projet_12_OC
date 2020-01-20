@@ -4,6 +4,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import fr.yr.site.alegia.beans.*;
 import fr.yr.site.alegia.configuration.Factory;
+import fr.yr.site.alegia.configuration.GenerateMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
@@ -15,6 +16,7 @@ public class GestionCommandeAction extends ActionSupport {
     @Autowired
     Factory factory;
 
+    private GenerateMethod gm = new GenerateMethod();
 
     private List<Contenu> contenuList;
     private List<Categorie> categorieList;
@@ -25,7 +27,6 @@ public class GestionCommandeAction extends ActionSupport {
     private String info;
     private String ville;
     private String numeroCommande;
-
 
     public String doConfirmAdresse(){
 
@@ -105,7 +106,7 @@ public class GestionCommandeAction extends ActionSupport {
             Compte compte = factory.getCompteProxy().findByEmail((String) ActionContext.getContext().getSession().get("email"));
             commandeList = factory.getCommandeProxy().getCommandeByCompteId(compte.getId());
             for (Commande c:commandeList){
-                c.setStatut("EN COURS DE PREPARATION");
+                c.setStatut(c.generateStatut());
                 c.setDate(new Date()); // A CHANGER !!!!!!!!
                 float total = 0;
                 int count = 0;

@@ -17,14 +17,7 @@
             justify-content: center;
             margin-top: 75px;
         }
-        .testimonial-group > .row {
-            overflow-x: auto;
-            white-space: nowrap;
-        }
-        .testimonial-group > .row  {
-            display: inline-block;
-            float: none;
-        }
+
         body
         {
             margin:0;
@@ -44,7 +37,7 @@
             <div style="width: 100%;text-align: center">
             <label for="actuArticle">Les nouveaux articles</label>
             </div>
-            <section class="row col-8 testimonial-group" id="actuArticle" style="margin: auto;justify-content: space-around">
+            <section class="row col-8 border shadow p-3 mb-5 bg-white rounded" id="actuArticle" style="margin: auto;justify-content: space-around">
                 <s:iterator value="actuArticleList">
                     <s:set var="articleId" value="id"/>
                     <li class="nav-item" style="text-align: center;width: 100px;margin :15px">

@@ -18,8 +18,6 @@
             color: black;
             margin-top: 100px;
             margin-bottom: 20px;
-            border-radius: 10px;
-            border: 1px lightgrey solid;
             width: 350px;
         }
         #bottom
@@ -65,7 +63,7 @@
         <div id="cadreLogin">
             <label class="form-check-label" id="label"> Ajouter un article </label>
             <em id="message" ><s:actionmessage/></em>
-            <div class="col-12 container" id="cadreLog">
+            <div class="col-12 container border shadow bg-white" id="cadreLog">
                 <s:form action="doAddArticle" enctype="multipart/form-data" method="POST" namespace="/">
                     <div class="form-group" style="margin: 20px;">
                         <label for="inputNom" style="color: black;">Nom de l'article</label>
@@ -96,7 +94,7 @@
                                     listLabelKey="taille" style="width:51%" listKey="taille"/>
 
                     <div style="display: flex;justify-content:space-around;padding-top: 25px">
-                        <button type="submit" style="font-size: 0.7em" class="btn btn-dark">Confirmer</button>
+                        <s:submit value="Confimer" type="submit" style="font-size: 0.7em" class="btn btn-dark"></s:submit>
                     </div>
                 </s:form>
             </div>

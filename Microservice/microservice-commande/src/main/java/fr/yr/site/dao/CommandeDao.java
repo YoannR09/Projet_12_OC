@@ -13,5 +13,7 @@ public interface CommandeDao extends JpaRepository<Commande, Integer> {
 
     List<Commande> findByCompteId(int compteId);
 
+    List<Commande> findByStatutId(int statutId);
+
     List<Commande> findAll();
 }

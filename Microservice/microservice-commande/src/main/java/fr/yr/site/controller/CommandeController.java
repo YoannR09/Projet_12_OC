@@ -32,13 +32,12 @@ public class CommandeController {
         }
     }
 
-
     /**
      * Méthode pour récupérer une commande via un numéro.
      * @param numero
      * @return
      */
-    @GetMapping(value = "/Commande/{numero}")
+    @GetMapping(value = "/Commande/Numero/{numero}")
     public Commande getCommandeByNumero(@PathVariable String numero){
         try {
             return commandeDao.findByNumero(numero);
@@ -57,6 +56,21 @@ public class CommandeController {
     public List<Commande> getCommandeByCompteId(@PathVariable int compteId){
         try {
             return commandeDao.findByCompteId(compteId);
+        }catch (Exception e){
+            logger.error(e);
+            return null;
+        }
+    }
+
+    /**
+     * Méthode pour récupérer une liste de commandes via l'id d'un statut
+     * @param statutId
+     * @return
+     */
+    @GetMapping(value = "/Commande/Statut/{statutId}")
+    public List<Commande> getCOmmandeByStatutId(@PathVariable int statutId){
+        try {
+            return commandeDao.findByStatutId(statutId);
         }catch (Exception e){
             logger.error(e);
             return null;

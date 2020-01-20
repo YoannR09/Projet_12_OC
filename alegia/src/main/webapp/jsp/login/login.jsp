@@ -13,16 +13,7 @@
             margin:0;
             padding:0;
         }
-        #cadreLogin
-        {
-            color: black;
-            margin-top: 100px;
-            margin-bottom: 20px;
-            border-radius: 10px;
-            border: 1px lightgrey solid;
-            width: 350px;
-            background: rgba(0, 0, 0, 0.5);
-        }
+
         #bottom
         {
             display: flex;
@@ -40,8 +31,6 @@
         #cadreLog
         {
             width: 100%;
-            padding: 10px ;
-            margin-bottom: 10px;
         }
         #message
         {
@@ -50,7 +39,7 @@
         label
         {
             font-size: 0.8em;
-            color:white;
+            color:black;
         }
     </style>
 </head>
@@ -60,10 +49,10 @@
 </header>
 <div id="page">
     <div id="bottom" >
-        <div id="cadreLogin">
+        <div id="cadreLogin" style="margin-top: 100px;width: 350px">
             <label class="form-check-label" id="label"> Connectez-vous </label>
             <em id="message" ><s:actionmessage/></em>
-            <div class="col-12 container" id="cadreLog">
+            <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreLog">
                 <s:form action="doLogin">
                     <div class="form-group" style="margin: 20px;">
                         <label for="inputEmail" >Adresse éléctronique</label>
