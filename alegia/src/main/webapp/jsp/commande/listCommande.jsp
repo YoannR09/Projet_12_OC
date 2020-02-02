@@ -81,22 +81,22 @@
                     <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreArticle">
                         <section class="row">
                             <div class="col" style="display:flex;justify-content: space-around;padding: 5px">
-                                <div style="text-align: center">
+                                <div>
                                     <em class="lab">COMMANDE EFFECTUEE LE</em><br/>
                                     <span style="font-weight: bold"><s:property value="date"/></span>
                                 </div>
-                                <div style="text-align: center">
+                                <div>
                                     <em class="lab">N° DE COMMANDE</em><br/>
                                     <span style="font-weight: bold"><s:property value="numero"/></span>
                                 </div>
-                                <div style="text-align: center">
+                                <div>
                                     <em class="lab">TOTAL</em><br/>
                                     <span style="font-weight: bold"><s:property value="prixTotal"/>  €</span>
                                 </div>
-                                <div style="text-align: center">
+                                <di>
                                     <em class="lab">STATUT</em><br/>
                                     <span style="font-weight: bold"><s:property value="statut"/></span>
-                                </div>
+                                </di>
                             </div>
                             <button class="btn btn-small btModal"
                                     id="<s:property value="id"/>"><i class="fas fa-eye"></i></button>
@@ -161,6 +161,13 @@
                                     </div>
                                     <div class="progress-bar bg-light" style="width:25%">
                                         <em style="font-size: 0.6em;color: black">LIVREE</em>
+                                    </div>
+                                </div>
+                            </s:elseif>
+                            <s:elseif test="statut.equals('ACHEVEE')">
+                                <div class="progress border">
+                                    <div class="progress-bar progress-bar-striped borderProgress progress-bar-animated bg-info" style="width:100%">
+                                        <em style="font-size: 0.6em"><s:property value="statut"/></em>
                                     </div>
                                 </div>
                             </s:elseif>

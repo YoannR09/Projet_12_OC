@@ -68,7 +68,7 @@
 <div id="blocCenter" style="display: flex;justify-content: center;">
     <div class="col-9">
         <s:if test="panierVide"><label class="textTop">Vous n'avez effectué aucune commande.</label></s:if>
-        <s:else><label class="textTop">Mes commandes</label></s:else>
+        <s:else><label class="textTop">Liste des commande "<em style="font-size: 0.8em"><s:property value="statutList" /></em> "</label></s:else>
         <div class="col-12 " style="display: flex;justify-content: space-around">
             <div style="width: 800px">
                 <table class="table table-bordered table-hover border shadow p-3 mb-5 bg-white rounded">

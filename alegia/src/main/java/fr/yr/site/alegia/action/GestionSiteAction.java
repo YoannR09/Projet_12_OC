@@ -136,9 +136,6 @@ public class GestionSiteAction extends ActionSupport {
 
     public String doAjoutImage() {
         try {
-            System.out.println(articleId);
-            System.out.println(file);
-            System.out.println(filename);
             File fileToCreate = new File(filePath,file.getName());
             FileUtils.copyFile(file, fileToCreate);
             Image image = new Image();

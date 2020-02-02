@@ -81,7 +81,6 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
                     vResult = ActionSupport.ERROR;
                 }
             }
-
         }
         return vResult;
     }
@@ -110,11 +109,11 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
 
                     // Création du compte
                     Compte compte = new Compte();
-                    compte.setEmail(email);
+                    compte.setEmail(email.toUpperCase());
                     compte.setMotDePasse(EncryptionUtil.encrypt(motDePasse, secretKey));
                     compte.setNiveauAccesId(1);
-                    compte.setNom(nom);
-                    compte.setPrenom(prenom);
+                    compte.setNom(nom.toUpperCase());
+                    compte.setPrenom(prenom.toUpperCase());
                     compte.setNumeroTelephone(numeroTelephone);
                     List<Adresse> listAdresse = factory.getAdresseProxy().findAll();
                     compte.setAdresseId(listAdresse.get(listAdresse.size() - 1).getId());

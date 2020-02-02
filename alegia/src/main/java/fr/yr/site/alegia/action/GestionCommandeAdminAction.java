@@ -3,6 +3,7 @@ package fr.yr.site.alegia.action;
 import com.opensymphony.xwork2.ActionSupport;
 import fr.yr.site.alegia.beans.Categorie;
 import fr.yr.site.alegia.beans.Commande;
+import fr.yr.site.alegia.beans.Compte;
 import fr.yr.site.alegia.beans.LigneDeCommande;
 import fr.yr.site.alegia.configuration.Factory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,9 +19,14 @@ public class GestionCommandeAdminAction extends ActionSupport {
 
     private List<Commande> commandeList;
     private List<Categorie> categorieList;
+    private String nom;
+    private String prenom;
+    private String email;
     private String statut;
+    private String statutList;
     private Integer commandeId;
     private String numero;
+    private Compte compte;
     private Commande commande;
 
 
@@ -28,31 +34,21 @@ public class GestionCommandeAdminAction extends ActionSupport {
         try {
             if (statut != null && commandeId != null){
                 commande = factory.getCommandeProxy().getCommande(commandeId);
-                if(statut.equals("1")){
-                    commande.setStatutId(1);
-                }else if(statut.equals("2")){
+                if(commande.getStatutId() == 1){
                     commande.setStatutId(2);
-                }else if(statut.equals("3")){
+                }else if(commande.getStatutId() == 2){
                     commande.setStatutId(3);
-                }else if(statut.equals("4")){
+                }else if(commande.getStatutId() == 3){
                     commande.setStatutId(4);
                 }
+                generateCommande(commande);
                 factory.getCommandeProxy().update(commande);
+                categorieList = factory.getCategorieProxy().findAll();
             }
             return ActionSupport.SUCCESS;
         }catch (Exception e){
+            e.printStackTrace();
             return ActionSupport.ERROR;
-        }
-    }
-
-    public String doRechercheCommande(){
-        try {
-            if (numero != null) {
-                commande = factory.getCommandeProxy().getCommandeByNumero(numero);
-            }
-            return ActionSupport.SUCCESS;
-        }catch (Exception e){
-            return ActionSupport.SUCCESS;
         }
     }
 
@@ -70,6 +66,18 @@ public class GestionCommandeAdminAction extends ActionSupport {
             for (Commande c:commandeList){
                 generateCommande(c);
             }
+            if (commandeList.size() != 0){
+                statutList = commandeList.get(0).getStatut();
+            }else {
+                if(Integer.parseInt(statut) == 2){
+                    statutList = "EN COURS DE PREPARATION";
+                }else if(Integer.parseInt(statut) == 3){
+                    statutList = "EN COURS DE LIVRAISON";
+                }else if(Integer.parseInt(statut) == 4){
+                    statutList = "ACHEVEES";
+                }
+            }
+            categorieList = factory.getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             e.printStackTrace();
@@ -84,6 +92,7 @@ public class GestionCommandeAdminAction extends ActionSupport {
                 commande = factory.getCommandeProxy().getCommande(commandeId);
                 generateCommande(commande);
             }
+            categorieList = factory.getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             return ActionSupport.SUCCESS;
@@ -93,6 +102,7 @@ public class GestionCommandeAdminAction extends ActionSupport {
     private void generateCommande(Commande c) {
         c.setStatut(c.generateStatut());
         c.setDate(new Date()); // A CHANGER !!!!!!!!
+        compte = factory.getCompteProxy().findById(c.getCompteId());
         int count = 0;
         float total = 0;
         c.setLigneDeCommandeList(factory.getLigneProxy().findByCommandeId(c.getId()));
@@ -102,6 +112,66 @@ public class GestionCommandeAdminAction extends ActionSupport {
         }
         c.setCountArticle(count);
         c.setPrixTotal(Float.toString(total));
+    }
+
+    public String doRechercheForm(){
+        try {
+            categorieList = factory.getCategorieProxy().findAll();
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return ActionSupport.ERROR;
+        }
+    }
+
+    /**
+     * Méthode pour afficher une liste de commande
+     * la recherche se fait en fonction des textes rentrés
+     * dans le formulaire de recherche.
+     * @return
+     */
+    public String doRechercheCommande(){
+        try {
+            nom = nom.toUpperCase();
+            prenom = prenom.toUpperCase();
+            email = email.toLowerCase();
+            if (numero != null) {
+                commandeList = factory.getCommandeProxy().findCommandeByNumeroContaining(numero);
+                statutList = "Numéro : "+numero;
+            }
+            if (!nom.equals("") || !prenom.equals("") || !email.equals("")){
+                if (!nom.equals("") && !prenom.equals("") && !email.equals("")){
+                   commandeList = factory.getCommandeProxy().findByNomPrenomEmail(nom,prenom,email);
+                    statutList = "Nom : "+nom+"/ Prénom : "+prenom+"/ Adresse éléctronique : "+email;
+                }else if (nom.equals("") && !prenom.equals("") && !email.equals("")){
+                    commandeList =  factory.getCommandeProxy().findByPrenomEmail(prenom,email);
+                    statutList = "Prénom : "+prenom+"/ Adresse éléctronique : "+email;
+                }else if (!nom.equals("") && !prenom.equals("") && email.equals("")){
+                    commandeList = factory.getCommandeProxy().findByNomPrenom(nom,prenom);
+                    statutList = "Nom : "+nom+"/ Prénom : "+prenom;
+                }else if (!nom.equals("") && prenom.equals("") && !email.equals("")){
+                    commandeList = factory.getCommandeProxy().findByNomEmail(nom,email);
+                    statutList = "Nom : "+nom+"/ Adresse éléctronique : "+email;
+                }else if (!nom.equals("") && prenom.equals("") && email.equals("")){
+                    commandeList = factory.getCommandeProxy().findByNom(nom);
+                    statutList = "Nom : "+nom;
+                }else if (nom.equals("") && !prenom.equals("") && email.equals("")){
+                    commandeList = factory.getCommandeProxy().findByPrenom(prenom);
+                    statutList = "Prénom : "+prenom;
+                }else if (nom.equals("") && prenom.equals("") && !email.equals("")){
+                    commandeList = factory.getCommandeProxy().findByEmail(email);
+                    statutList = "Adresse éléctronique : "+email;
+                }
+                for (Commande c:commandeList){
+                    generateCommande(c);
+                }
+                categorieList = factory.getCategorieProxy().findAll();
+            }
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return ActionSupport.ERROR;
+        }
     }
 
 
@@ -152,5 +222,45 @@ public class GestionCommandeAdminAction extends ActionSupport {
 
     public void setCategorieList(List<Categorie> categorieList) {
         this.categorieList = categorieList;
+    }
+
+    public String getStatutList() {
+        return statutList;
+    }
+
+    public void setStatutList(String statutList) {
+        this.statutList = statutList;
+    }
+
+    public Compte getCompte() {
+        return compte;
+    }
+
+    public void setCompte(Compte compte) {
+        this.compte = compte;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+
+    public void setPrenom(String prenom) {
+        this.prenom = prenom;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

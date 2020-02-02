@@ -53,6 +53,9 @@ public class CompteController {
     @PostMapping(value = "/Compte")
     public void add(@RequestBody Compte compte){
         try {
+            compte.setEmail(compte.getEmail().toLowerCase());
+            compte.setNom(compte.getNom().toUpperCase());
+            compte.setPrenom(compte.getPrenom().toUpperCase());
             dao.save(compte);
         }catch (Exception e){
             logger.error(e);

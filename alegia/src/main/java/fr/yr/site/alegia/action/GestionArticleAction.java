@@ -73,6 +73,7 @@ public class GestionArticleAction extends ActionSupport {
      * @return
      */
     public String addArticle(){
+        String vResult;
         try {
             if (nom != null && description != null && description != null
                     && prixHt != null && prixTtc != null && categorieSelect != null){
@@ -97,18 +98,21 @@ public class GestionArticleAction extends ActionSupport {
                         lt.setArticleId(newArticle.getId());
                         factory.getListTailleProxy().add(lt);
                     }
+                    vResult = ActionSupport.SUCCESS;
+                }else {
+                    this.addActionMessage(" Vous devez choisir des tailles ");
+                    vResult = ActionSupport.ERROR;
                 }
-                // vResult = ActionSupport.SUCCESS;
             }else {
-               // vResult = ActionSupport.ERROR;
+               vResult = ActionSupport.ERROR;
             }
         }catch (Exception e){
             e.printStackTrace();
-            // vResult = ActionSupport.ERROR;
+            vResult = ActionSupport.ERROR;
         }
         tailleList = factory.getTailleProxy().findAll();
         generateCategorieList();
-        return ActionSupport.SUCCESS;
+        return vResult;
     }
 
     /**
@@ -137,6 +141,7 @@ public class GestionArticleAction extends ActionSupport {
             Article article = factory.getArticleProxy().getArticle(articleId);
             article.setDisponible(false);
             updateArticle(article,true);
+            generateCategorieList();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             generateCategorieList();
@@ -191,6 +196,7 @@ public class GestionArticleAction extends ActionSupport {
         articleList = factory.getArticleProxy().findByCategorieIdAndDisponible(article.getCategorieId(),dispo);
         categorieList = factory.getCategorieProxy().findAll();
         completeArticleList(articleList);
+        generateCategorieList();
     }
 
     private void completeArticleList(List<Article> vList){

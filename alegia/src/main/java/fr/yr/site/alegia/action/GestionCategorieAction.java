@@ -5,6 +5,7 @@ import fr.yr.site.alegia.beans.Article;
 import fr.yr.site.alegia.beans.Categorie;
 import fr.yr.site.alegia.beans.Image;
 import fr.yr.site.alegia.configuration.Factory;
+import fr.yr.site.alegia.configuration.GenerateMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
@@ -17,6 +18,8 @@ public class GestionCategorieAction extends ActionSupport {
     // --- Microservices ---
     @Autowired
     Factory factory;
+
+    private GenerateMethod gm = new GenerateMethod();
 
     private         Integer         categorieId;
     private         List<Article>   articleList;
@@ -31,14 +34,7 @@ public class GestionCategorieAction extends ActionSupport {
     public String doListArticleByCategorieId(){
         try {
             articleList = factory.getArticleProxy().findByCategorieIdAndDisponible(categorieId,true);
-            for (Article article:articleList){
-                article.setImageList(factory.getImageProxy().findByArticleId(article.getId()));
-                if (article.getImageList().size() == 0 ){
-                    Image image = new Image();
-                    image.setUrl("indisponible.jpg");
-                    article.getImageList().add(image);
-                }
-            }
+            gm.completeArticleList(factory,articleList);
             categorieList = factory.getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){

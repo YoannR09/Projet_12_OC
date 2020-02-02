@@ -5,8 +5,11 @@ import fr.yr.site.model.Commande;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
+import javax.ws.rs.Path;
 import java.util.List;
 
 @RestController
@@ -43,6 +46,85 @@ public class CommandeController {
             return commandeDao.findByNumero(numero);
         }catch (Exception e){
             logger.error(e);
+            return null;
+        }
+    }
+
+    @GetMapping(value = "/Commande/NomPrenomEmail/{nom},{prenom},{email}")
+    public List<Commande> findByNomPrenomEmail(@PathVariable String nom,
+                                        @PathVariable String prenom,
+                                        @PathVariable String email){
+        try {
+            return commandeDao.findByNomPrenomEmail(nom, prenom, email);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+
+    @GetMapping(value = "/Commande/NomPrenom/{nom},{prenom}")
+    public List<Commande> findByNomPrenom(@PathVariable String nom,
+                                   @PathVariable String prenom){
+        try {
+            return commandeDao.findByNomPrenom(nom,prenom);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    @GetMapping(value = "/Commande/Nom/{nom}")
+    public List<Commande> findByNom(@PathVariable String nom){
+        try {
+            return commandeDao.findByNom(nom);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+
+    @GetMapping(value = "/Commande/NomEmail/{nom},{email}")
+    public List<Commande> findByNomEmail(@PathVariable String nom,@PathVariable String email){
+     try {
+         return commandeDao.findByNomEmail(nom,email);
+     }catch (Exception e){
+         return null;
+     }
+    }
+
+
+    @GetMapping(value = "/Commande/PrenomEmail/{prenom},{email}")
+    public List<Commande> findByPrenomEmail(@PathVariable String prenom,
+                                     @PathVariable String email){
+        try {
+            return commandeDao.findByPrenomEmail(prenom, email);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    @GetMapping(value = "/Commande/Prenom/{prenom}")
+    public List<Commande> findByPrenom(@PathVariable("prenom") String prenom){
+        try {
+            return commandeDao.findByPrenom(prenom);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    @GetMapping(value = "/Commande/Email/{email}")
+    public List<Commande> findByEmail(@PathVariable("email") String email){
+        try {
+            return commandeDao.findByEmail(email);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    @GetMapping(value = "/Commande/NumeroContaining/{numero}")
+    public List<Commande> findCommandeByNumeroContaining(@PathVariable String numero){
+        try {
+            return commandeDao.findByNumeroContaining(numero);
+        }catch (Exception e){
             return null;
         }
     }

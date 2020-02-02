@@ -63,10 +63,10 @@
 </header>
 <div id="page">
     <div id="bottom" >
-        <div id="cadre">
+        <div id="cadre" class="shadow p-3 mb-5 bg-white rounded">
             <label class="form-check-label" id="label"> Modifier l'article </label>
             <em id="message" ><s:actionmessage/></em>
-            <div class="col-12 container shadow p-3 mb-5 bg-white rounded" id="cadreLog">
+            <div class="col-12 container" id="cadreLog">
                 <div class="col-12">
                     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style=" margin-bottom: 5px">
                         <div class="carousel-inner" style="height: 100%">

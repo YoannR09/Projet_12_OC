@@ -35,6 +35,4 @@ public class GenerateMethod {
             a.getImageList().add(image);
         }
     }
-
-
 }

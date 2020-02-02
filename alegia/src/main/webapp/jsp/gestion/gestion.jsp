@@ -55,7 +55,7 @@
             <s:a action="doListCommande" class="btn btn-dark btnType">Achevées
                 <s:param name="statut" value="4"/>
             </s:a>
-            <s:a action="formInscription" class="btn btn-dark btnType">Rechercher</s:a>
+            <s:a action="rechercheForm" class="btn btn-dark btnType">Rechercher</s:a>
         </div>
         <br/>
     </div>
