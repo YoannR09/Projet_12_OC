@@ -72,7 +72,7 @@
 <div id="blocCenter" style="display: flex;justify-content: center;">
     <div class="col-9">
         <s:if test="panierVide"><label class="textTop">Vous n'avez effectué aucune commande.</label></s:if>
-        <s:else><label class="textTop">DETAILS DE LA COMMANDE</label></s:else>
+        <s:else><label class="textTop">Détails de la commande</label></s:else>
         <div class="col-12" style="display: flex;justify-content: space-around">
             <div style="width: 800px">
                 <div class="col-12 container border shadow bg-white rounded" id="cadreArticle">
@@ -107,6 +107,19 @@
                             </tbody>
 
                         </table>
+                    </div>
+                    <div style="width: 100%">
+                        <em class="lab">ADRESSE DE LIVRAISON</em><br/>
+                        <div style="margin-bottom: 10px">
+                            <span style="font-weight: bold"><s:property value="commande.adresse.codePostal"/></span>
+                            <span style="font-weight: bold">  -  </span>
+                            <span style="font-weight: bold"><s:property value="commande.adresse.ville"/></span>
+                            <span style="font-weight: bold">  -  </span>
+                            <span style="font-weight: bold"><s:property value="commande.adresse.numero"/></span>
+                            <span style="font-weight: bold"><s:property value="commande.adresse.rue"/></span>
+                            <span style="font-weight: bold">  /  </span>
+                            <span style="font-weight: bold"><s:property value="commande.adresse.info"/></span>
+                        </div>
                     </div>
                     <div style="display: flex;justify-content: space-between">
                         <div>

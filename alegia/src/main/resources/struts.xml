@@ -179,6 +179,12 @@
             <result name="error">jsp/error/error.jsp</result>
         </action>
 
+        <action name="doNouveauMdp" class="fr.yr.site.alegia.action.GestionLoginAction" method="doNouveauMotDePasse">
+            <result name="success">jsp/login/login.jsp</result>
+            <result name="input">jsp/login/nouveauMdp.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
         <action name="doListArticleByCategorieId" class="fr.yr.site.alegia.action.GestionCategorieAction" method="doListArticleByCategorieId">
             <result name="success">jsp/categorie/listArticle.jsp</result>
             <result name="error">jsp/error/error.jsp</result>
@@ -211,10 +217,25 @@
             <result name="error">/jsp/error/error.jsp</result>
         </action>
 
+        <action name="doRepriseCommande"
+                class="fr.yr.site.alegia.action.GestionCommandeAction"
+                method="doRepriseCommande">
+            <result name="success">/jsp/commande/adresseCommande.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doAdresseCommande"
+                class="fr.yr.site.alegia.action.GestionCommandeAction"
+                method="doAdresseCommande">
+            <result name="success">/jsp/commande/adresseCommande.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
+
         <action name="doCommande"
                 class="fr.yr.site.alegia.action.GestionCommandeAction"
                 method="doCommande">
-            <result name="success">/jsp/index.jsp</result>
+            <result name="success">/jsp/commande/adresseCommande.jsp</result>
             <result name="error">/jsp/error/error.jsp</result>
         </action>
 

@@ -14,7 +14,7 @@
         </i></a>
     </div>
     <div style="width: 33%;text-align: center;margin: 25px;">
-        <em style="font-size: 0.8em"> 5 Rue Louis Blanc <br/>
+        <em style="font-size: 0.8em;color: whitesmoke"> 5 Rue Louis Blanc <br/>
             83110 Sanary-sur-Mer</em>
     </div>
     <div style="width: 33%;text-align: center;margin: 25px;">

@@ -21,29 +21,21 @@ public class GestionCommandeAction extends ActionSupport {
     private List<Contenu> contenuList;
     private List<Categorie> categorieList;
     private List<Commande> commandeList;
+    private Adresse adresse;
+    private Commande commande;
     private String codePostal;
     private String rue;
     private String numero;
     private String info;
     private String ville;
     private String numeroCommande;
+    private Integer commandeId;
 
     public String doConfirmAdresse(){
 
         try {
             // Création de l'adresse
-            Adresse adresse = new Adresse();
-            adresse.setCodePostal(codePostal);
-            adresse.setCodePostal(codePostal);
-            if (info.equals("") || info == null){
-                adresse.setInfo("Aucune information");
-            }else {
-                adresse.setInfo(info);
-            }
-            adresse.setRue(rue);
-            adresse.setVille(ville);
-            adresse.setNumero(numero);
-            factory.getAdresseProxy().add(adresse);
+
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             e.printStackTrace();
@@ -65,8 +57,7 @@ public class GestionCommandeAction extends ActionSupport {
             Compte compte = factory.getCompteProxy().findByEmail((String) ActionContext.getContext().getSession().get("email"));
             Panier panier = factory.getPanierProxy().getPanierByCompteId(compte.getId());
             contenuList = factory.getContenuProxy().findByPanierId(panier.getId());
-
-            Commande commande = new Commande();
+            commande = new Commande();
             commande.setStatutId(1);
             Date date = new Date();
             numeroCommande = compte.getId()+"-"
@@ -75,8 +66,8 @@ public class GestionCommandeAction extends ActionSupport {
             commande.setNumero(numeroCommande);
             commande.setCompteId(compte.getId());
             commande.setAdresseId(compte.getAdresseId());
+            adresse = factory.getAdresseProxy().getAdresse(compte.getAdresseId());
             factory.getCommandeProxy().add(commande);
-
             for(Contenu contenu:contenuList){
                 contenu.setArticle(factory.getArticleProxy().getArticle(contenu.getArticleId()));
                 LigneDeCommande ligneDeCommande = new LigneDeCommande();
@@ -92,7 +83,54 @@ public class GestionCommandeAction extends ActionSupport {
                 ligneDeCommande.setTaille(contenu.getTaille().getTaille());
                 factory.getLigneProxy().add(ligneDeCommande);
                 factory.getContenuProxy().delete(contenu.getId());
+                commandeId = vList.get(vList.size()-1).getId();
             }
+            categorieList = factory.getCategorieProxy().findAll();
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return ActionSupport.ERROR;
+        }
+    }
+
+    /**
+     * Méthode pour intégrer une nouvelle adresse pour la livraison de la commande.
+     * @return
+     */
+    public String doAdresseCommande(){
+        try {
+            if(codePostal != null && rue != null && numero != null && ville == null) {
+                Adresse adresse = new Adresse();
+                if (info.equals("") || info == null) {
+                    adresse.setInfo("Aucune information");
+                } else {
+                    adresse.setInfo(info);
+                }
+                adresse.setCodePostal(codePostal);
+                adresse.setRue(rue);
+                adresse.setNumero(numero);
+                adresse.setVille(ville);
+                factory.getAdresseProxy().add(adresse);
+                commande = factory.getCommandeProxy().getCommande(commandeId);
+                commande.setAdresseId(factory.getAdresseProxy()
+                        .findByVilleAndCodePostalAndNumeroAndRue(ville,codePostal,numero,rue).getId());
+                factory.getCommandeProxy().update(commande);
+            }else {
+                commande = factory.getCommandeProxy().getCommande(commandeId);
+            }
+            categorieList = factory.getCategorieProxy().findAll();
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            return ActionSupport.ERROR;
+        }
+    }
+
+    public String doRepriseCommande(){
+        try {
+            Compte compte = factory.getCompteProxy()
+                    .findByEmail((String) ActionContext.getContext().getSession().get("email"));
+            commande = factory.getCommandeProxy().getCommande(commandeId);
+            adresse = factory.getAdresseProxy().getAdresse(compte.getAdresseId());
             categorieList = factory.getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
@@ -115,6 +153,7 @@ public class GestionCommandeAction extends ActionSupport {
                     count = count+lc.getQuantite();
                     total = total+lc.getMontantTtc();
                 }
+                c.setAdresse(factory.getAdresseProxy().getAdresse(c.getAdresseId()));
                 c.setPrixTotal(Float.toString(total));
                 c.setCountArticle(count);
             }
@@ -196,5 +235,29 @@ public class GestionCommandeAction extends ActionSupport {
 
     public void setCommandeList(List<Commande> commandeList) {
         this.commandeList = commandeList;
+    }
+
+    public Adresse getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(Adresse adresse) {
+        this.adresse = adresse;
+    }
+
+    public Commande getCommande() {
+        return commande;
+    }
+
+    public void setCommande(Commande commande) {
+        this.commande = commande;
+    }
+
+    public Integer getCommandeId() {
+        return commandeId;
+    }
+
+    public void setCommandeId(Integer commandeId) {
+        this.commandeId = commandeId;
     }
 }

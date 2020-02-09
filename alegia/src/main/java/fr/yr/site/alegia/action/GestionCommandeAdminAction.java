@@ -6,6 +6,7 @@ import fr.yr.site.alegia.beans.Commande;
 import fr.yr.site.alegia.beans.Compte;
 import fr.yr.site.alegia.beans.LigneDeCommande;
 import fr.yr.site.alegia.configuration.Factory;
+import fr.yr.site.alegia.configuration.MailGestion;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
@@ -32,13 +33,22 @@ public class GestionCommandeAdminAction extends ActionSupport {
 
     public String doCommandeChangeStatut(){
         try {
+            MailGestion mailGestion = new MailGestion();
             if (statut != null && commandeId != null){
                 commande = factory.getCommandeProxy().getCommande(commandeId);
+                String contenu;
+                String objet = "Le statut de votre commande Alegia évolue !";
                 if(commande.getStatutId() == 1){
                     commande.setStatutId(2);
+                    contenu = "Votre commande est maintenant en cours de préparation";
+                    mailGestion.sendMail(objet,contenu,factory.getCompteProxy().findById(commande.getCompteId()));
                 }else if(commande.getStatutId() == 2){
+                    contenu = "Votre commande est maintenant en cours de livraison";
+                    mailGestion.sendMail(objet,contenu,factory.getCompteProxy().findById(commande.getCompteId()));
                     commande.setStatutId(3);
                 }else if(commande.getStatutId() == 3){
+                    contenu = "Votre commande a été livré à votre adresse de livraison";
+                    mailGestion.sendMail(objet,contenu,factory.getCompteProxy().findById(commande.getCompteId()));
                     commande.setStatutId(4);
                 }
                 generateCommande(commande);
@@ -110,6 +120,7 @@ public class GestionCommandeAdminAction extends ActionSupport {
             total = total+lc.getMontantTtc();
             count = count+lc.getQuantite();
         }
+        c.setAdresse(factory.getAdresseProxy().getAdresse(c.getAdresseId()));
         c.setCountArticle(count);
         c.setPrixTotal(Float.toString(total));
     }

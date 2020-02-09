@@ -18,8 +18,6 @@
             color: black;
             margin-top: 100px;
             margin-bottom: 20px;
-            border-radius: 10px;
-            border: 1px lightgrey solid;
             width: 350px;
         }
         #bottom
@@ -28,14 +26,9 @@
             justify-content: space-around;
             width: 100%;
         }
-        #label
+        label,input
         {
-            left: 10px;
-            font-size: 1.2em;
-            margin-top: 10px;
-            margin-left: 10px;
-            font-weight: bold;
-            color: black;
+            font-size: 0.7em;
         }
         #cadreLog
         {
@@ -50,9 +43,10 @@
             margin-top: 15px;
             color: white;
         }
-        label
+        .textTop
         {
-            font-size: 0.8em;
+            font-size: 1.3em;
+            margin: 10px;
         }
     </style>
 </head>
@@ -63,9 +57,9 @@
 <div id="page">
     <div id="bottom" >
         <div id="cadreLogin">
-            <label class="form-check-label" id="label"> S'inscrire </label>
+            <label class="form-check-label textTop"> S'inscrire </label>
             <em id="message" ><s:actionmessage/></em>
-            <div class="col-12 container" id="cadreLog">
+            <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreLog">
                 <s:form action="doInscription">
                     <div class="form-group" style="margin: 20px;">
                         <label for="inputNom" style="color: black;">Nom</label>

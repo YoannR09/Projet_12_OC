@@ -19,6 +19,18 @@ public interface MicroserviceAdresseProxy {
     @GetMapping(value = "/Adresse")
     List<Adresse> findAll();
 
+    /**
+     * Méthode pour récupérer une adresse en fonction de toutes les valeurs de l'objet Adresse
+     * @param ville
+     * @param codePostal
+     * @param numero
+     * @param rue
+     * @return
+     */
+    @GetMapping(value = "Adresse/All/{ville},{codePostal},{numero},{rue}")
+    Adresse findByVilleAndCodePostalAndNumeroAndRue(
+            @PathVariable("ville") String ville,@PathVariable("codePostal") String codePostal,
+            @PathVariable("numero") String numero,@PathVariable("rue") String rue);
 
     /**
      * Méthode pour récupérer une adresse via un id

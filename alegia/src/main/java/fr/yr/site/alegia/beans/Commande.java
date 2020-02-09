@@ -9,6 +9,7 @@ public class Commande {
     private Date date;
     private String statut;
     private List<LigneDeCommande> ligneDeCommandeList;
+    private Adresse adresse;
     private String numero;
     private StatutCommande statutCommande;
     private Integer compteId;
@@ -105,9 +106,17 @@ public class Commande {
         this.statut = statut;
     }
 
+    public Adresse getAdresse() {
+        return adresse;
+    }
+
+    public void setAdresse(Adresse adresse) {
+        this.adresse = adresse;
+    }
+
     public String generateStatut(){
         if(this.statutId == 1){
-            this.statut = "EN COURS DE VALIDATION";
+            this.statut = "EN ATTENTE DE VALIDATION";
         }else if (this.statutId == 2){
             this.statut = "EN COURS DE PREPARATION";
         }else if (this.statutId == 3){

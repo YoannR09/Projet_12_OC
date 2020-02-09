@@ -23,7 +23,6 @@
         #label
         {
             left: 10px;
-            font-size: 1.2em;
             margin-top: 10px;
             margin-left: 10px;
             font-weight: bold;
@@ -36,10 +35,14 @@
         {
             color: black;
         }
-        label
+        label,input
         {
-            font-size: 0.8em;
-            color:black;
+            font-size: 0.7em;
+        }
+        .textTop
+        {
+            font-size: 1.3em;
+            margin: 10px;
         }
     </style>
 </head>
@@ -50,7 +53,7 @@
 <div id="page">
     <div id="bottom" >
         <div id="cadreLogin" style="margin-top: 100px;width: 350px">
-            <label class="form-check-label" id="label"> Connectez-vous </label>
+            <label class="form-check-label textTop"> Connectez-vous </label>
             <em id="message" ><s:actionmessage/></em>
             <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreLog">
                 <s:form action="doLogin">
@@ -64,7 +67,7 @@
                     </div>
                     <div style="display: flex;justify-content: space-between;padding-top: 25px">
                         <s:a action="doInscription" style="font-size: 0.7em" class="btn btn-dark">S'inscrire</s:a>
-                        <s:a action="formInscription" style="font-size: 0.7em;color:orange;">Mot de passe oublié</s:a>
+                        <s:a action="doNouveauMdp" style="font-size: 0.7em;color:orange;">Mot de passe oublié</s:a>
                         <button type="submit" style="font-size: 0.7em" class="btn btn-dark">Connexion</button>
                     </div>
                 </s:form>

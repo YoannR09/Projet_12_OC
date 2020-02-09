@@ -66,8 +66,6 @@
                     </div>
                     <button type="submit"id="btnRecherche" class="btn btn-dark">Rechercher</button>
             </div>
-
-
         </div>
         </s:form>
     </div>

@@ -8,4 +8,6 @@ import org.springframework.stereotype.Repository;
 public interface AdresseDao extends JpaRepository<Adresse,Integer> {
 
     Adresse findById(int id);
+
+    Adresse findByVilleAndCodePostalAndNumeroAndRue(String ville,String codePostal,String numero,String rue);
 }

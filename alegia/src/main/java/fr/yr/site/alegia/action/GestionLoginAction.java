@@ -7,6 +7,8 @@ import fr.yr.site.alegia.beans.Compte;
 import fr.yr.site.alegia.beans.Panier;
 import fr.yr.site.alegia.configuration.EncryptionUtil;
 import fr.yr.site.alegia.configuration.Factory;
+import fr.yr.site.alegia.configuration.MailGestion;
+import org.apache.commons.lang.RandomStringUtils;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -38,8 +40,6 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
     private String ville;
     private String codePostal;
     private Compte compte;
-
-
 
     public String pageLogin(){
         try {
@@ -109,20 +109,19 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
 
                     // Création du compte
                     Compte compte = new Compte();
-                    compte.setEmail(email.toUpperCase());
+                    compte.setEmail(email.toLowerCase());
                     compte.setMotDePasse(EncryptionUtil.encrypt(motDePasse, secretKey));
                     compte.setNiveauAccesId(1);
                     compte.setNom(nom.toUpperCase());
                     compte.setPrenom(prenom.toUpperCase());
                     compte.setNumeroTelephone(numeroTelephone);
-                    List<Adresse> listAdresse = factory.getAdresseProxy().findAll();
-                    compte.setAdresseId(listAdresse.get(listAdresse.size() - 1).getId());
+                    compte.setAdresseId(factory.getAdresseProxy()
+                            .findByVilleAndCodePostalAndNumeroAndRue(ville,codePostal,numero,rue).getId());
                     factory.getCompteProxy().add(compte);
 
                     // Création du panier
                     Panier panier = new Panier();
-                    List<Compte> listCompte = factory.getCompteProxy().findAll();
-                    panier.setCompteId(listCompte.get(listCompte.size() - 1).getId());
+                    panier.setCompteId(factory.getCompteProxy().findByEmail(email).getId());
                     factory.getPanierProxy().add(panier);
 
                     vResult = ActionSupport.SUCCESS;
@@ -136,6 +135,34 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
         }
 
         return vResult;
+    }
+
+
+    /**
+     * Méthode pour réinitialiser son mot de passe
+     * Envoie un mail contenant le nouveau mot de passe
+     * @return
+     */
+    public String doNouveauMotDePasse(){
+        try {
+            if (email != null){
+                compte = factory.getCompteProxy().findByEmail(email);
+                String newMdp = RandomStringUtils.randomAlphanumeric(10);
+                MailGestion mailGestion = new MailGestion();
+                String contenu = "Votre nouveau mot de passe est : "+newMdp;
+                String objet = "Votre nouveau mot de passe";
+                mailGestion.sendMail(objet,contenu,compte);
+                compte.setMotDePasse(EncryptionUtil.encrypt(newMdp, secretKey));
+                factory.getCompteProxy().update(compte);
+                categorieList = factory.getCategorieProxy().findAll();
+                return ActionSupport.SUCCESS;
+            }else {
+                categorieList = factory.getCategorieProxy().findAll();
+                return ActionSupport.INPUT;
+            }
+        }catch (Exception e){
+            return ActionSupport.ERROR;
+        }
     }
 
 

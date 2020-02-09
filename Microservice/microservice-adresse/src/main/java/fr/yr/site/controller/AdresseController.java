@@ -65,6 +65,25 @@ public class AdresseController {
     }
 
     /**
+     * Méthode pour récupérer une adresse en fonction de toutes les valeurs de l'objet Adresse
+     * @param ville
+     * @param codePostal
+     * @param numero
+     * @param rue
+     * @return
+     */
+    @GetMapping(value = "Adresse/All/{ville},{codePostal},{numero},{rue}")
+    public Adresse findByVilleAndCodePostalAndNumeroAndRue(
+            @PathVariable String ville,@PathVariable String codePostal,
+            @PathVariable String numero,@PathVariable String rue){
+        try {
+            return dao.findByVilleAndCodePostalAndNumeroAndRue(ville, codePostal, numero, rue);
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    /**
      * Méthode pour mettre à jour une adresse existante
      * @param adresse
      */

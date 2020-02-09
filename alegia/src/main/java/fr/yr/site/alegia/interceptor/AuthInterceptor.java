@@ -13,7 +13,9 @@ public class AuthInterceptor extends AbstractInterceptor {
     @Override
     public String intercept(ActionInvocation pInvocation) throws Exception {
         String vResult;
-        if (pInvocation.getInvocationContext().getSession().get("user") != null || pInvocation.getInvocationContext().getSession().get("admin") != null ) {
+        if (pInvocation.getInvocationContext().getSession()
+                .get("user") != null || pInvocation.getInvocationContext()
+                .getSession().get("admin") != null ) {
             vResult = pInvocation.invoke();
         } else {
             vResult = ActionSupport.ERROR;

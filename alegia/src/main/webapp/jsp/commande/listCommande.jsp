@@ -83,7 +83,12 @@
                             <div class="col" style="display:flex;justify-content: space-around;padding: 5px">
                                 <div>
                                     <em class="lab">COMMANDE EFFECTUEE LE</em><br/>
-                                    <span style="font-weight: bold"><s:property value="date"/></span>
+                                    <s:if test="!statut.equals('EN ATTENTE DE VALIDATION')">
+                                        <span style="font-weight: bold"><s:property value="date"/></span>
+                                    </s:if>
+                                    <s:else>
+                                        <span style="font-weight: bold">En attente</span>
+                                    </s:else>
                                 </div>
                                 <div>
                                     <em class="lab">N° DE COMMANDE</em><br/>
@@ -124,20 +129,33 @@
                                 </s:iterator>
                                 </tbody>
                             </table>
-                            <em style="font-weight: bold;font-size: 0.7em">L'avancée de votre commande </em>
+                            <s:if test="!statut.equals('EN ATTENTE DE VALIDATION')">
+                            <div style="width: 100%">
+                                <em class="lab">ADRESSE DE LIVRAISON</em><br/>
+                                <div style="margin-bottom: 10px">
+                                    <span style="font-weight: bold"><s:property value="adresse.codePostal"/></span>
+                                    <span style="font-weight: bold">  -  </span>
+                                    <span style="font-weight: bold"><s:property value="adresse.ville"/></span>
+                                    <span style="font-weight: bold">  -  </span>
+                                    <span style="font-weight: bold"><s:property value="adresse.numero"/></span>
+                                    <span style="font-weight: bold"><s:property value="adresse.rue"/></span>
+                                </div>
+                            </div>
+                            </s:if>
+                            <em class="lab">L'AVANCEE DE VOTRE COMMANDE</em>
                             <s:if test="statut.equals('EN ATTENTE DE VALIDATION')">
                                 <div class="progress border">
                                     <div class="progress-bar progress-bar-striped progress-bar-animated bg-info" style="width:25%">
                                         <em style="font-size: 0.6em"><s:property value="statut"/></em>
                                     </div>
-                                    <div style="width:25%;font-size: 0.5em;font-weight: bold;text-align: center">
-                                        EN COURS DE PREPARATION
+                                    <div class="progress-bar borderProgress bg-light" style="width:25%">
+                                        <em style="font-size: 0.6em;color: black">EN COURS DE PREPARATION</em>
                                     </div>
-                                    <div style="width:25%;font-size: 0.5em;font-weight: bold;text-align: center">
-                                        EXPEDIEE
+                                    <div class="progress-bar borderProgress bg-light" style="width:25%">
+                                        <em style="font-size: 0.6em;color: black">EXPEDIEE</em>
                                     </div>
-                                    <div style="width:25%;font-size: 0.5em;font-weight: bold;text-align: center">
-                                        LIVREE
+                                    <div class="progress-bar borderProgress bg-light" style="width:25%">
+                                        <em style="font-size: 0.6em;color: black">LIVREE</em>
                                     </div>
                                 </div>
                             </s:if>
@@ -171,6 +189,11 @@
                                     </div>
                                 </div>
                             </s:elseif>
+                            <s:if test="statut.equals('EN ATTENTE DE VALIDATION')">
+                                <div style="display:flex;width: 100%;justify-content: space-around;margin-top: 10px">
+                                    <s:a action="doRepriseCommande" class="btn btn-dark" style="font-size:0.7em;"><s:param value="id" name="commandeId"/>Reprendre ma commande</s:a>
+                                </div>
+                            </s:if>
                         </div>
                     </div>
                 </s:iterator>
