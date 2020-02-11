@@ -91,6 +91,16 @@
             <result name="error">jsp/error/error.jsp</result>
         </action>
 
+        <action name="doCategorieDisponible" class="fr.yr.site.alegia.action.GestionCategorieAction" method="doDisponible">
+            <result>/jsp/gestion/categorie/gestionCategorie.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doCategorieIndisponible" class="fr.yr.site.alegia.action.GestionCategorieAction" method="doIndisponible">
+            <result>/jsp/gestion/categorie/gestionCategorie.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
         <action name="doArticleIndosponible" class="fr.yr.site.alegia.action.GestionArticleAction" method="doIndiponible">
             <result>/jsp/gestion/article/gestionArticle.jsp</result>
             <result name="error">jsp/error/error.jsp</result>
@@ -207,6 +217,13 @@
                 class="fr.yr.site.alegia.action.GestionPanierAction"
                 method="doAddPanier">
             <result name="success">/jsp/index.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doProfil"
+                class="fr.yr.site.alegia.action.GestionLoginAction"
+                method="doProfil">
+            <result name="success">/jsp/login/profil.jsp</result>
             <result name="error">/jsp/error/error.jsp</result>
         </action>
 

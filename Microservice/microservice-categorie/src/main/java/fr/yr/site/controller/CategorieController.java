@@ -54,7 +54,7 @@ public class CategorieController {
     @GetMapping(value = "/Categorie")
     public List<Categorie> findAll(){
         try {
-            return dao.findAll();
+            return dao.findByDisponible(true);
         }catch (Exception e){
             logger.error(e);
             return null;
@@ -88,6 +88,19 @@ public class CategorieController {
             if(cat == null){
                 dao.save(categorie);
             }
+        }catch (Exception e){
+            logger.error(e);
+        }
+    }
+
+    /**
+     * Méthode pour mettre à jour une catégorie
+     * @param categorie
+     */
+    @PutMapping(value = "/Categorie")
+    public void update(@RequestBody Categorie categorie){
+        try {
+            dao.save(categorie);
         }catch (Exception e){
             logger.error(e);
         }

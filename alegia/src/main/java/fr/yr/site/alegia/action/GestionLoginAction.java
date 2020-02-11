@@ -1,5 +1,6 @@
 package fr.yr.site.alegia.action;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import fr.yr.site.alegia.beans.Adresse;
 import fr.yr.site.alegia.beans.Categorie;
@@ -61,7 +62,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
         categorieList = factory.getCategorieProxy().findAll();
 
         if (email != null) {
-            compte = factory.getCompteProxy().findByEmail(email);
+            compte = factory.getCompteProxy().findByEmail(email.toLowerCase());
         }
         if (compte == null) {
             this.addActionMessage("Identifiant invalide");
@@ -121,7 +122,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
 
                     // Création du panier
                     Panier panier = new Panier();
-                    panier.setCompteId(factory.getCompteProxy().findByEmail(email).getId());
+                    panier.setCompteId(factory.getCompteProxy().findByEmail(email.toLowerCase()).getId());
                     factory.getPanierProxy().add(panier);
 
                     vResult = ActionSupport.SUCCESS;
@@ -146,7 +147,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
     public String doNouveauMotDePasse(){
         try {
             if (email != null){
-                compte = factory.getCompteProxy().findByEmail(email);
+                compte = factory.getCompteProxy().findByEmail(email.toLowerCase());
                 String newMdp = RandomStringUtils.randomAlphanumeric(10);
                 MailGestion mailGestion = new MailGestion();
                 String contenu = "Votre nouveau mot de passe est : "+newMdp;
@@ -161,10 +162,26 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
                 return ActionSupport.INPUT;
             }
         }catch (Exception e){
+            e.printStackTrace();
             return ActionSupport.ERROR;
         }
     }
 
+    /**
+     * Méthode pour afficher les informations du compte
+     * @return
+     */
+    public String doProfil(){
+        try {
+            String email = (String) ActionContext.getContext().getSession().get("email");
+            compte = factory.getCompteProxy().findByEmail(email.toLowerCase());
+            compte.setAdresse(factory.getAdresseProxy().getAdresse(compte.getAdresseId()));
+            categorieList = factory.getCategorieProxy().findAll();
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            return ActionSupport.ERROR;
+        }
+    }
 
 
     //----------- GETTERS ET SETTERS ----------------

@@ -44,11 +44,11 @@
         <div id="barreDeRecherche" class="border shadow p-3 mb-5 bg-white rounded" style="display:flex;justify-content: space-around;margin: auto">
             <s:form id="formulaire" action="gestionCategorie" >
                 <div class="input-group">
-                        <div class="input-group">
-                            <s:radio id="radio" name="radio" list="radioList" style="color:gray" label="Afficher les catégories "
-                            labelposition="top"/>
-                            <s:submit type="submit" value="Rechercher" id="btnRecherche" class="btn btn-dark"></s:submit>
-                        </div>
+                    <div class="input-group">
+                        <s:radio id="radio" name="radio" list="radioList" style="color:gray" label="Afficher les catégories "
+                                 labelposition="top"/>
+                        <s:submit type="submit" value="Rechercher" id="btnRecherche" class="btn btn-dark"></s:submit>
+                    </div>
                 </div>
             </s:form>
         </div>
@@ -57,14 +57,18 @@
                 <li class="nav-item border" style="text-align: center;margin: 15px;padding:10px;width:200px">
                     <p style="font-weight: bold;font-size: 1.1em;"><s:property value="nom"/></p>
                     <em style="font-size: 0.7em">Nombre d'article(s) : </em><s:property value="countArticle"/>
-                    <s:a action="" class="btn btn-dark btnUnder">
-                        Rendre disponible
-                        <s:param name="categorieId" value="id"/>
-                    </s:a>
-                    <s:a action="" class="btn btn-dark btnUnder">
-                        Rendre indisponible
-                        <s:param name="categorieId" value="id"/>
-                    </s:a>
+                    <s:if test="disponible == false">
+                        <s:a action="doCategorieDisponible" class="btn btn-dark btnUnder">
+                            Rendre disponible
+                            <s:param name="categorieId" value="id"/>
+                        </s:a>
+                    </s:if>
+                    <s:else>
+                        <s:a action="doCategorieIndisponible" class="btn btn-dark btnUnder">
+                            Rendre indisponible
+                            <s:param name="categorieId" value="id"/>
+                        </s:a>
+                    </s:else>
                     <s:if test="countArticle == 0">
                         <s:a action="" class="btn btn-danger btnUnder">
                             Supprimer

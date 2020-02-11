@@ -64,11 +64,10 @@
 <body>
 <%@ include file="../_include/header.jsp"%>
 <div id="blocCenter" style="display: flex;justify-content: center;">
-    <div class="col-7">
-        <div style="display: flex;justify-content: space-between">
+    <div style="width: 800px">
+        <div style="text-align: left">
             <s:if test="panierVide"><label class="textTop">Votre panier est vide pour le moment.</label></s:if>
             <s:else><label class="textTop" style="text-align: left">Mon panier</label></s:else>
-            <label class="textTop" style="text-align: right">C</label>
         </div>
         <div class="col-12" style="display: flex;justify-content: space-between">
             <div style="width: 350px">

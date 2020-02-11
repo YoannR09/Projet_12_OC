@@ -2,6 +2,7 @@ package fr.yr.site.alegia.proxies;
 
 import fr.yr.site.alegia.beans.Compte;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.cloud.openfeign.FeignClientProperties;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -9,7 +10,8 @@ import java.util.List;
 /**
  * Classe pour récupérer les données du MicroserviceCompte
  */
-@FeignClient(value = "microservice-compte", url = "localhost:9012")
+
+@FeignClient(value = "microservice-compte", url = "localhost:9012",configuration = FeignClientProperties.FeignClientConfiguration.class)
 public interface MicroserviceCompteProxy {
 
     @GetMapping(value = "/Compte/{id}")

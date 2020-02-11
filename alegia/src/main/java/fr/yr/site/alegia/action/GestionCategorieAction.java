@@ -8,6 +8,7 @@ import fr.yr.site.alegia.configuration.Factory;
 import fr.yr.site.alegia.configuration.GenerateMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -21,11 +22,14 @@ public class GestionCategorieAction extends ActionSupport {
 
     private GenerateMethod gm = new GenerateMethod();
 
-    private         Integer         categorieId;
-    private         List<Article>   articleList;
-    private         List<Categorie> categorieList;
-    private         String          nom;
-    private         String          labelle;
+    private         Integer                 categorieId;
+    private         List<Article>           articleList;
+    private         List<Categorie>         categorieList;
+    private         List<Categorie>         categories;
+    private         String                  nom;
+    private         String                  labelle;
+    private         String                  radio;
+    private         List<String>            radioList = Arrays.asList("Disponible","Indisponible");
 
     /**
      * Méthode pour afficher une liste d'articles via l'id d'une catégorie
@@ -66,6 +70,40 @@ public class GestionCategorieAction extends ActionSupport {
         }
         categorieList = factory.getCategorieProxy().findAll();
         return vResult;
+    }
+
+    /**
+     * Méthode pour définir une catégorie comme disponible
+     * @return
+     */
+    public String doDisponible(){
+        try {
+            Categorie categorie = factory.getCategorieProxy().findById(categorieId);
+            categorie.setDisponible(true);
+            factory.getCategorieProxy().update(categorie);
+            categories = factory.getCategorieProxy().findByDispo(false);
+            categorieList = factory.getCategorieProxy().findAll();
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            return ActionSupport.ERROR;
+        }
+    }
+
+    /**
+     * Méthode pour définir une catégorie comme indisponible
+     * @return
+     */
+    public String doIndisponible(){
+        try {
+            Categorie categorie = factory.getCategorieProxy().findById(categorieId);
+            categorie.setDisponible(false);
+            factory.getCategorieProxy().update(categorie);
+            categories = factory.getCategorieProxy().findByDispo(true);
+            categorieList = factory.getCategorieProxy().findAll();
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            return ActionSupport.ERROR;
+        }
     }
 
 
@@ -110,5 +148,29 @@ public class GestionCategorieAction extends ActionSupport {
 
     public void setLabelle(String labelle) {
         this.labelle = labelle;
+    }
+
+    public List<Categorie> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<Categorie> categories) {
+        this.categories = categories;
+    }
+
+    public String getRadio() {
+        return radio;
+    }
+
+    public void setRadio(String radio) {
+        this.radio = radio;
+    }
+
+    public List<String> getRadioList() {
+        return radioList;
+    }
+
+    public void setRadioList(List<String> radioList) {
+        this.radioList = radioList;
     }
 }

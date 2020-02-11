@@ -30,9 +30,9 @@ public class GestionSiteAction extends ActionSupport {
     private     Integer                 categorieId;
     private     Integer                 articleId;
     private     String                  categorieSelect;
-    private     File file;
-    private     String contentType;
-    private     String filename;
+    private     File                    file;
+    private     String                  contentType;
+    private     String                  filename;
     private     String                  descriptionImage;
     private     String                  radio;
     private     List<String>            radioList = Arrays.asList("Disponible","Indisponible");

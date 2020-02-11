@@ -86,7 +86,8 @@ public class GestionPanierAction extends ActionSupport {
     }
 
     private void generateCompteAndPanier() {
-        compte = factory.getCompteProxy().findByEmail((String) ActionContext.getContext().getSession().get("email"));
+        String email = (String) ActionContext.getContext().getSession().get("email");
+        compte = factory.getCompteProxy().findByEmail(email.toLowerCase());
         panier = factory.getPanierProxy().getPanierByCompteId(compte.getId());
     }
 

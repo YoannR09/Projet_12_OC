@@ -2,10 +2,7 @@ package fr.yr.site.alegia.proxies;
 
 import fr.yr.site.alegia.beans.Categorie;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -52,5 +49,12 @@ public interface MicroserviceCategorie {
      */
     @PostMapping(value = "/Categorie")
     void add(@RequestBody Categorie categorie);
+
+    /**
+     * Méthode pour mettre à jour une catégorie
+     * @param categorie
+     */
+    @PutMapping(value = "/Categorie")
+    void update(@RequestBody Categorie categorie);
 }
 

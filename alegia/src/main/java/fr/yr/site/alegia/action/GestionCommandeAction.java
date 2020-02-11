@@ -22,6 +22,7 @@ public class GestionCommandeAction extends ActionSupport {
     private List<Categorie> categorieList;
     private List<Commande> commandeList;
     private Adresse adresse;
+    private Compte compte;
     private Commande commande;
     private String codePostal;
     private String rue;
@@ -54,7 +55,8 @@ public class GestionCommandeAction extends ActionSupport {
 
     public String doCommande(){
         try {
-            Compte compte = factory.getCompteProxy().findByEmail((String) ActionContext.getContext().getSession().get("email"));
+            String email = (String) ActionContext.getContext().getSession().get("email");
+            compte = factory.getCompteProxy().findByEmail(email.toLowerCase());
             Panier panier = factory.getPanierProxy().getPanierByCompteId(compte.getId());
             contenuList = factory.getContenuProxy().findByPanierId(panier.getId());
             commande = new Commande();
@@ -127,8 +129,8 @@ public class GestionCommandeAction extends ActionSupport {
 
     public String doRepriseCommande(){
         try {
-            Compte compte = factory.getCompteProxy()
-                    .findByEmail((String) ActionContext.getContext().getSession().get("email"));
+            String email = (String) ActionContext.getContext().getSession().get("email");
+            compte = factory.getCompteProxy().findByEmail(email.toLowerCase());
             commande = factory.getCommandeProxy().getCommande(commandeId);
             adresse = factory.getAdresseProxy().getAdresse(compte.getAdresseId());
             categorieList = factory.getCategorieProxy().findAll();
@@ -141,7 +143,8 @@ public class GestionCommandeAction extends ActionSupport {
 
     public String doConsulterCommande(){
         try {
-            Compte compte = factory.getCompteProxy().findByEmail((String) ActionContext.getContext().getSession().get("email"));
+            String email = (String) ActionContext.getContext().getSession().get("email");
+            compte = factory.getCompteProxy().findByEmail(email.toLowerCase());
             commandeList = factory.getCommandeProxy().getCommandeByCompteId(compte.getId());
             for (Commande c:commandeList){
                 c.setStatut(c.generateStatut());

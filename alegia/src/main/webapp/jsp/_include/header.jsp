@@ -10,7 +10,7 @@
             <li style="display: flex;justify-content: space-around">
                 <s:a action="doConsulterPanier" class="nav-link btnNav" style="font-size:0.8em;"><i class="fas fa-shopping-cart" style="margin-right: 10px"></i>  Mon panier </s:a>
                 <s:a action="doConsulterCommande" class="nav-link btnNav" style="font-size:0.8em;"> <i class="fas fa-shopping-bag" style="margin-right: 10px"></i> Mes commandes </s:a>
-                <s:a action="" class="nav-link btnNav" style="font-size:0.8em;"><i class="fas fa-user-circle" style="margin-right: 10px"></i> Mon profil</s:a>
+                <s:a action="doProfil" class="nav-link btnNav" style="font-size:0.8em;"><i class="fas fa-user-circle" style="margin-right: 10px"></i> Mon profil</s:a>
                 <s:a action="logout" class="nav-link btnNav" style="font-size:0.8em;"><i class="fas fa-sign-out-alt" style="margin-right: 10px"></i> Se déconnecter</s:a>
             </li>
         </s:if>
@@ -31,9 +31,6 @@
                         <s:a action="doListArticleByCategorieId" class="nav-link btnNav" style="font-size:0.9em;font-family: arial"><s:property value="nom"/><s:param name="categorieId" value="id"/></s:a>
                     </li>
                 </s:iterator>
-                <li class="nav-item" style="margin-top: 20px;'">
-                    <s:a action="" class="nav-link btnNav" style="font-size:0.9em;font-family: arial"> LA MARQUE </s:a>
-                </li>
                 <li class="nav-item" style="margin-top: 20px;'">
                     <s:a action="gestion" class="nav-link btnNav" style="font-size:0.9em;font-family: arial;color:blue"> GESTION </s:a>
                 </li>

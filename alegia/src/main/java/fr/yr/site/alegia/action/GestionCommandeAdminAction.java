@@ -30,7 +30,6 @@ public class GestionCommandeAdminAction extends ActionSupport {
     private Compte compte;
     private Commande commande;
 
-
     public String doCommandeChangeStatut(){
         try {
             MailGestion mailGestion = new MailGestion();
