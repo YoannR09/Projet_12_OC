@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Classe pour récupérer les données du MicroserviceArticle
  */
-@FeignClient(value = "microservice-article", url = "localhost:9002")
+@FeignClient(name = "zuul-server", url = "localhost:9004")
 public interface MicroserviceArticleProxy {
 
     /**
@@ -17,7 +17,7 @@ public interface MicroserviceArticleProxy {
      * @param id
      * @return
      */
-    @GetMapping(value = "/Article/{id}")
+    @GetMapping(value = "/microservice-article/Article/{id}")
     Article getArticle(@PathVariable("id") int id);
 
 
@@ -26,14 +26,14 @@ public interface MicroserviceArticleProxy {
      * @param categorieId
      * @return
      */
-    @GetMapping(value = "/Article/Categorie/{categorieId}")
+    @GetMapping(value = "/microservice-article/Article/Categorie/{categorieId}")
     List<Article> getArticleByCategorieId(@PathVariable("categorieId") int categorieId);
 
     /**
      * Méthode pour récupérer la liste des articles
      * @return
      */
-    @GetMapping(value = "/Article")
+    @GetMapping(value = "/microservice-article/Article")
     List<Article> findAll();
 
     /**
@@ -43,7 +43,7 @@ public interface MicroserviceArticleProxy {
      * @param dispo
      * @return
      */
-    @GetMapping(value = "/Article/CategorieAndDispo/{categorieId},{dispo}")
+    @GetMapping(value = "/microservice-article/Article/CategorieAndDispo/{categorieId},{dispo}")
     List<Article> findByCategorieIdAndDisponible(@PathVariable int categorieId,
                                                   @PathVariable Boolean dispo);
 
@@ -52,28 +52,28 @@ public interface MicroserviceArticleProxy {
      * @param dispo
      * @return
      */
-    @GetMapping(value = "/Article/Dispo/{dispo}")
+    @GetMapping(value = "/microservice-article/Article/Dispo/{dispo}")
     List<Article> findByDisponibleOrderById(@PathVariable Boolean dispo);
 
     /**
      * Méthode pour ajouter un article
      * @param article
      */
-    @PostMapping(value = "/Article")
+    @PostMapping(value = "/microservice-article/Article")
     void add(@RequestBody Article article);
 
     /**
      * Méthode pour mettre à jour un article
      * @param article
      */
-    @PutMapping(value = "/Article")
+    @PutMapping(value = "/microservice-article/Article")
     void update(@RequestBody Article article);
 
     /**
      * %éthode pour supprimer un article
      * @param id
      */
-    @DeleteMapping(value = "/Article/{id}")
+    @DeleteMapping(value = "/microservice-article/Article/{id}")
     void delete(@PathVariable("id") Integer id);
 
 }

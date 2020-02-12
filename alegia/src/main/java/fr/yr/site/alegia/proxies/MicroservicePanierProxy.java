@@ -11,20 +11,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 /**
  * Classe pour récupérer les données du MicroserviceAdresse
  */
-@FeignClient(value = "microservice-panier", url = "localhost:9003")
+@FeignClient(name = "zuul-server", url = "localhost:9004")
 public interface MicroservicePanierProxy {
 
 
-    @GetMapping(value = "/Panier/{id}")
+    @GetMapping(value = "/microservice-panier/Panier/{id}")
     Panier getPanier(@PathVariable int id);
 
-    @GetMapping(value = "/Panier/Compte/{compteId}")
+    @GetMapping(value = "/microservice-panier/Panier/Compte/{compteId}")
     Panier getPanierByCompteId(@PathVariable("compteId") int compteId);
 
     /**
      * Méthode pour créer un panier
      * @param panier
      */
-    @PostMapping(value = "/Panier")
+    @PostMapping(value = "/microservice-panier/Panier")
     void add(@RequestBody Panier panier);
 }

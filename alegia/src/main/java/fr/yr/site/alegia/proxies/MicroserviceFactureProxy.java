@@ -7,18 +7,18 @@ import org.springframework.web.bind.annotation.*;
 /**
  * Classe pour récupérer les données du MicroserviceFacture
  */
-@FeignClient(value = "microservice-facture", url = "localhost:9018")
+@FeignClient(name = "zuul-server", url = "localhost:9004")
 public interface MicroserviceFactureProxy {
 
-    @GetMapping(value = "/Facture/{id}")
+    @GetMapping(value = "/microservice-facture/Facture/{id}")
     Facture getById(@PathVariable("id") int id);
 
-    @GetMapping(value = "/Facture/Commande/{commandeId}")
+    @GetMapping(value = "/microservice-facture/Facture/Commande/{commandeId}")
     Facture getByCoAndCommandeId(@PathVariable("commandeId") int commandeId);
 
-    @PostMapping(value = "/Facture")
+    @PostMapping(value = "/microservice-facture/Facture")
     void add(@RequestBody Facture facture);
 
-    @PutMapping(value = "/Facture")
+    @PutMapping(value = "/microservice-facture/Facture")
     void update(@RequestBody Facture facture);
 }

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Classe pour récupérer les données du MicroserviceCommande
  */
-@FeignClient(value = "microservice-commande", url = "localhost:9001")
+@FeignClient(name = "zuul-server", url = "localhost:9004")
 public interface MicroserviceCommandeProxy {
 
     /**
@@ -17,35 +17,35 @@ public interface MicroserviceCommandeProxy {
      * @param id
      * @return
      */
-    @GetMapping(value = "/Commande/{id}")
+    @GetMapping(value = "/microservice-commande/Commande/{id}")
     Commande getCommande(@PathVariable("id") int id);
 
-    @GetMapping(value = "/Commande/NomPrenomEmail/{nom},{prenom},{email}")
+    @GetMapping(value = "/microservice-commande/microservice-commande/Commande/NomPrenomEmail/{nom},{prenom},{email}")
     List<Commande> findByNomPrenomEmail(@PathVariable String nom,
                                                @PathVariable String prenom,
                                                @PathVariable String email);
 
 
-    @GetMapping(value = "/Commande/NomPrenom/{nom},{prenom}")
+    @GetMapping(value = "/microservice-commande/Commande/NomPrenom/{nom},{prenom}")
     List<Commande> findByNomPrenom(@PathVariable String nom,
                                           @PathVariable String prenom);
 
-    @GetMapping(value = "/Commande/Nom/{nom}")
+    @GetMapping(value = "/microservice-commande/Commande/Nom/{nom}")
     List<Commande> findByNom(@PathVariable String nom);
 
 
-    @GetMapping(value = "/Commande/NomEmail/{nom},{email}")
+    @GetMapping(value = "/microservice-commande/Commande/NomEmail/{nom},{email}")
     List<Commande> findByNomEmail(@PathVariable String nom,@PathVariable String email);
 
 
-    @GetMapping(value = "/Commande/PrenomEmail/{prenom},{email}")
+    @GetMapping(value = "/microservice-commande/Commande/PrenomEmail/{prenom},{email}")
     List<Commande> findByPrenomEmail(@PathVariable String prenom,
                                             @PathVariable String email);
 
-    @GetMapping(value = "/Commande/Prenom/{prenom}")
+    @GetMapping(value = "/microservice-commande/Commande/Prenom/{prenom}")
     List<Commande> findByPrenom(@PathVariable("prenom") String prenom);
 
-    @GetMapping(value = "/Commande/Email/{email}")
+    @GetMapping(value = "/microservice-commande/Commande/Email/{email}")
     List<Commande> findByEmail(@PathVariable("email") String email);
 
     /**
@@ -53,13 +53,13 @@ public interface MicroserviceCommandeProxy {
      * @param numero
      * @return
      */
-    @GetMapping(value = "/Commande/Numero/{numero}")
+    @GetMapping(value = "/microservice-commande/Commande/Numero/{numero}")
     Commande getCommandeByNumero(@PathVariable("numero") String numero);
 
-    @GetMapping(value = "/Commande")
+    @GetMapping(value = "/microservice-commande/Commande")
     List<Commande> getListCommande();
 
-    @GetMapping(value = "/Commande/NumeroContaining/{numero}")
+    @GetMapping(value = "/microservice-commande/Commande/NumeroContaining/{numero}")
     List<Commande> findCommandeByNumeroContaining(@PathVariable("numero") String numero);
 
     /**
@@ -67,7 +67,7 @@ public interface MicroserviceCommandeProxy {
      * @param compteId
      * @return
      */
-    @GetMapping(value = "/Commande/Compte/{compteId}")
+    @GetMapping(value = "/microservice-commande/Commande/Compte/{compteId}")
     List<Commande> getCommandeByCompteId(@PathVariable("compteId") int compteId);
 
 
@@ -76,12 +76,12 @@ public interface MicroserviceCommandeProxy {
      * @param statutId
      * @return
      */
-    @GetMapping(value = "/Commande/Statut/{statutId}")
+    @GetMapping(value = "/microservice-commande/Commande/Statut/{statutId}")
     List<Commande> getCOmmandeByStatutId(@PathVariable int statutId);
 
-    @PostMapping(value = "/Commande")
+    @PostMapping(value = "/microservice-commande/Commande")
     void add(@RequestBody Commande commande);
 
-    @PutMapping(value = "/Commande")
+    @PutMapping(value = "/microservice-commande/Commande")
     void update(@RequestBody Commande commande);
 }

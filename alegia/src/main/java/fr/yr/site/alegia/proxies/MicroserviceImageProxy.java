@@ -12,16 +12,16 @@ import java.util.List;
 /**
  * Classe pour récupérer les données du MicroserviceImage
  */
-@FeignClient(value = "microservice-image", url = "localhost:9021")
+@FeignClient(name = "zuul-server", url = "localhost:9004")
 public interface MicroserviceImageProxy {
 
-    @GetMapping(value = "/Image/Article/{articleId}")
+    @GetMapping(value = "/microservice-image/Image/Article/{articleId}")
     List<Image> findByArticleId(@PathVariable("articleId") int articleId);
 
     /**
      * Méthode pour ajouter une image
      * @param image
      */
-    @PostMapping(value = "/Image")
+    @PostMapping(value = "/microservice-image/Image")
     void add(@RequestBody Image image);
 }

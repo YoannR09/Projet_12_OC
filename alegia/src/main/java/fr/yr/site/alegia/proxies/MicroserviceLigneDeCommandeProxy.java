@@ -12,18 +12,18 @@ import java.util.List;
 /**
  * Classe pour récupérer les données du MicroserviceLigneDeCommande
  */
-@FeignClient(value = "microservice-ligne", url = "localhost:9033")
+@FeignClient(name = "zuul-server", url = "localhost:9004")
 public interface MicroserviceLigneDeCommandeProxy {
 
-    @GetMapping(value = "/Ligne/{id}")
+    @GetMapping(value = "/microservice-ligne/Ligne/{id}")
     LigneDeCommande findById(@PathVariable int id);
 
-    @GetMapping(value = "/Ligne")
+    @GetMapping(value = "/microservice-ligne/Ligne")
     List<LigneDeCommande> findAll();
 
-    @GetMapping(value = "/Ligne/Commande/{commandeId}")
+    @GetMapping(value = "/microservice-ligne/Ligne/Commande/{commandeId}")
     List<LigneDeCommande> findByCommandeId(@PathVariable("commandeId") int commandeId);
 
-    @PostMapping(value = "/Ligne")
+    @PostMapping(value = "/microservice-ligne/Ligne")
     void add(@RequestBody LigneDeCommande ldc);
 }

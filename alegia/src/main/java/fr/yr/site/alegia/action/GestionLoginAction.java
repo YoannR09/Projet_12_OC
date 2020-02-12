@@ -148,13 +148,15 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
         try {
             if (email != null){
                 compte = factory.getCompteProxy().findByEmail(email.toLowerCase());
-                String newMdp = RandomStringUtils.randomAlphanumeric(10);
-                MailGestion mailGestion = new MailGestion();
-                String contenu = "Votre nouveau mot de passe est : "+newMdp;
-                String objet = "Votre nouveau mot de passe";
-                mailGestion.sendMail(objet,contenu,compte);
-                compte.setMotDePasse(EncryptionUtil.encrypt(newMdp, secretKey));
-                factory.getCompteProxy().update(compte);
+                if (compte != null) {
+                    String newMdp = RandomStringUtils.randomAlphanumeric(10);
+                    MailGestion mailGestion = new MailGestion();
+                    String contenu = "Votre nouveau mot de passe est : " + newMdp;
+                    String objet = "Votre nouveau mot de passe";
+                    mailGestion.sendMail(objet, contenu, compte);
+                    compte.setMotDePasse(EncryptionUtil.encrypt(newMdp, secretKey));
+                    factory.getCompteProxy().update(compte);
+                }
                 categorieList = factory.getCategorieProxy().findAll();
                 return ActionSupport.SUCCESS;
             }else {

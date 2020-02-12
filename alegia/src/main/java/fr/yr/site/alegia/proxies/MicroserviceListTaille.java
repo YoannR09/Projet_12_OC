@@ -11,27 +11,27 @@ import java.util.List;
 /**
  * Classe pour récupérer les données du MicroserviceListTaille
  */
-@FeignClient(value = "microservice-list", url = "localhost:9016")
+@FeignClient(name = "zuul-server", url = "localhost:9004")
 public interface MicroserviceListTaille {
 
-    @GetMapping(value = "/ListTaille/{id}")
+    @GetMapping(value = "/microservice-list/ListTaille/{id}")
     ListTaille findById(@PathVariable("id") int id);
 
 
-    @GetMapping(value = "/ListTaille/Article/{articleId}")
+    @GetMapping(value = "/microservice-list/ListTaille/Article/{articleId}")
     List<ListTaille> findByArticleId(@PathVariable("articleId") int articleId);
 
     /**
      * Méthode pour ajouter une listTaille
      * @param listTaille
      */
-    @PostMapping(value = "/ListTaille")
+    @PostMapping(value = "/microservice-list/ListTaille")
     void add(@RequestBody ListTaille listTaille);
 
     /**
      * Méthode pour supprimer une liste de taille en focntion de l'article id
      * @param articleId
      */
-    @DeleteMapping(value = "/ListTaille/Article/{articleId}")
+    @DeleteMapping(value = "/microservice-list/ListTaille/Article/{articleId}")
     void deleteByArticleId(@PathVariable("articleId") int articleId);
 }

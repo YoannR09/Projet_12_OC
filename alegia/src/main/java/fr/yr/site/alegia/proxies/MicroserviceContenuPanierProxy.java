@@ -9,21 +9,21 @@ import java.util.List;
 /**
  * Classe pour récupérer les données du MicroserviceContenuPanier
  */
-@FeignClient(value = "microservice-contenu", url = "localhost:9017")
+@FeignClient(name = "zuul-server", url = "localhost:9004")
 public interface MicroserviceContenuPanierProxy {
 
-    @GetMapping(value = "/Contenu/{id}")
+    @GetMapping(value = "/microservice-contenu/Contenu/{id}")
     Contenu findById(@PathVariable int id);
 
-    @GetMapping(value = "/Contenu/Panier/{panierId}")
+    @GetMapping(value = "/microservice-contenu/Contenu/Panier/{panierId}")
     List<Contenu> findByPanierId(@PathVariable("panierId") int panierId);
 
-    @PostMapping(value = "/Contenu")
+    @PostMapping(value = "/microservice-contenu/Contenu")
     void add(@RequestBody Contenu contenu);
 
-    @PostMapping(value = "/Contenu")
+    @PostMapping(value = "/microservice-contenu/Contenu")
     void update(@RequestBody Contenu contenu);
 
-    @DeleteMapping(value = "/Contenu/{id}")
+    @DeleteMapping(value = "/microservice-contenu/Contenu/{id}")
     void delete(@PathVariable("id") int id);
 }

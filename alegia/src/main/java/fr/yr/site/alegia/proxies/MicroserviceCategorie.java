@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Classe pour récupérer les données du MicroserviceCategorie
  */
-@FeignClient(value = "microservice-categorie", url = "localhost:9015")
+@FeignClient(name = "zuul-server", url = "localhost:9004")
 public interface MicroserviceCategorie {
 
 
@@ -18,7 +18,7 @@ public interface MicroserviceCategorie {
      * @param id
      * @return
      */
-    @GetMapping(value = "/Categorie/{id}")
+    @GetMapping(value = "/microservice-categorie/Categorie/{id}")
     Categorie findById(@PathVariable("id") int id);
 
     /**
@@ -26,35 +26,35 @@ public interface MicroserviceCategorie {
      * @param nom
      * @return
      */
-    @GetMapping(value = "/Categorie/Nom/{nom}")
+    @GetMapping(value = "/microservice-categorie/Categorie/Nom/{nom}")
     Categorie findByNom(@PathVariable("nom") String nom);
 
     /**
      * Méthode pour trouver toutes les catégories
      * @return
      */
-    @GetMapping(value = "/Categorie")
+    @GetMapping(value = "/microservice-categorie/Categorie")
     List<Categorie> findAll();
 
     /**
      * Méthode pour trouver toutes les catégories disponibles ou indisponibles
      * @return
      */
-    @GetMapping(value = "/Categorie/Dispo/{dispo}")
+    @GetMapping(value = "/microservice-categorie/Categorie/Dispo/{dispo}")
     List<Categorie> findByDispo(@PathVariable("dispo") Boolean dispo);
 
     /**
      * Méthode pour ajouter une catégorie
      * @param categorie
      */
-    @PostMapping(value = "/Categorie")
+    @PostMapping(value = "/microservice-categorie/Categorie")
     void add(@RequestBody Categorie categorie);
 
     /**
      * Méthode pour mettre à jour une catégorie
      * @param categorie
      */
-    @PutMapping(value = "/Categorie")
+    @PutMapping(value = "/microservice-categorie/Categorie")
     void update(@RequestBody Categorie categorie);
 }
 
