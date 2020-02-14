@@ -17,10 +17,6 @@ public class AdresseController {
 
     private static final Logger logger = LogManager.getLogger();
 
-    public AdresseController(AdresseDao vAdresseDao){
-        this.dao = vAdresseDao;
-    }
-
     /**
      * Méthode pour rechercher ka liste des adresses
      * @return
@@ -28,9 +24,9 @@ public class AdresseController {
     @GetMapping(value = "/Adresse")
     public List<Adresse> findAll(){
         try {
-            return dao.findAll();
+            return getDao().findAll();
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
             return null;
         }
     }
@@ -43,9 +39,9 @@ public class AdresseController {
     @GetMapping(value = "/Adresse/{id}")
     public Adresse getAdresse(@PathVariable int id){
         try {
-            return dao.findById(id);
+            return getDao().findById(id);
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
             return null;
         }
     }
@@ -58,9 +54,9 @@ public class AdresseController {
     @PostMapping(value = "/Adresse")
     public void add(@RequestBody Adresse adresse){
         try {
-            dao.save(adresse);
+            getDao().save(adresse);
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
         }
     }
 
@@ -77,11 +73,12 @@ public class AdresseController {
             @PathVariable String ville,@PathVariable String codePostal,
             @PathVariable String numero,@PathVariable String rue){
         try {
-            return dao.findByVilleAndCodePostalAndNumeroAndRue(ville, codePostal, numero, rue);
+            return getDao().findByVilleAndCodePostalAndNumeroAndRue(ville, codePostal, numero, rue);
         }catch (Exception e){
             return null;
         }
     }
+
 
     /**
      * Méthode pour mettre à jour une adresse existante
@@ -90,9 +87,17 @@ public class AdresseController {
     @PutMapping(value = "/Adresse")
     public void update(@RequestBody Adresse adresse){
         try {
-            dao.save(adresse);
+            getDao().save(adresse);
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
         }
+    }
+
+    protected AdresseDao getDao() {
+        return dao;
+    }
+
+    protected Logger getLogger() {
+        return logger;
     }
 }

@@ -6,6 +6,7 @@ public class Article {
 
     private String nom;
     private String description;
+    private String reference;
     private Integer id;
     private Integer categorieId;
     private Float prixHt;
@@ -84,5 +85,13 @@ public class Article {
 
     public void setSupprimable(Boolean supprimable) {
         this.supprimable = supprimable;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 }

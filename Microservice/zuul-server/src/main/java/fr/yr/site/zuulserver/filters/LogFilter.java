@@ -28,15 +28,13 @@ public class LogFilter extends ZuulFilter {
 
     @Override
     public boolean shouldFilter() {
-        return true;
+        return false;
     }
 
     @Override
     public Object run() throws ZuulException {
 
         HttpServletRequest req = RequestContext.getCurrentContext().getRequest();
-
-        log.info("**** Requête interceptée ! L'URL est : {} " , req.getRequestURL());
 
         return null;
     }

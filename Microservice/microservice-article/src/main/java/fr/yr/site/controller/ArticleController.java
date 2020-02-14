@@ -14,10 +14,6 @@ public class ArticleController {
 
     private static final Logger logger = LogManager.getLogger();
 
-    public ArticleController(ArticleDao vArticleDao){
-        this.articleDao = vArticleDao;
-    }
-
     @Autowired
     private ArticleDao articleDao;
 
@@ -29,9 +25,9 @@ public class ArticleController {
     @GetMapping(value = "/Article/{id}")
     public Article getArticle(@PathVariable int id){
         try {
-            return articleDao.findById(id);
+            return getArticleDao().findById(id);
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
             return null;
         }
     }
@@ -44,9 +40,9 @@ public class ArticleController {
     @GetMapping(value = "/Article/Categorie/{categorieId}")
     public List<Article> getArticleByCategorieId(@PathVariable int categorieId){
         try {
-            return articleDao.findByCategorieId(categorieId);
+            return getArticleDao().findByCategorieId(categorieId);
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
             return null;
         }
     }
@@ -58,9 +54,9 @@ public class ArticleController {
     @GetMapping(value = "/Article")
     public List<Article> findAll(){
         try {
-            return articleDao.findAll();
+            return getArticleDao().findAll();
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
             return null;
         }
     }
@@ -75,9 +71,9 @@ public class ArticleController {
     @GetMapping(value = "/Article/CategorieAndDispo/{categorieId},{dispo}")
     public List<Article> findByCategorieIdAndDisponible(@PathVariable int categorieId,@PathVariable Boolean dispo){
         try {
-            return articleDao.findByCategorieIdAndDisponible(categorieId,dispo);
+            return getArticleDao().findByCategorieIdAndDisponible(categorieId,dispo);
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
             return null;
         }
     }
@@ -90,9 +86,9 @@ public class ArticleController {
     @GetMapping(value = "/Article/Dispo/{dispo}")
     public List<Article> findByDisponibleOrderById(@PathVariable Boolean dispo){
         try {
-            return articleDao.findByDisponibleOrderById(dispo);
+            return getArticleDao().findByDisponibleOrderById(dispo);
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
             return null;
         }
     }
@@ -104,9 +100,9 @@ public class ArticleController {
     @PostMapping(value = "/Article")
     public void add(@RequestBody Article article){
         try {
-                articleDao.save(article);
+                getArticleDao().save(article);
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
         }
     }
 
@@ -117,9 +113,9 @@ public class ArticleController {
     @PutMapping(value = "/Article")
     public void update(@RequestBody Article article){
         try {
-            articleDao.save(article);
+            getArticleDao().save(article);
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
         }
     }
 
@@ -130,9 +126,17 @@ public class ArticleController {
     @DeleteMapping(value = "/Article/{id}")
     public void delete(@PathVariable Integer id){
         try {
-            articleDao.deleteById(id);
+            getArticleDao().deleteById(id);
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
         }
+    }
+
+    protected ArticleDao getArticleDao() {
+        return articleDao;
+    }
+
+    protected Logger getLogger() {
+        return logger;
     }
 }
