@@ -2,6 +2,8 @@ package fr.yr.site.controller;
 
 import fr.yr.site.dao.ContenuDao;
 import fr.yr.site.model.Contenu;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +15,8 @@ public class ContenuController {
     @Autowired
     private ContenuDao dao;
 
+    private static final Logger logger = LogManager.getLogger();
+
     /**
      * Méthode pour récupérer un
      * @param id
@@ -21,8 +25,9 @@ public class ContenuController {
     @GetMapping(value = "/Contenu/{id}")
     public Contenu findById(@PathVariable int id){
         try {
-            return dao.findById(id);
+            return getDao().findById(id);
         }catch (Exception e){
+            getLogger().error(e);
             return null;
         }
     }
@@ -35,8 +40,9 @@ public class ContenuController {
     @GetMapping(value = "/Contenu/Panier/{panierId}")
     public List<Contenu> findByPanierId(@PathVariable int panierId){
         try {
-            return dao.findByPanierId(panierId);
+            return getDao().findByPanierId(panierId);
         }catch (Exception e){
+            getLogger().error(e);
             return null;
         }
     }
@@ -48,9 +54,9 @@ public class ContenuController {
     @PostMapping(value = "/Contenu")
     public void add(@RequestBody Contenu contenu){
         try {
-            dao.save(contenu);
+            getDao().save(contenu);
         }catch (Exception e){
-
+            getLogger().error(e);
         }
     }
 
@@ -61,9 +67,9 @@ public class ContenuController {
     @PutMapping(value = "/Contenu")
     public void update(@RequestBody Contenu contenu){
         try {
-            dao.save(contenu);
+            getDao().save(contenu);
         }catch (Exception e){
-
+            getLogger().error(e);
         }
     }
 
@@ -74,9 +80,17 @@ public class ContenuController {
     @DeleteMapping(value = "/Contenu/{id}")
     public void delete(@PathVariable int id){
         try {
-            dao.deleteById(id);
+            getDao().deleteById(id);
         }catch (Exception e){
-
+            getLogger().error(e);
         }
+    }
+
+    protected ContenuDao getDao() {
+        return dao;
+    }
+
+    protected Logger getLogger() {
+        return logger;
     }
 }

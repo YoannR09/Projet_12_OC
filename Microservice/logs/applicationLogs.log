@@ -2048,3 +2048,5 @@ Caused by: java.lang.IllegalArgumentException: Not a managed type: class fr.yr.s
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContextInternal(DefaultCacheAwareContextLoaderDelegate.java:99) ~[spring-test-5.1.10.RELEASE.jar:5.1.10.RELEASE]
 	at org.springframework.test.context.cache.DefaultCacheAwareContextLoaderDelegate.loadContext(DefaultCacheAwareContextLoaderDelegate.java:117) ~[spring-test-5.1.10.RELEASE.jar:5.1.10.RELEASE]
 	... 27 more
+17:17:24.337 [Projet 7] ERROR fr.yr.site.controller.ImageController - java.lang.NullPointerException
+17:17:24.369 [Projet 7] ERROR fr.yr.site.controller.ImageController - java.lang.NullPointerException

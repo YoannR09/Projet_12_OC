@@ -21,8 +21,9 @@ public class CompteController {
     @GetMapping(value = "/Compte/{id}")
     public Compte findById(@PathVariable int id){
         try {
-            return dao.findById(id);
+            return getDao().findById(id);
         }catch (Exception e){
+            getLogger().error(e);
             return null;
         }
     }
@@ -30,8 +31,9 @@ public class CompteController {
     @GetMapping(value = "/Compte/Email/{email}")
     public Compte findByEmail(@PathVariable String email){
         try {
-            return dao.findByEmail(email);
+            return getDao().findByEmail(email);
         }catch (Exception e){
+            getLogger().error(e);
             return null;
         }
     }
@@ -39,9 +41,9 @@ public class CompteController {
     @GetMapping(value = "/Compte")
     public List<Compte> findAll(){
         try {
-            return dao.findAll();
+            return getDao().findAll();
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
             return null;
         }
     }
@@ -56,9 +58,9 @@ public class CompteController {
             compte.setEmail(compte.getEmail().toLowerCase());
             compte.setNom(compte.getNom().toUpperCase());
             compte.setPrenom(compte.getPrenom().toUpperCase());
-            dao.save(compte);
+            getDao().save(compte);
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
         }
     }
 
@@ -69,9 +71,17 @@ public class CompteController {
     @PutMapping(value = "/Compte")
     public void update(@RequestBody Compte compte){
         try {
-            dao.save(compte);
+            getDao().save(compte);
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
         }
+    }
+
+    protected CompteDao getDao() {
+        return dao;
+    }
+
+    protected Logger getLogger() {
+        return logger;
     }
 }

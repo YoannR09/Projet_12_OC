@@ -176,6 +176,7 @@ public class ArticleControllerTest {
         dao = mock(ArticleDao.class);
         logger = mock(Logger.class);
         doNothing().when(logger).warn(anyString());
+        doNothing().when(logger).error(anyString());
     }
 
     public class ArticleControllerFake extends ArticleController {

@@ -25,9 +25,9 @@ public class CategorieController {
     @GetMapping(value = "/Categorie/{id}")
     public Categorie findById(@PathVariable int id){
         try {
-            return dao.findById(id);
+            return getDao().findById(id);
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
             return null;
         }
     }
@@ -40,9 +40,9 @@ public class CategorieController {
     @GetMapping(value = "/Categorie/Nom/{nom}")
     public Categorie findByNom(@PathVariable String nom){
         try {
-            return dao.findByNom(nom);
+            return getDao().findByNom(nom);
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
             return null;
         }
     }
@@ -54,9 +54,9 @@ public class CategorieController {
     @GetMapping(value = "/Categorie")
     public List<Categorie> findAll(){
         try {
-            return dao.findByDisponible(true);
+            return getDao().findByDisponible(true);
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
             return null;
         }
     }
@@ -68,9 +68,9 @@ public class CategorieController {
     @GetMapping(value = "/Categorie/Dispo/{dispo}")
     public List<Categorie> findByDispo(@PathVariable Boolean dispo){
         try {
-            return dao.findByDisponible(dispo);
+            return getDao().findByDisponible(dispo);
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
             return null;
         }
     }
@@ -84,12 +84,12 @@ public class CategorieController {
     @PostMapping(value = "/Categorie")
     public void add(@RequestBody Categorie categorie){
         try {
-            Categorie cat = dao.findByNom(categorie.getNom());
+            Categorie cat = getDao().findByNom(categorie.getNom());
             if(cat == null){
-                dao.save(categorie);
+                getDao().save(categorie);
             }
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
         }
     }
 
@@ -100,9 +100,18 @@ public class CategorieController {
     @PutMapping(value = "/Categorie")
     public void update(@RequestBody Categorie categorie){
         try {
-            dao.save(categorie);
+            getDao().save(categorie);
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
         }
+    }
+
+    protected CategorieDao getDao() {
+        return dao;
+    }
+
+
+    protected Logger getLogger() {
+        return logger;
     }
 }
