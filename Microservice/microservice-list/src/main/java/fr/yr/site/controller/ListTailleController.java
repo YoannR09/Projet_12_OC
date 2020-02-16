@@ -20,9 +20,9 @@ public class ListTailleController {
     @GetMapping(value = "/ListTaille/{id}")
     public ListTaille findById(@PathVariable int id){
         try {
-            return dao.findById(id);
+            return getDao().findById(id);
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
             return null;
         }
     }
@@ -31,9 +31,9 @@ public class ListTailleController {
     @GetMapping(value = "/ListTaille/Article/{articleId}")
     public List<ListTaille> findByCategorieId(@PathVariable int articleId){
         try {
-            return dao.findByArticleId(articleId);
+            return getDao().findByArticleId(articleId);
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
             return null;
         }
     }
@@ -45,8 +45,9 @@ public class ListTailleController {
     @PostMapping(value = "/ListTaille")
     public void add(@RequestBody ListTaille listTaille){
         try {
-            dao.save(listTaille);
+            getDao().save(listTaille);
         }catch (Exception e){
+            getLogger().error(e);
         }
     }
 
@@ -57,9 +58,17 @@ public class ListTailleController {
     @DeleteMapping(value = "/ListTaille/Article/{articleId}")
     public void deleteByArticleId(@PathVariable Integer articleId){
         try {
-            dao.deleteByArticleId(articleId);
+            getDao().deleteByArticleId(articleId);
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
         }
+    }
+
+    protected ListTailleDao getDao() {
+        return dao;
+    }
+
+    protected Logger getLogger() {
+        return logger;
     }
 }

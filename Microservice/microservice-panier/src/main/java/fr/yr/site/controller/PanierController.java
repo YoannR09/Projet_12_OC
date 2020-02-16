@@ -15,16 +15,12 @@ public class PanierController {
     @Autowired
     private PanierDao dao;
 
-    public PanierController(PanierDao vPanierDao){
-        this.dao = vPanierDao;
-    }
-
     @GetMapping(value = "/Panier/{id}")
     public Panier getPanier(@PathVariable int id){
         try {
-            return dao.findById(id);
+            return getDao().findById(id);
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
             return null;
         }
     }
@@ -32,9 +28,9 @@ public class PanierController {
     @GetMapping(value = "/Panier/Compte/{compteId}")
     public Panier getPanierByCompteId(@PathVariable int compteId){
         try {
-            return dao.findByCompteId(compteId);
+            return getDao().findByCompteId(compteId);
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
             return null;
         }
     }
@@ -46,9 +42,17 @@ public class PanierController {
     @PostMapping(value = "/Panier")
     public void add(@RequestBody Panier panier){
         try {
-            dao.save(panier);
+            getDao().save(panier);
         }catch (Exception e){
-            logger.error(e);
+            getLogger().error(e);
         }
+    }
+
+    protected Logger getLogger() {
+        return logger;
+    }
+
+    protected PanierDao getDao() {
+        return dao;
     }
 }

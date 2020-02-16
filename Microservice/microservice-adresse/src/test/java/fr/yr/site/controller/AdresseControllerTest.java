@@ -36,7 +36,7 @@ public class AdresseControllerTest {
         Adresse adresseTest = controller.getAdresse(4);
 
         // THEN
-        assertEquals(adresseTest.getCodePostal(),83110);
+        assertEquals(adresseTest.getCodePostal(),"83110");
     }
 
     @Test
@@ -62,6 +62,7 @@ public class AdresseControllerTest {
         // THEN
         assertEquals(adresse.getCodePostal(),adresseTest.getCodePostal());
     }
+
 
     @Before
     public void init() {
