@@ -21,9 +21,9 @@ public class FactureController {
     }
 
     @GetMapping(value = "/Facture/Commande/{commandeId}")
-    public Facture getByCoAndCommandeId(@PathVariable int commandeId){
+    public Facture getByCommandeId(@PathVariable int commandeId){
         try {
-            return dao.getByCoAndCommandeId(commandeId);
+            return dao.getByCommandeId(commandeId);
         }catch (Exception e){
             return null;
         }

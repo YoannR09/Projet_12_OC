@@ -111,46 +111,28 @@
 <%@ include file="../_include/header.jsp"%>
 <div id="blocCenter" style="display: flex;justify-content: center;">
     <div class="col-9" style="max-width: 500px">
-        <label class="textTop">Votre commande</label>
+        <label class="textTop">Sélectionnez votre mode de paiement</label>
         <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreArticle">
             <div style="display: flex;justify-content: space-between">
                 <div>
-                    <table class="table table-bordered table-hover">
-                        <thead class="thead">
-                        <tr style="max-height: 10px">
-                            <th scope="col">ARTICLE</th>
-                            <th scope="col">PRIX</th>
-                            <th scope="col">MONTANT</th>
-                            <th scope="col">QUANTITE</th>
-                            <th scope="col">TAILLE</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <s:iterator value="ligneDeCommandeList">
-                            <tr>
-                                <td><s:property value="designation"/></td>
-                                <td><s:property value="prixUnitTtc"/> €</td>
-                                <td><s:property value="montantTtc"/> €</td>
-                                <td><s:property value="quantite"/></td>
-                                <td><s:property value="taille"/></td>
-                            </tr>
-                        </s:iterator>
-                        </tbody>
-                    </table>
-                    <div style="width: 100%">
-                        <em class="lab">ADRESSE DE LIVRAISON</em><br/>
-                        <div style="margin-bottom: 10px">
-                            <span style="font-weight: bold"><s:property value="adresse.codePostal"/></span>
-                            <span style="font-weight: bold">  -  </span>
-                            <span style="font-weight: bold"><s:property value="adresse.ville"/></span>
-                            <span style="font-weight: bold">  -  </span>
-                            <span style="font-weight: bold"><s:property value="adresse.numero"/></span>
-                            <span style="font-weight: bold"><s:property value="adresse.rue"/></span>
-                        </div>
-                    </div>
-                    <footer>
-                        <%@ include file="../_include/footer.jsp"%>
-                    </footer>
+                    Carte
+                    <s:a action="doPaiementCommande" class="btn btn-dark" style="font-size: 0.8em;">
+                        <s:param name="commandeId" value="commande.id"/>
+                        Sélectionner</s:a>
+                </div>
+                <div>
+                    Paypal
+                    <s:a action="doPaiementCommande" class="btn btn-dark" style="font-size: 0.8em;">
+                        <s:param name="commandeId" value="commande.id"/>
+                        Sélectionner</s:a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<footer>
+    <%@ include file="../_include/footer.jsp"%>
+</footer>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>

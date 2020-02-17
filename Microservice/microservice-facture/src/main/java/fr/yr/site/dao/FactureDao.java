@@ -7,5 +7,5 @@ public interface FactureDao extends JpaRepository<Facture, Integer> {
 
     Facture getById(int id);
 
-    Facture getByCoAndCommandeId(int commandeId);
+    Facture getByCommandeId(int commandeId);
 }

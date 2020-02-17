@@ -50,110 +50,6 @@
 
         <default-action-ref name="index" />
 
-        <!-- !!!!!!!!!!!!!!!!!!!!! A deplacer !!!!!!!!!!! -->
-        <action name="gestion" class="fr.yr.site.alegia.action.GestionSiteAction" method="doGestion">
-            <result>/jsp/gestion/gestion.jsp</result>
-            <result name="error">/jsp/error/error.jsp</result>
-        </action>
-
-        <action name="formAddCategorie" class="fr.yr.site.alegia.action.GestionSiteAction" method="doGestion">
-            <result>/jsp/gestion/categorie/addCategorie.jsp</result>
-            <result name="error">/jsp/error/error.jsp</result>
-        </action>
-
-        <action name="formAddArticle" class="fr.yr.site.alegia.action.GestionSiteAction" method="formAddArticle">
-            <result>/jsp/gestion/article/addArticle.jsp</result>
-            <result name="error">/jsp/error/error.jsp</result>
-        </action>
-
-        <action name="gestionArticle" class="fr.yr.site.alegia.action.GestionSiteAction" method="gestionArticle">
-            <result>/jsp/gestion/article/gestionArticle.jsp</result>
-            <result name="error">/jsp/error/error.jsp</result>
-        </action>
-
-        <action name="gestionCategorie" class="fr.yr.site.alegia.action.GestionSiteAction" method="gestionCategorie">
-            <result>/jsp/gestion/categorie/gestionCategorie.jsp</result>
-            <result name="error">/jsp/error/error.jsp</result>
-        </action>
-
-        <action name="addCategorie" class="fr.yr.site.alegia.action.GestionCategorieAction" method="addCategorie">
-            <result name="success">/jsp/index.jsp</result>
-            <result name="error">/jsp/gestion/categorie/addCategorie.jsp</result>
-        </action>
-
-        <action name="doAddArticle" class="fr.yr.site.alegia.action.GestionArticleAction" method="addArticle">
-            <result name="success">/jsp/index.jsp</result>
-            <result name="error">/jsp/gestion/article/addArticle.jsp</result>
-        </action>
-
-        <action name="doArticleDisponible" class="fr.yr.site.alegia.action.GestionArticleAction" method="doDiponible">
-            <result>/jsp/gestion/article/gestionArticle.jsp</result>
-            <result name="error">jsp/error/error.jsp</result>
-        </action>
-
-        <action name="doCategorieDisponible" class="fr.yr.site.alegia.action.GestionCategorieAction" method="doDisponible">
-            <result>/jsp/gestion/categorie/gestionCategorie.jsp</result>
-            <result name="error">jsp/error/error.jsp</result>
-        </action>
-
-        <action name="doCategorieIndisponible" class="fr.yr.site.alegia.action.GestionCategorieAction" method="doIndisponible">
-            <result>/jsp/gestion/categorie/gestionCategorie.jsp</result>
-            <result name="error">jsp/error/error.jsp</result>
-        </action>
-
-        <action name="doArticleIndosponible" class="fr.yr.site.alegia.action.GestionArticleAction" method="doIndiponible">
-            <result>/jsp/gestion/article/gestionArticle.jsp</result>
-            <result name="error">jsp/error/error.jsp</result>
-        </action>
-
-        <action name="formModifArticle" class="fr.yr.site.alegia.action.GestionArticleAction" method="formModifArticle">
-            <result>/jsp/gestion/article/modifArticle.jsp</result>
-            <result name="error">jsp/error/error.jsp</result>
-        </action>
-
-        <action name="doModifArticle" class="fr.yr.site.alegia.action.GestionArticleAction" method="doModifArticle">
-            <result>/jsp/gestion/article/modifArticle.jsp</result>
-            <result name="error">jsp/error/error.jsp</result>
-        </action>
-
-        <action name="doArticleSupprimer" class="fr.yr.site.alegia.action.GestionArticleAction" method="doSupprimer">
-            <result>/jsp/gestion/article/gestionArticle.jsp</result>
-            <result name="error">jsp/error/error.jsp</result>
-        </action>
-        <!-- !!!!!!!!!!!!!!!!!!!!! A deplacer !!!!!!!!!!! -->
-
-        <action name="doAddImage" class="fr.yr.site.alegia.action.GestionSiteAction" method="doAjoutImage">
-            <interceptor-ref name="fileUpload"/>
-            <interceptor-ref name="basicStack"/>
-            <result name="success">/jsp/gestion/article/modifArticle.jsp</result>
-            <result name="error">jsp/error/error.jsp</result>
-        </action>
-
-        <action name="doRechercheCommande" class="fr.yr.site.alegia.action.GestionCommandeAdminAction" method="doRechercheCommande">
-            <result name="success">/jsp/gestion/commande/listCommande.jsp</result>
-            <result name="error">jsp/error/error.jsp</result>
-        </action>
-
-        <action name="doChangeStatut" class="fr.yr.site.alegia.action.GestionCommandeAdminAction" method="doCommandeChangeStatut">
-            <result name="success">/jsp/gestion/commande/detailCommande.jsp</result>
-            <result name="error">jsp/error/error.jsp</result>
-        </action>
-
-        <action name="rechercheForm" class="fr.yr.site.alegia.action.GestionCommandeAdminAction" method="doRechercheForm">
-            <result name="success">/jsp/gestion/commande/rechercheCommande.jsp</result>
-            <result name="error">jsp/error/error.jsp</result>
-        </action>
-
-        <action name="doListCommande" class="fr.yr.site.alegia.action.GestionCommandeAdminAction" method="doListCommandeByStatut">
-            <result name="success">/jsp/gestion/commande/listCommande.jsp</result>
-            <result name="error">jsp/error/error.jsp</result>
-        </action>
-
-        <action name="doDetailCommande" class="fr.yr.site.alegia.action.GestionCommandeAdminAction" method="doDetailCommande">
-            <result name="success">/jsp/gestion/commande/detailCommande.jsp</result>
-            <result name="error">jsp/error/error.jsp</result>
-        </action>
-
         <action name="doLogin" class="fr.yr.site.alegia.action.GestionLoginAction" method="doLogin">
             <result name="success">/jsp/index.jsp</result>
             <result name="error">/jsp/login/login.jsp</result>
@@ -241,6 +137,27 @@
             <result name="error">/jsp/error/error.jsp</result>
         </action>
 
+        <action name="doAdresseCompteCommande"
+                class="fr.yr.site.alegia.action.GestionCommandeAction"
+                method="doConfirmAdresseCompte">
+            <result name="success">/jsp/commande/paiementCommande.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doNewAdresseCommande"
+                class="fr.yr.site.alegia.action.GestionCommandeAction"
+                method="doConfirmNewAdresse">
+            <result name="success">/jsp/commande/paiementCommande.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doPaiementCommande"
+                class="fr.yr.site.alegia.action.GestionCommandeAction"
+                method="doConfirmPaiement">
+            <result name="success">/jsp/commande/recapCommande.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
         <action name="doAdresseCommande"
                 class="fr.yr.site.alegia.action.GestionCommandeAction"
                 method="doAdresseCommande">
@@ -281,5 +198,110 @@
             <result name="success">/jsp/index.jsp</result>
             <result name="error">/jsp/error/error.jsp</result>
         </action>
+
+        <action name="doArticleDisponible" class="fr.yr.site.alegia.action.GestionArticleAction" method="doDiponible">
+            <result>/jsp/gestion/article/gestionArticle.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doCategorieDisponible" class="fr.yr.site.alegia.action.GestionCategorieAction" method="doDisponible">
+            <result>/jsp/gestion/categorie/gestionCategorie.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doCategorieIndisponible" class="fr.yr.site.alegia.action.GestionCategorieAction" method="doIndisponible">
+            <result>/jsp/gestion/categorie/gestionCategorie.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doArticleIndosponible" class="fr.yr.site.alegia.action.GestionArticleAction" method="doIndiponible">
+            <result>/jsp/gestion/article/gestionArticle.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
+        <action name="formModifArticle" class="fr.yr.site.alegia.action.GestionArticleAction" method="formModifArticle">
+            <result>/jsp/gestion/article/modifArticle.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doModifArticle" class="fr.yr.site.alegia.action.GestionArticleAction" method="doModifArticle">
+            <result>/jsp/gestion/article/modifArticle.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doArticleSupprimer" class="fr.yr.site.alegia.action.GestionArticleAction" method="doSupprimer">
+            <result>/jsp/gestion/article/gestionArticle.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+        <!-- !!!!!!!!!!!!!!!!!!!!! A deplacer !!!!!!!!!!! -->
+
+        <action name="doAddImage" class="fr.yr.site.alegia.action.GestionSiteAction" method="doAjoutImage">
+            <interceptor-ref name="fileUpload"/>
+            <interceptor-ref name="basicStack"/>
+            <result name="success">/jsp/gestion/article/modifArticle.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doRechercheCommande" class="fr.yr.site.alegia.action.GestionCommandeAdminAction" method="doRechercheCommande">
+            <result name="success">/jsp/gestion/commande/listCommande.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doChangeStatut" class="fr.yr.site.alegia.action.GestionCommandeAdminAction" method="doCommandeChangeStatut">
+            <result name="success">/jsp/gestion/commande/detailCommande.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
+        <action name="rechercheForm" class="fr.yr.site.alegia.action.GestionCommandeAdminAction" method="doRechercheForm">
+            <result name="success">/jsp/gestion/commande/rechercheCommande.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doListCommande" class="fr.yr.site.alegia.action.GestionCommandeAdminAction" method="doListCommandeByStatut">
+            <result name="success">/jsp/gestion/commande/listCommande.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doDetailCommande" class="fr.yr.site.alegia.action.GestionCommandeAdminAction" method="doDetailCommande">
+            <result name="success">/jsp/gestion/commande/detailCommande.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
+
+        <action name="addCategorie" class="fr.yr.site.alegia.action.GestionCategorieAction" method="addCategorie">
+            <result name="success">/jsp/index.jsp</result>
+            <result name="error">/jsp/gestion/categorie/addCategorie.jsp</result>
+        </action>
+
+        <action name="doAddArticle" class="fr.yr.site.alegia.action.GestionArticleAction" method="addArticle">
+            <result name="success">/jsp/index.jsp</result>
+            <result name="error">/jsp/gestion/article/addArticle.jsp</result>
+        </action>
+
+        <action name="gestion" class="fr.yr.site.alegia.action.GestionSiteAction" method="doGestion">
+            <result>/jsp/gestion/gestion.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
+        <action name="formAddCategorie" class="fr.yr.site.alegia.action.GestionSiteAction" method="doGestion">
+            <result>/jsp/gestion/categorie/addCategorie.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
+        <action name="formAddArticle" class="fr.yr.site.alegia.action.GestionSiteAction" method="formAddArticle">
+            <result>/jsp/gestion/article/addArticle.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
+        <action name="gestionArticle" class="fr.yr.site.alegia.action.GestionSiteAction" method="gestionArticle">
+            <result>/jsp/gestion/article/gestionArticle.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
+        <action name="gestionCategorie" class="fr.yr.site.alegia.action.GestionSiteAction" method="gestionCategorie">
+            <result>/jsp/gestion/categorie/gestionCategorie.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
     </package>
 </struts>

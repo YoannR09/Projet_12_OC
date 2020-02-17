@@ -31,12 +31,14 @@ public class GestionPanierAction extends ActionSupport {
     public String doAddPanier(){
         try {
             generateCompteAndPanier();
-            List<Contenu> contenuExist = factory.getContenuProxy().findByPanierId(panier.getId());
+            List<Contenu> contenuExist = factory.getContenuProxy()
+                    .findByPanierId(panier.getId());
             boolean existe = false;
             Contenu contenu = new Contenu();
             for (Contenu c:contenuExist){
                 if(c.getArticleId() == articleId
-                        && c.getTailleId() == factory.getTailleProxy().findByTaille(taille).getId()){
+                        && c.getTailleId() == factory.getTailleProxy()
+                        .findByTaille(taille).getId()){
                     existe = true;
                     contenu.setId(c.getId());
                     quantite = quantite+c.getQuantite();
@@ -44,7 +46,8 @@ public class GestionPanierAction extends ActionSupport {
             }
             contenu.setArticleId(articleId);
             contenu.setPanierId(panier.getId());
-            contenu.setTailleId(factory.getTailleProxy().findByTaille(taille).getId());
+            contenu.setTailleId(factory.getTailleProxy()
+                    .findByTaille(taille).getId());
             contenu.setQuantite(quantite);
             article = factory.getArticleProxy().getArticle(articleId);
             gm.completeArticle(factory,article);
@@ -57,7 +60,8 @@ public class GestionPanierAction extends ActionSupport {
             this.addActionMessage(" Article ajouté à votre panier");
             return ActionSupport.SUCCESS;
         }catch (Exception e){
-            this.addActionMessage("une erreur est survenu...");
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
             e.printStackTrace();
             return ActionSupport.ERROR;
         }
@@ -80,6 +84,8 @@ public class GestionPanierAction extends ActionSupport {
             categorieList = factory.getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
             e.printStackTrace();
             return ActionSupport.ERROR;
         }

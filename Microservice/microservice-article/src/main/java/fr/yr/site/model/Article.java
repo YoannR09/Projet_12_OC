@@ -13,6 +13,7 @@ public class Article {
     private Integer id;
     private String nom;
     private String description;
+    private String reference;
     private Integer categorieId;
     private Float prixHt;
     private Float prixTtc;
@@ -73,5 +74,13 @@ public class Article {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
     }
 }

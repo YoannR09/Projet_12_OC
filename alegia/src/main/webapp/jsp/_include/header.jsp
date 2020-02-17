@@ -1,12 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <div style="top: 20px;position: fixed;right: 10px;z-index: 1">
     <div>
-        <s:if test="!#session.user">
+        <s:if test="!#session.user && !#session.admin">
             <li>
                 <s:a action="login" class="nav-link btnNav" style="font-size:0.8em;"><i class="fas fa-user-circle" style="margin-right: 10px"></i>  Se connecter </s:a>
             </li>
         </s:if>
-        <s:if test="#session.user">
+        <s:if test="#session.user || #session.admin">
             <li style="display: flex;justify-content: space-around">
                 <s:a action="doConsulterPanier" class="nav-link btnNav" style="font-size:0.8em;"><i class="fas fa-shopping-cart" style="margin-right: 10px"></i>  Mon panier </s:a>
                 <s:a action="doConsulterCommande" class="nav-link btnNav" style="font-size:0.8em;"> <i class="fas fa-shopping-bag" style="margin-right: 10px"></i> Mes commandes </s:a>

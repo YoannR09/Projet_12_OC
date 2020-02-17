@@ -40,14 +40,17 @@ public class GestionCommandeAdminAction extends ActionSupport {
                 if(commande.getStatutId() == 1){
                     commande.setStatutId(2);
                     contenu = "Votre commande est maintenant en cours de préparation";
-                    mailGestion.sendMail(objet,contenu,factory.getCompteProxy().findById(commande.getCompteId()));
+                    mailGestion.sendMail(objet,contenu
+                            ,factory.getCompteProxy().findById(commande.getCompteId()));
                 }else if(commande.getStatutId() == 2){
                     contenu = "Votre commande est maintenant en cours de livraison";
-                    mailGestion.sendMail(objet,contenu,factory.getCompteProxy().findById(commande.getCompteId()));
+                    mailGestion.sendMail(objet,contenu
+                            ,factory.getCompteProxy().findById(commande.getCompteId()));
                     commande.setStatutId(3);
                 }else if(commande.getStatutId() == 3){
                     contenu = "Votre commande a été livré à votre adresse de livraison";
-                    mailGestion.sendMail(objet,contenu,factory.getCompteProxy().findById(commande.getCompteId()));
+                    mailGestion.sendMail(objet,contenu
+                            ,factory.getCompteProxy().findById(commande.getCompteId()));
                     commande.setStatutId(4);
                 }
                 generateCommande(commande);
@@ -56,6 +59,8 @@ public class GestionCommandeAdminAction extends ActionSupport {
             }
             return ActionSupport.SUCCESS;
         }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
             e.printStackTrace();
             return ActionSupport.ERROR;
         }
@@ -71,7 +76,8 @@ public class GestionCommandeAdminAction extends ActionSupport {
      */
     public String doListCommandeByStatut(){
         try {
-            commandeList = factory.getCommandeProxy().getCOmmandeByStatutId(Integer.parseInt(statut));
+            commandeList = factory.getCommandeProxy()
+                    .getCOmmandeByStatutId(Integer.parseInt(statut));
             for (Commande c:commandeList){
                 generateCommande(c);
             }
@@ -89,6 +95,8 @@ public class GestionCommandeAdminAction extends ActionSupport {
             categorieList = factory.getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
             e.printStackTrace();
             return ActionSupport.ERROR;
         }
@@ -129,6 +137,8 @@ public class GestionCommandeAdminAction extends ActionSupport {
             categorieList = factory.getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
             e.printStackTrace();
             return ActionSupport.ERROR;
         }
@@ -179,6 +189,8 @@ public class GestionCommandeAdminAction extends ActionSupport {
             }
             return ActionSupport.SUCCESS;
         }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
             e.printStackTrace();
             return ActionSupport.ERROR;
         }

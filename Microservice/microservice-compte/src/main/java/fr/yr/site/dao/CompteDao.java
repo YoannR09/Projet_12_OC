@@ -7,4 +7,5 @@ public interface CompteDao extends JpaRepository<Compte,Integer> {
 
     Compte findById(int id);
     Compte findByEmail(String email);
+    Compte findByNiveauAccesId(int niveau);
 }

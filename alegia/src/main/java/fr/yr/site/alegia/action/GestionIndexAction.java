@@ -33,20 +33,24 @@ public class GestionIndexAction extends ActionSupport {
         String vResult;
         try {
             articleList = factory.getArticleProxy().findByDisponibleOrderById(true);
-            gm.completeArticleList(factory,articleList);
-            actuArticleList = new ArrayList<>();
-            if (articleList.size() < 5){
-                for(int i=0;i<articleList.size();i++){
-                    actuArticleList.add(articleList.get(i));
-                }
-            }else {
-                for(int i=articleList.size()-5;i<articleList.size();i++){
-                    actuArticleList.add(articleList.get(i));
+            if (actuArticleList != null) {
+                gm.completeArticleList(factory, articleList);
+                actuArticleList = new ArrayList<>();
+                if (articleList.size() < 5){
+                    for(int i=0;i<articleList.size();i++){
+                        actuArticleList.add(articleList.get(i));
+                    }
+                }else {
+                    for(int i=articleList.size()-5;i<articleList.size();i++){
+                        actuArticleList.add(articleList.get(i));
+                    }
                 }
             }
             categorieList = factory.getCategorieProxy().findAll();
             vResult = ActionSupport.SUCCESS;
         }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
             e.printStackTrace();
             vResult = ActionSupport.ERROR;
         }

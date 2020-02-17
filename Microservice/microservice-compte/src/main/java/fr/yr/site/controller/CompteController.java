@@ -50,6 +50,10 @@ public class CompteController {
 
     /**
      * Méthode pour ajouter un compte
+     * L'adresse éléctronique est mise en minuscule
+     * Le nom et prénom sont mis en majuscule
+     * Si c'est le premier compte créé dans la bdd
+     * ce compte sera alors un compte administrateur
      * @param compte
      */
     @PostMapping(value = "/Compte")
@@ -58,6 +62,9 @@ public class CompteController {
             compte.setEmail(compte.getEmail().toLowerCase());
             compte.setNom(compte.getNom().toUpperCase());
             compte.setPrenom(compte.getPrenom().toUpperCase());
+            if (findAll().size() == 0 && getDao().findByNiveauAccesId(2) == null){
+                compte.setNiveauAccesId(2);
+            }
             getDao().save(compte);
         }catch (Exception e){
             getLogger().error(e);

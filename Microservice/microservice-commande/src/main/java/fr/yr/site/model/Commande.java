@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.util.Date;
 
 @Entity
 public class Commande {
@@ -17,6 +18,7 @@ public class Commande {
     private Integer statutId;
     private Integer adresseId;
     private Integer compteId;
+    private Date date;
 
     public Integer getAdresseId() {
         return adresseId;
@@ -56,5 +58,13 @@ public class Commande {
 
     public void setCompteId(Integer compteId) {
         this.compteId = compteId;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 }

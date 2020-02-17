@@ -37,12 +37,14 @@ public class GestionCategorieAction extends ActionSupport {
      */
     public String doListArticleByCategorieId(){
         try {
-            articleList = factory.getArticleProxy().findByCategorieIdAndDisponible(categorieId,true);
+            articleList = factory.getArticleProxy()
+                    .findByCategorieIdAndDisponible(categorieId,true);
             gm.completeArticleList(factory,articleList);
             categorieList = factory.getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
             return ActionSupport.ERROR;
         }
     }
@@ -52,24 +54,30 @@ public class GestionCategorieAction extends ActionSupport {
      * @return
      */
     public String addCategorie(){
-        String vResult = null;
-
-        if(nom != null && labelle != null){
-            Categorie categorie = new Categorie();
-            categorie.setNom(nom);
-            categorie.setLabelle(labelle);
-            categorie.setDisponible(false);
-            if(factory.getCategorieProxy().findByNom(nom) == null){
-                factory.getCategorieProxy().add(categorie);
-                this.addActionMessage("La catégorie a bien été crée");
-                vResult = ActionSupport.SUCCESS;
+        try {
+            categorieList = factory.getCategorieProxy().findByDispo(true);
+            if (nom != null && labelle != null) {
+                Categorie categorie = new Categorie();
+                categorie.setNom(nom);
+                categorie.setLabelle(labelle);
+                categorie.setDisponible(false);
+                if (factory.getCategorieProxy().findByNom(nom) == null) {
+                    factory.getCategorieProxy().add(categorie);
+                    this.addActionMessage("La catégorie a bien été crée");
+                    return ActionSupport.SUCCESS;
+                } else {
+                    this.addActionMessage("Ce nom de catégorie est déjà utilisé");
+                    return ActionSupport.INPUT;
+                }
             }else {
-                this.addActionMessage("Ce nom de catégorie est déjà utilisé");
-                vResult = ActionSupport.ERROR;
+                this.addActionMessage("Un problème est survenu... ");
+                return ActionSupport.ERROR;
             }
+        }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
+            return ActionSupport.ERROR;
         }
-        categorieList = factory.getCategorieProxy().findAll();
-        return vResult;
     }
 
     /**
@@ -85,6 +93,8 @@ public class GestionCategorieAction extends ActionSupport {
             categorieList = factory.getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
             return ActionSupport.ERROR;
         }
     }
@@ -102,6 +112,8 @@ public class GestionCategorieAction extends ActionSupport {
             categorieList = factory.getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
             return ActionSupport.ERROR;
         }
     }

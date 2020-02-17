@@ -20,7 +20,7 @@ public class GestionSiteAction extends ActionSupport {
     @Autowired
     Factory factory;
 
-    private GenerateMethod gm = new GenerateMethod();
+    private     GenerateMethod          gm = new GenerateMethod();
 
     private     List<Categorie>         categorieList;
     private     List<Categorie>         categories;
@@ -51,7 +51,8 @@ public class GestionSiteAction extends ActionSupport {
             categorieList = factory.getCategorieProxy().findAll();
             vResult = ActionSupport.SUCCESS;
         }catch (Exception e){
-            this.addActionMessage("Une erreur est survenu...");
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
             vResult = ActionSupport.ERROR;
         }
         return vResult;
@@ -68,7 +69,8 @@ public class GestionSiteAction extends ActionSupport {
             categorieList = factory.getCategorieProxy().findAll();
             vResult = ActionSupport.SUCCESS;
         }catch (Exception e){
-            this.addActionMessage("Une erreur est survenu...");
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
             vResult = ActionSupport.ERROR;
         }
         return vResult;
@@ -86,9 +88,11 @@ public class GestionSiteAction extends ActionSupport {
             if (radio != null){
                 Categorie categorie = factory.getCategorieProxy().findByNom(categorieSelect);
                 if (radio.equals("Disponible")){
-                    articleList = factory.getArticleProxy().findByCategorieIdAndDisponible(categorie.getId(),true);
+                    articleList = factory.getArticleProxy()
+                            .findByCategorieIdAndDisponible(categorie.getId(),true);
                 }else if (radio.equals("Indisponible")){
-                    articleList = factory.getArticleProxy().findByCategorieIdAndDisponible(categorie.getId(),false);
+                    articleList = factory.getArticleProxy()
+                            .findByCategorieIdAndDisponible(categorie.getId(),false);
                 }
                 for (Article article:articleList){
                     gm.completeArticle(factory,article);
@@ -97,7 +101,8 @@ public class GestionSiteAction extends ActionSupport {
             categorieList = factory.getCategorieProxy().findAll();
             vResult = ActionSupport.SUCCESS;
         }catch (Exception e){
-            this.addActionMessage("Une erreur est survenu...");
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
             vResult = ActionSupport.ERROR;
         }
         return vResult;
@@ -128,7 +133,8 @@ public class GestionSiteAction extends ActionSupport {
             categorieList = factory.getCategorieProxy().findAll();
             vResult = ActionSupport.SUCCESS;
         }catch (Exception e){
-            this.addActionMessage("Une erreur est survenu...");
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
             vResult = ActionSupport.ERROR;
         }
         return vResult;
@@ -147,6 +153,8 @@ public class GestionSiteAction extends ActionSupport {
             gm.completeArticle(factory,article);
             return ActionSupport.SUCCESS;
         }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
             e.printStackTrace();
             return ActionSupport.ERROR;
         }

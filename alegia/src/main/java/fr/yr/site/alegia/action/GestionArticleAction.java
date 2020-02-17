@@ -39,6 +39,7 @@ public class GestionArticleAction extends ActionSupport {
     private         String              prixHt;
     private         String              description;
     private         String              radio;
+    private         String              reference;
     private         List<Taille>        tailles;
     private         List<String>        radioList = Arrays.asList("Disponible","Indisponible");
 
@@ -63,6 +64,7 @@ public class GestionArticleAction extends ActionSupport {
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
             e.printStackTrace();
             return ActionSupport.ERROR;
         }
@@ -70,6 +72,7 @@ public class GestionArticleAction extends ActionSupport {
 
     /**
      * Méthode pour ajouter un article
+     * Ajout de la liste de tailles de l'article dans la bdd
      * @return
      */
     public String addArticle(){
@@ -85,6 +88,7 @@ public class GestionArticleAction extends ActionSupport {
                 article.setPrixHt(Float.parseFloat(prixHt));
                 article.setPrixTtc(Float.parseFloat(prixTtc));
                 article.setDisponible(false);
+                article.setReference(reference);
                 factory.getArticleProxy().add(article);
                 List<Article> vList = factory.getArticleProxy().getArticleByCategorieId(categorieId);
                 Article newArticle = vList.get(vList.size()-1);
@@ -104,9 +108,13 @@ public class GestionArticleAction extends ActionSupport {
                     vResult = ActionSupport.ERROR;
                 }
             }else {
+                this.addActionMessage("Un problème est survenu... ");
+                categorieList = factory.getCategorieProxy().findByDispo(true);
                vResult = ActionSupport.ERROR;
             }
         }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
             e.printStackTrace();
             vResult = ActionSupport.ERROR;
         }
@@ -126,7 +134,8 @@ public class GestionArticleAction extends ActionSupport {
             updateArticle(article,false);
             return ActionSupport.SUCCESS;
         }catch (Exception e){
-            generateCategorieList();
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
             e.printStackTrace();
             return ActionSupport.ERROR;
         }
@@ -144,7 +153,8 @@ public class GestionArticleAction extends ActionSupport {
             generateCategorieList();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
-            generateCategorieList();
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
             e.printStackTrace();
             return ActionSupport.ERROR;
         }
@@ -160,15 +170,18 @@ public class GestionArticleAction extends ActionSupport {
             factory.getListTailleProxy().deleteByArticleId(articleId);
             factory.getArticleProxy().delete(articleId);
             if (radio.equals("Disponible")){
-                articleList = factory.getArticleProxy().findByCategorieIdAndDisponible(a.getCategorieId(),true);
+                articleList = factory.getArticleProxy()
+                        .findByCategorieIdAndDisponible(a.getCategorieId(),true);
             }else if(radio.equals("Indisponible")){
-                articleList = factory.getArticleProxy().findByCategorieIdAndDisponible(a.getCategorieId(),false);
+                articleList = factory.getArticleProxy()
+                        .findByCategorieIdAndDisponible(a.getCategorieId(),false);
             }
             completeArticleList(articleList);
             generateCategorieList();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
-            generateCategorieList();
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
             e.printStackTrace();
             return ActionSupport.ERROR;
         }
@@ -185,7 +198,8 @@ public class GestionArticleAction extends ActionSupport {
             generateCategorieList();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
-            generateCategorieList();
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
             e.printStackTrace();
             return ActionSupport.ERROR;
         }
@@ -193,7 +207,8 @@ public class GestionArticleAction extends ActionSupport {
 
     private void updateArticle(Article article, Boolean dispo) {
         factory.getArticleProxy().update(article);
-        articleList = factory.getArticleProxy().findByCategorieIdAndDisponible(article.getCategorieId(),dispo);
+        articleList = factory.getArticleProxy()
+                .findByCategorieIdAndDisponible(article.getCategorieId(),dispo);
         categorieList = factory.getCategorieProxy().findAll();
         completeArticleList(articleList);
         generateCategorieList();

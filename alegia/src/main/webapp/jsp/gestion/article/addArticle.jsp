@@ -69,6 +69,10 @@
                         <label for="inputNom" style="color: black;">Nom de l'article</label>
                         <input name="nom" type="text" class="form-control" id="inputNom" required>
                     </div>
+                    <div class="form-group" style="margin: 20px;">
+                        <label for="inputRef" style="color: black;">Réference</label>
+                        <input name="reference" type="text" class="form-control" id="inputRef" required>
+                    </div>
                     <div class="form-group " style="margin: 20px">
                         <label for="inputDescription" style="color: black;">Description de l'article</label>
                         <textarea name="description" rows="3" class="form-control" id="inputDescription" required></textarea>

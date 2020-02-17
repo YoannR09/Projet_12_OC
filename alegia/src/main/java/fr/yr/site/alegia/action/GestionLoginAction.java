@@ -47,6 +47,8 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
             categorieList = factory.getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
             return ActionSupport.ERROR;
         }
     }
@@ -95,19 +97,25 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
                     this.addActionMessage("Adresse éléctronique déjà utilisée");
                     vResult = ActionSupport.ERROR;
                 }else {
-                    // Création de l'adresse
-                    Adresse adresse = new Adresse();
-                    adresse.setCodePostal(codePostal);
-                    if (info.equals("") || info == null){
-                        adresse.setInfo("Aucune information");
-                    }else {
-                        adresse.setInfo(info);
+                    if (factory.getAdresseProxy()
+                            .findByVilleAndCodePostalAndNumeroAndRue(
+                                    ville
+                                    ,codePostal
+                                    ,numero
+                                    ,rue) == null) {
+                        // Création de l'adresse
+                        Adresse adresse = new Adresse();
+                        adresse.setCodePostal(codePostal);
+                        if (info.equals("") || info == null){
+                            adresse.setInfo("Aucune information");
+                        }else {
+                            adresse.setInfo(info);
+                        }
+                        adresse.setNumero(numero);
+                        adresse.setRue(rue);
+                        adresse.setVille(ville);
+                        factory.getAdresseProxy().add(adresse);
                     }
-                    adresse.setNumero(numero);
-                    adresse.setRue(rue);
-                    adresse.setVille(ville);
-                    factory.getAdresseProxy().add(adresse);
-
                     // Création du compte
                     Compte compte = new Compte();
                     compte.setEmail(email.toLowerCase());
@@ -117,12 +125,17 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
                     compte.setPrenom(prenom.toUpperCase());
                     compte.setNumeroTelephone(numeroTelephone);
                     compte.setAdresseId(factory.getAdresseProxy()
-                            .findByVilleAndCodePostalAndNumeroAndRue(ville,codePostal,numero,rue).getId());
+                            .findByVilleAndCodePostalAndNumeroAndRue(
+                                    ville
+                                    ,codePostal
+                                    ,numero
+                                    ,rue).getId());
                     factory.getCompteProxy().add(compte);
 
                     // Création du panier
                     Panier panier = new Panier();
-                    panier.setCompteId(factory.getCompteProxy().findByEmail(email.toLowerCase()).getId());
+                    panier.setCompteId(factory.getCompteProxy()
+                            .findByEmail(email.toLowerCase()).getId());
                     factory.getPanierProxy().add(panier);
 
                     vResult = ActionSupport.SUCCESS;
@@ -131,10 +144,11 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
                 vResult = ActionSupport.INPUT;
             }
         }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
             e.printStackTrace();
             vResult = ActionSupport.ERROR;
         }
-
         return vResult;
     }
 
@@ -164,6 +178,8 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
                 return ActionSupport.INPUT;
             }
         }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
             e.printStackTrace();
             return ActionSupport.ERROR;
         }
@@ -181,6 +197,8 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
             categorieList = factory.getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
             return ActionSupport.ERROR;
         }
     }
