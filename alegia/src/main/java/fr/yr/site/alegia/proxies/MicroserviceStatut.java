@@ -5,6 +5,6 @@ import org.springframework.cloud.openfeign.FeignClient;
 /**
  * Classe pour récupérer les données du MicroserviceArticle
  */
-@FeignClient(value = "microservice-statut", url = "localhost:9095")
+@FeignClient(name = "zuul-server", url = "localhost:9004")
 public interface MicroserviceStatut {
 }

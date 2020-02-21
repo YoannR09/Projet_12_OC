@@ -354,5 +354,13 @@ public class GestionArticleAction extends ActionSupport {
     public void setRadio(String radio) {
         this.radio = radio;
     }
+
+    public String getReference() {
+        return reference;
+    }
+
+    public void setReference(String reference) {
+        this.reference = reference;
+    }
 }
 

@@ -6,6 +6,7 @@ import fr.yr.site.alegia.beans.Commande;
 import fr.yr.site.alegia.beans.Compte;
 import fr.yr.site.alegia.beans.LigneDeCommande;
 import fr.yr.site.alegia.configuration.Factory;
+import fr.yr.site.alegia.configuration.GenerateMethod;
 import fr.yr.site.alegia.configuration.MailGestion;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,6 +18,8 @@ public class GestionCommandeAdminAction extends ActionSupport {
     // Microseervices
     @Autowired
     Factory factory;
+
+    private GenerateMethod gm = new GenerateMethod();
 
     private List<Commande> commandeList;
     private List<Categorie> categorieList;
@@ -118,18 +121,10 @@ public class GestionCommandeAdminAction extends ActionSupport {
 
     private void generateCommande(Commande c) {
         c.setStatut(c.generateStatut());
-        c.setDate(new Date()); // A CHANGER !!!!!!!!
         compte = factory.getCompteProxy().findById(c.getCompteId());
         int count = 0;
         float total = 0;
-        c.setLigneDeCommandeList(factory.getLigneProxy().findByCommandeId(c.getId()));
-        for (LigneDeCommande lc : c.getLigneDeCommandeList()){
-            total = total+lc.getMontantTtc();
-            count = count+lc.getQuantite();
-        }
-        c.setAdresse(factory.getAdresseProxy().getAdresse(c.getAdresseId()));
-        c.setCountArticle(count);
-        c.setPrixTotal(Float.toString(total));
+        gm.generateCommande(commande,count,total,factory);
     }
 
     public String doRechercheForm(){

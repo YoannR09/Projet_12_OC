@@ -75,6 +75,11 @@
             <result name="error">jsp/login/login.jsp</result>
         </action>
 
+        <action name="logout" class="fr.yr.site.alegia.action.GestionLoginAction" method="doLogout">
+            <result name="success">/jsp/index.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
         <action name="doLogin" class="fr.yr.site.alegia.action.GestionLoginAction" method="doLogin">
             <result name="success">jsp/index.jsp</result>
             <result name="error">jsp/login/login.jsp</result>
@@ -108,6 +113,27 @@
         </interceptors>
 
         <default-interceptor-ref name="authenticatedStack" />
+
+        <action name="doChangeAdresse"
+                class="fr.yr.site.alegia.action.GestionLoginAction"
+                method="doChangeAdresse">
+            <result name="success">/jsp/login/profil.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doChangeMdp"
+                class="fr.yr.site.alegia.action.GestionLoginAction"
+                method="doChangeMotDePasse">
+            <result name="success">/jsp/login/profil.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doChangeEmail"
+                class="fr.yr.site.alegia.action.GestionLoginAction"
+                method="doChangeEmail">
+            <result name="success">/jsp/login/profil.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
 
         <action name="addPanier"
                 class="fr.yr.site.alegia.action.GestionPanierAction"
@@ -185,7 +211,7 @@
         <interceptors>
             <interceptor name="authAdmin" class="fr.yr.site.alegia.interceptor.AuthInterceptorAdmin" />
             <interceptor-stack name="authenticatedStackAdmin">
-                <interceptor-ref name="auth" />
+                <interceptor-ref name="authAdmin" />
                 <interceptor-ref name="defaultStack" />
             </interceptor-stack>
         </interceptors>
@@ -233,7 +259,6 @@
             <result>/jsp/gestion/article/gestionArticle.jsp</result>
             <result name="error">jsp/error/error.jsp</result>
         </action>
-        <!-- !!!!!!!!!!!!!!!!!!!!! A deplacer !!!!!!!!!!! -->
 
         <action name="doAddImage" class="fr.yr.site.alegia.action.GestionSiteAction" method="doAjoutImage">
             <interceptor-ref name="fileUpload"/>

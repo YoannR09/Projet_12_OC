@@ -39,6 +39,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
     private String numeroTelephone;
     private String info;
     private String ville;
+    private String verif;
     private String codePostal;
     private Compte compte;
 
@@ -203,6 +204,102 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
         }
     }
 
+    /**
+     * Méthode pour déconnecter l'abonné.
+     * @return
+     */
+    public String doLogout(){
+        try {
+            this.session.remove("admin");
+            this.session.remove("user");
+            categorieList = factory.getCategorieProxy().findByDispo(true);
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            return ActionSupport.ERROR;
+        }
+    }
+
+    /**
+     * Méthode pour changer de mot de passe
+     * Via la page de profil
+     * @return
+     */
+    public String doChangeMotDePasse(){
+        try {
+            if (motDePasse.equals(verif)) {
+                String getEmail = (String) ActionContext.getContext().getSession().get("email");
+                compte = factory.getCompteProxy().findByEmail(getEmail.toLowerCase());
+                compte.setMotDePasse(EncryptionUtil.encrypt(motDePasse, secretKey));
+                factory.getCompteProxy().update(compte);
+                compte.setAdresse(factory.getAdresseProxy().getAdresse(compte.getAdresseId()));
+                categorieList = factory.getCategorieProxy().findAll();
+            }else {
+                this.addActionMessage("La vérification du mot de passe est invalide");
+            }
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            return ActionSupport.ERROR;
+        }
+    }
+
+    public String doChangeEmail(){
+        try {
+            if (email != null && email.equals(verif)) {
+                String getEmail = (String) ActionContext.getContext().getSession().get("email");
+                compte = factory.getCompteProxy().findByEmail(getEmail.toLowerCase());
+                compte.setEmail(email);
+                compte.setAdresse(factory.getAdresseProxy().getAdresse(compte.getAdresseId()));
+                categorieList = factory.getCategorieProxy().findAll();
+                factory.getCompteProxy().update(compte);
+            }else {
+                this.addActionMessage("La vérification de l'adresse éléctronique est invalide");
+            }
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            return ActionSupport.ERROR;
+        }
+    }
+
+    public String doChangeAdresse(){
+        try {
+            if (motDePasse != null && motDePasse.equals(verif)) {
+                String getEmail = (String) ActionContext.getContext().getSession().get("email");
+                compte = factory.getCompteProxy().findByEmail(getEmail.toLowerCase());
+                if (factory.getAdresseProxy()
+                        .findByVilleAndCodePostalAndNumeroAndRue(
+                                ville
+                                ,codePostal
+                                ,numero
+                                ,rue) == null) {
+                    // Création de l'adresse
+                    Adresse adresse = new Adresse();
+                    adresse.setRue(rue);
+                    if (info.equals("") || info == null){
+                        adresse.setInfo("Aucune information");
+                    }else {
+                        adresse.setInfo(info);
+                    }
+                    adresse.setVille(ville);
+                    adresse.setCodePostal(codePostal);
+                    adresse.setNumero(numero);
+                    factory.getAdresseProxy().add(adresse);
+                }
+                compte.setAdresseId(factory.getAdresseProxy()
+                        .findByVilleAndCodePostalAndNumeroAndRue(
+                                ville
+                                ,codePostal
+                                ,numero
+                                ,rue).getId());
+                compte.setAdresse(factory.getAdresseProxy().getAdresse(compte.getAdresseId()));
+                categorieList = factory.getCategorieProxy().findAll();
+                factory.getCompteProxy().update(compte);
+            }
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            return ActionSupport.ERROR;
+        }
+    }
+
 
     //----------- GETTERS ET SETTERS ----------------
 
@@ -308,5 +405,11 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
         this.numeroTelephone = numeroTelephone;
     }
 
+    public String getVerif() {
+        return verif;
+    }
 
+    public void setVerif(String verif) {
+        this.verif = verif;
+    }
 }

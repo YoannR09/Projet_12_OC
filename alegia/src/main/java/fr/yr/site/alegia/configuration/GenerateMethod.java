@@ -1,7 +1,9 @@
 package fr.yr.site.alegia.configuration;
 
 import fr.yr.site.alegia.beans.Article;
+import fr.yr.site.alegia.beans.Commande;
 import fr.yr.site.alegia.beans.Image;
+import fr.yr.site.alegia.beans.LigneDeCommande;
 
 import java.util.List;
 
@@ -20,6 +22,17 @@ public class GenerateMethod {
                 a.getImageList().add(image);
             }
         }
+    }
+
+    public void generateCommande(Commande commande,int count, float total, Factory factory){
+        commande.setLigneDeCommandeList(factory.getLigneProxy().findByCommandeId(commande.getId()));
+        for (LigneDeCommande lc : commande.getLigneDeCommandeList()){
+            total = total+lc.getMontantTtc();
+            count = count+lc.getQuantite();
+        }
+        commande.setAdresse(factory.getAdresseProxy().getAdresse(commande.getAdresseId()));
+        commande.setCountArticle(count);
+        commande.setPrixTotal(Float.toString(total));
     }
 
     /**

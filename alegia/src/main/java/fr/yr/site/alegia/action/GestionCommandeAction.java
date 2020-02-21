@@ -82,6 +82,9 @@ public class GestionCommandeAction extends ActionSupport {
     public String doConfirmPaiement(){
         try {
             commande = factory.getCommandeProxy().getCommande(commandeId);
+            int count = 0;
+            float total = 0;
+            gm.generateCommande(commande,count,total,factory);
             commande.setStatutId(2);
             factory.getCommandeProxy().update(commande);
             categorieList = factory.getCategorieProxy().findByDispo(true);

@@ -126,31 +126,37 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <s:iterator value="ligneDeCommandeList">
+                        <s:iterator value="commande.ligneDeCommandeList">
                             <tr>
-                                <td><s:property value="designation"/></td>
-                                <td><s:property value="prixUnitTtc"/> €</td>
-                                <td><s:property value="montantTtc"/> €</td>
-                                <td><s:property value="quantite"/></td>
-                                <td><s:property value="taille"/></td>
+                                <td><s:property value="commande.designation"/></td>
+                                <td><s:property value="commande.prixUnitTtc"/> €</td>
+                                <td><s:property value="commande.montantTtc"/> €</td>
+                                <td><s:property value="commande.quantite"/></td>
+                                <td><s:property value="commande.taille"/></td>
                             </tr>
                         </s:iterator>
+                        <td>TOTAL : <s:property value="commande.prixTotal"/>  €</td>
                         </tbody>
                     </table>
                     <div style="width: 100%">
                         <em class="lab">ADRESSE DE LIVRAISON</em><br/>
                         <div style="margin-bottom: 10px">
-                            <span style="font-weight: bold"><s:property value="adresse.codePostal"/></span>
+                            <span style="font-weight: bold"><s:property value="commande.adresse.codePostal"/></span>
                             <span style="font-weight: bold">  -  </span>
-                            <span style="font-weight: bold"><s:property value="adresse.ville"/></span>
+                            <span style="font-weight: bold"><s:property value="commande.adresse.ville"/></span>
                             <span style="font-weight: bold">  -  </span>
-                            <span style="font-weight: bold"><s:property value="adresse.numero"/></span>
-                            <span style="font-weight: bold"><s:property value="adresse.rue"/></span>
+                            <span style="font-weight: bold"><s:property value="commande.adresse.numero"/></span>
+                            <span style="font-weight: bold"><s:property value="commande.adresse.rue"/></span>
                         </div>
                     </div>
-                    <footer>
-                        <%@ include file="../_include/footer.jsp"%>
-                    </footer>
+                </div>
+            </div>
+            <footer>
+                <%@ include file="../_include/footer.jsp"%>
+            </footer>
+        </div>
+    </div>
+</div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>

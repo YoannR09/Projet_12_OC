@@ -134,7 +134,7 @@
                 <span class="spanAdresse">  <s:property value="adresse.info"/></span><br/>
                 <span style="position: absolute;right: 10px;bottom: 10px">
                 <s:a action="doAdresseCompteCommande" class="btn btn-dark" style="font-size: 0.8em;">
-                    <s:param name="commandeId" value="commande.id"/>
+                    <s:param name="commandeId" value="commandeId"/>
                     Confirmer</s:a>
                     </span>
             </div>

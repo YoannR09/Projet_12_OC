@@ -20,7 +20,7 @@
 <body>
 <%@ include file="../_include/header.jsp"%>
 <div id="blocCenter" style="display: flex;justify-content: center;">
-    <div class="col-xs-5 col-8" style="display: flex;justify-content: center">
+    <div style="display: flex;justify-content: center;width: 800px">
         <div class="col-5">
             <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style=" margin-bottom: 5px">
                 <div class="carousel-inner" style="height: 100%">

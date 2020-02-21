@@ -71,6 +71,7 @@ public class GestionSiteAction extends ActionSupport {
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
             categorieList = factory.getCategorieProxy().findByDispo(true);
+            e.printStackTrace();
             vResult = ActionSupport.ERROR;
         }
         return vResult;
