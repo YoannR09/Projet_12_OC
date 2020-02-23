@@ -6,6 +6,8 @@ import fr.yr.site.alegia.configuration.Factory;
 import fr.yr.site.alegia.configuration.GenerateMethod;
 import fr.yr.site.alegia.proxies.*;
 import org.apache.commons.io.FileUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
@@ -19,11 +21,14 @@ import java.util.List;
  */
 public class GestionArticleAction extends ActionSupport {
 
+    private static final Logger logger = LogManager.getLogger();
+
     // --- Microservices ---
     @Autowired
-    Factory factory;
+    private Factory factory;
 
     private         GenerateMethod      gm = new GenerateMethod();
+
 
     private         Article             article;
     private         Integer             articleId;
@@ -49,23 +54,23 @@ public class GestionArticleAction extends ActionSupport {
      */
     public String doDetailArticle(){
         try {
-            article = factory.getArticleProxy().getArticle(articleId);
-            listTailles =factory.getListTailleProxy().findByArticleId(articleId);
-            imageList = factory.getImageProxy().findByArticleId(articleId);
+            article = getFactory().getArticleProxy().getArticle(articleId);
+            listTailles = getFactory().getListTailleProxy().findByArticleId(articleId);
+            imageList = getFactory().getImageProxy().findByArticleId(articleId);
             if (imageList.size() == 0 ){
                 Image image = new Image();
                 image.setUrl("indisponible.jpg");
                 imageList.add(image);
             }
             for(ListTaille lt:listTailles){
-                lt.setTaille(factory.getTailleProxy().findById(lt.getTailleId()));
+                lt.setTaille(getFactory().getTailleProxy().findById(lt.getTailleId()));
             }
-            generateCategorieList();
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
-            categorieList = factory.getCategorieProxy().findByDispo(true);
-            e.printStackTrace();
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
             return ActionSupport.ERROR;
         }
     }
@@ -83,24 +88,24 @@ public class GestionArticleAction extends ActionSupport {
                 Article article = new Article();
                 article.setNom(nom);
                 article.setDescription(description);
-                Integer categorieId = factory.getCategorieProxy().findByNom(categorieSelect).getId();
+                Integer categorieId = getFactory().getCategorieProxy().findByNom(categorieSelect).getId();
                 article.setCategorieId(categorieId);
                 article.setPrixHt(Float.parseFloat(prixHt));
                 article.setPrixTtc(Float.parseFloat(prixTtc));
                 article.setDisponible(false);
                 article.setReference(reference);
-                factory.getArticleProxy().add(article);
-                List<Article> vList = factory.getArticleProxy().getArticleByCategorieId(categorieId);
+                getFactory().getArticleProxy().add(article);
+                List<Article> vList = getFactory().getArticleProxy().getArticleByCategorieId(categorieId);
                 Article newArticle = vList.get(vList.size()-1);
 
                 // Ajout des tailles
                 if(tailleSelect != null){
                     for(String t: tailleSelect){
                         ListTaille lt = new ListTaille();
-                        Taille taille = factory.getTailleProxy().findByTaille(t);
+                        Taille taille = getFactory().getTailleProxy().findByTaille(t);
                         lt.setTailleId(taille.getId());
                         lt.setArticleId(newArticle.getId());
-                        factory.getListTailleProxy().add(lt);
+                        getFactory().getListTailleProxy().add(lt);
                     }
                     vResult = ActionSupport.SUCCESS;
                 }else {
@@ -109,17 +114,17 @@ public class GestionArticleAction extends ActionSupport {
                 }
             }else {
                 this.addActionMessage("Un problème est survenu... ");
-                categorieList = factory.getCategorieProxy().findByDispo(true);
+                categorieList = getFactory().getCategorieProxy().findByDispo(true);
                vResult = ActionSupport.ERROR;
             }
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
-            categorieList = factory.getCategorieProxy().findByDispo(true);
-            e.printStackTrace();
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
             vResult = ActionSupport.ERROR;
         }
-        tailleList = factory.getTailleProxy().findAll();
-        generateCategorieList();
+        tailleList = getFactory().getTailleProxy().findAll();
+        categorieList = getFactory().getCategorieProxy().findByDispo(true);
         return vResult;
     }
 
@@ -129,14 +134,14 @@ public class GestionArticleAction extends ActionSupport {
      */
     public String doDiponible(){
         try {
-            Article article = factory.getArticleProxy().getArticle(articleId);
+            Article article = getFactory().getArticleProxy().getArticle(articleId);
             article.setDisponible(true);
             updateArticle(article,false);
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
-            categorieList = factory.getCategorieProxy().findByDispo(true);
-            e.printStackTrace();
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
             return ActionSupport.ERROR;
         }
     }
@@ -147,15 +152,15 @@ public class GestionArticleAction extends ActionSupport {
      */
     public String doIndiponible(){
         try {
-            Article article = factory.getArticleProxy().getArticle(articleId);
+            Article article = getFactory().getArticleProxy().getArticle(articleId);
             article.setDisponible(false);
             updateArticle(article,true);
-            generateCategorieList();
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
-            categorieList = factory.getCategorieProxy().findByDispo(true);
-            e.printStackTrace();
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
             return ActionSupport.ERROR;
         }
     }
@@ -166,23 +171,23 @@ public class GestionArticleAction extends ActionSupport {
      */
     public String doSupprimer(){
         try {
-            Article a = factory.getArticleProxy().getArticle(articleId);
-            factory.getListTailleProxy().deleteByArticleId(articleId);
-            factory.getArticleProxy().delete(articleId);
+            Article a = getFactory().getArticleProxy().getArticle(articleId);
+            getFactory().getListTailleProxy().deleteByArticleId(articleId);
+            getFactory().getArticleProxy().delete(articleId);
             if (radio.equals("Disponible")){
-                articleList = factory.getArticleProxy()
+                articleList = getFactory().getArticleProxy()
                         .findByCategorieIdAndDisponible(a.getCategorieId(),true);
             }else if(radio.equals("Indisponible")){
-                articleList = factory.getArticleProxy()
+                articleList = getFactory().getArticleProxy()
                         .findByCategorieIdAndDisponible(a.getCategorieId(),false);
             }
             completeArticleList(articleList);
-            generateCategorieList();
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
-            categorieList = factory.getCategorieProxy().findByDispo(true);
-            e.printStackTrace();
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
             return ActionSupport.ERROR;
         }
     }
@@ -193,38 +198,40 @@ public class GestionArticleAction extends ActionSupport {
      */
     public String formModifArticle(){
         try {
-            article = factory.getArticleProxy().getArticle(articleId);
-            gm.completeArticle(factory,article);
-            generateCategorieList();
+            article = getFactory().getArticleProxy().getArticle(articleId);
+            gm.completeArticle(getFactory(),article);
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
-            categorieList = factory.getCategorieProxy().findByDispo(true);
-            e.printStackTrace();
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
             return ActionSupport.ERROR;
         }
     }
 
     private void updateArticle(Article article, Boolean dispo) {
-        factory.getArticleProxy().update(article);
-        articleList = factory.getArticleProxy()
+        getFactory().getArticleProxy().update(article);
+        articleList = getFactory().getArticleProxy()
                 .findByCategorieIdAndDisponible(article.getCategorieId(),dispo);
-        categorieList = factory.getCategorieProxy().findAll();
+        categorieList = getFactory().getCategorieProxy().findAll();
         completeArticleList(articleList);
-        generateCategorieList();
+        categorieList = getFactory().getCategorieProxy().findByDispo(true);
     }
 
     private void completeArticleList(List<Article> vList){
         for (Article a : vList) {
-            gm.completeArticle(factory,a);
+            gm.completeArticle(getFactory(),a);
         }
     }
 
-    /**
-     * Méthode pour générer la liste des catégories
-     */
-    public void generateCategorieList(){
-        categorieList = factory.getCategorieProxy().findAll();
+
+    protected Factory getFactory() {
+        return factory;
+    }
+
+    protected Logger getLogger() {
+        return logger;
     }
 
     public Article getArticle() {

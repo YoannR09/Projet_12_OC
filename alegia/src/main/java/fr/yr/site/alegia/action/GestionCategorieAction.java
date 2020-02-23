@@ -6,6 +6,8 @@ import fr.yr.site.alegia.beans.Categorie;
 import fr.yr.site.alegia.beans.Image;
 import fr.yr.site.alegia.configuration.Factory;
 import fr.yr.site.alegia.configuration.GenerateMethod;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Arrays;
@@ -16,9 +18,12 @@ import java.util.List;
  */
 public class GestionCategorieAction extends ActionSupport {
 
+
+    private static final Logger logger = LogManager.getLogger();
+
     // --- Microservices ---
     @Autowired
-    Factory factory;
+    private Factory factory;
 
     private GenerateMethod gm = new GenerateMethod();
 
@@ -37,14 +42,15 @@ public class GestionCategorieAction extends ActionSupport {
      */
     public String doListArticleByCategorieId(){
         try {
-            articleList = factory.getArticleProxy()
+            articleList = getFactory().getArticleProxy()
                     .findByCategorieIdAndDisponible(categorieId,true);
-            gm.completeArticleList(factory,articleList);
-            categorieList = factory.getCategorieProxy().findAll();
+            gm.completeArticleList(getFactory(),articleList);
+            categorieList = getFactory().getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
-            categorieList = factory.getCategorieProxy().findByDispo(true);
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
             return ActionSupport.ERROR;
         }
     }
@@ -55,14 +61,14 @@ public class GestionCategorieAction extends ActionSupport {
      */
     public String addCategorie(){
         try {
-            categorieList = factory.getCategorieProxy().findByDispo(true);
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
             if (nom != null && labelle != null) {
                 Categorie categorie = new Categorie();
                 categorie.setNom(nom);
                 categorie.setLabelle(labelle);
                 categorie.setDisponible(false);
-                if (factory.getCategorieProxy().findByNom(nom) == null) {
-                    factory.getCategorieProxy().add(categorie);
+                if (getFactory().getCategorieProxy().findByNom(nom) == null) {
+                    getFactory().getCategorieProxy().add(categorie);
                     this.addActionMessage("La catégorie a bien été crée");
                     return ActionSupport.SUCCESS;
                 } else {
@@ -75,7 +81,8 @@ public class GestionCategorieAction extends ActionSupport {
             }
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
-            categorieList = factory.getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
             return ActionSupport.ERROR;
         }
     }
@@ -86,15 +93,16 @@ public class GestionCategorieAction extends ActionSupport {
      */
     public String doDisponible(){
         try {
-            Categorie categorie = factory.getCategorieProxy().findById(categorieId);
+            Categorie categorie = getFactory().getCategorieProxy().findById(categorieId);
             categorie.setDisponible(true);
-            factory.getCategorieProxy().update(categorie);
-            categories = factory.getCategorieProxy().findByDispo(false);
-            categorieList = factory.getCategorieProxy().findAll();
+            getFactory().getCategorieProxy().update(categorie);
+            categories = getFactory().getCategorieProxy().findByDispo(false);
+            categorieList = getFactory().getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
-            categorieList = factory.getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
             return ActionSupport.ERROR;
         }
     }
@@ -105,17 +113,26 @@ public class GestionCategorieAction extends ActionSupport {
      */
     public String doIndisponible(){
         try {
-            Categorie categorie = factory.getCategorieProxy().findById(categorieId);
+            Categorie categorie = getFactory().getCategorieProxy().findById(categorieId);
             categorie.setDisponible(false);
-            factory.getCategorieProxy().update(categorie);
-            categories = factory.getCategorieProxy().findByDispo(true);
-            categorieList = factory.getCategorieProxy().findAll();
+            getFactory().getCategorieProxy().update(categorie);
+            categories = getFactory().getCategorieProxy().findByDispo(true);
+            categorieList = getFactory().getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
-            categorieList = factory.getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
             return ActionSupport.ERROR;
         }
+    }
+
+    protected Logger getLogger() {
+        return logger;
+    }
+
+    protected Factory getFactory() {
+        return factory;
     }
 
 

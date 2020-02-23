@@ -5,15 +5,19 @@ import com.opensymphony.xwork2.ActionSupport;
 import fr.yr.site.alegia.beans.*;
 import fr.yr.site.alegia.configuration.Factory;
 import fr.yr.site.alegia.configuration.GenerateMethod;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
 public class GestionPanierAction extends ActionSupport {
 
+    private static final Logger logger = LogManager.getLogger();
+
     // Microseervices
     @Autowired
-    Factory factory;
+    private Factory factory;
 
     private GenerateMethod gm = new GenerateMethod();
 
@@ -31,13 +35,13 @@ public class GestionPanierAction extends ActionSupport {
     public String doAddPanier(){
         try {
             generateCompteAndPanier();
-            List<Contenu> contenuExist = factory.getContenuProxy()
+            List<Contenu> contenuExist = getFactory().getContenuProxy()
                     .findByPanierId(panier.getId());
             boolean existe = false;
             Contenu contenu = new Contenu();
             for (Contenu c:contenuExist){
                 if(c.getArticleId() == articleId
-                        && c.getTailleId() == factory.getTailleProxy()
+                        && c.getTailleId() == getFactory().getTailleProxy()
                         .findByTaille(taille).getId()){
                     existe = true;
                     contenu.setId(c.getId());
@@ -46,23 +50,23 @@ public class GestionPanierAction extends ActionSupport {
             }
             contenu.setArticleId(articleId);
             contenu.setPanierId(panier.getId());
-            contenu.setTailleId(factory.getTailleProxy()
+            contenu.setTailleId(getFactory().getTailleProxy()
                     .findByTaille(taille).getId());
             contenu.setQuantite(quantite);
-            article = factory.getArticleProxy().getArticle(articleId);
-            gm.completeArticle(factory,article);
+            article = getFactory().getArticleProxy().getArticle(articleId);
+            gm.completeArticle(getFactory(),article);
             if (!existe){
-                factory.getContenuProxy().add(contenu);
+                getFactory().getContenuProxy().add(contenu);
             }else {
-                factory.getContenuProxy().update(contenu);
+                getFactory().getContenuProxy().update(contenu);
             }
-            categorieList = factory.getCategorieProxy().findAll();
+            categorieList = getFactory().getCategorieProxy().findAll();
             this.addActionMessage(" Article ajouté à votre panier");
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
-            categorieList = factory.getCategorieProxy().findByDispo(true);
-            e.printStackTrace();
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
             return ActionSupport.ERROR;
         }
     }
@@ -70,31 +74,45 @@ public class GestionPanierAction extends ActionSupport {
     public String doConsulterPanier(){
         try{
             generateCompteAndPanier();
-            contenuList = factory.getContenuProxy().findByPanierId(panier.getId());
+            contenuList = getFactory().getContenuProxy().findByPanierId(panier.getId());
             float totalContenu = 0;
             countArticle = 0;
             for(Contenu contenu:contenuList){
-                contenu.setArticle(factory.getArticleProxy().getArticle(contenu.getArticleId()));
-                gm.completeArticle(factory,contenu.getArticle());
-                contenu.setTaille(factory.getTailleProxy().findById(contenu.getTailleId()));
+                contenu.setArticle(getFactory().getArticleProxy().getArticle(contenu.getArticleId()));
+                gm.completeArticle(getFactory(),contenu.getArticle());
+                contenu.setTaille(getFactory().getTailleProxy().findById(contenu.getTailleId()));
                 totalContenu = totalContenu+(contenu.getArticle().getPrixTtc()*contenu.getQuantite());
                 countArticle = countArticle+contenu.getQuantite();
             }
             totalPrix = Float.toString(totalContenu);
-            categorieList = factory.getCategorieProxy().findAll();
+            categorieList = getFactory().getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
-            categorieList = factory.getCategorieProxy().findByDispo(true);
-            e.printStackTrace();
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
             return ActionSupport.ERROR;
         }
     }
 
-    private void generateCompteAndPanier() {
-        String email = (String) ActionContext.getContext().getSession().get("email");
-        compte = factory.getCompteProxy().findByEmail(email.toLowerCase());
-        panier = factory.getPanierProxy().getPanierByCompteId(compte.getId());
+    public void generateCompteAndPanier() {
+        String email = getEmail();
+        compte = getFactory().getCompteProxy().findByEmail(email.toLowerCase());
+        panier = getFactory().getPanierProxy().getPanierByCompteId(compte.getId());
+    }
+
+    protected String getEmail() {
+        return (String) ActionContext.getContext().getSession().get("email");
+    }
+
+
+    protected Logger getLogger() {
+        return logger;
+    }
+
+
+    protected Factory getFactory() {
+        return factory;
     }
 
     public Integer getQuantite() {

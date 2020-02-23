@@ -10,6 +10,8 @@ import fr.yr.site.alegia.configuration.EncryptionUtil;
 import fr.yr.site.alegia.configuration.Factory;
 import fr.yr.site.alegia.configuration.MailGestion;
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -21,9 +23,11 @@ import java.util.Map;
  */
 public class GestionLoginAction extends ActionSupport implements SessionAware{
 
+    private static final Logger logger = LogManager.getLogger();
+
     // --- Microservices ---
     @Autowired
-    Factory factory;
+    private Factory factory;
 
     final String secretKey = "ssshhhhhhhhhhh!!!!";
 
@@ -45,11 +49,12 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
 
     public String pageLogin(){
         try {
-            categorieList = factory.getCategorieProxy().findAll();
+            categorieList = getFactory().getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
-            categorieList = factory.getCategorieProxy().findByDispo(true);
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
             return ActionSupport.ERROR;
         }
     }
@@ -62,10 +67,10 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
 
         String vResult = ActionSupport.ERROR;
 
-        categorieList = factory.getCategorieProxy().findAll();
+        categorieList = getFactory().getCategorieProxy().findAll();
 
         if (email != null) {
-            compte = factory.getCompteProxy().findByEmail(email.toLowerCase());
+            compte = getFactory().getCompteProxy().findByEmail(email.toLowerCase());
         }
         if (compte == null) {
             this.addActionMessage("Identifiant invalide");
@@ -91,14 +96,14 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
 
     public String doInscription() {
         String vResult;
-        categorieList = factory.getCategorieProxy().findAll();
+        categorieList = getFactory().getCategorieProxy().findAll();
         try {
             if (email != null){
-                if(factory.getCompteProxy().findByEmail(email) != null){
+                if(getFactory().getCompteProxy().findByEmail(email) != null){
                     this.addActionMessage("Adresse éléctronique déjà utilisée");
                     vResult = ActionSupport.ERROR;
                 }else {
-                    if (factory.getAdresseProxy()
+                    if (getFactory().getAdresseProxy()
                             .findByVilleAndCodePostalAndNumeroAndRue(
                                     ville
                                     ,codePostal
@@ -115,7 +120,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
                         adresse.setNumero(numero);
                         adresse.setRue(rue);
                         adresse.setVille(ville);
-                        factory.getAdresseProxy().add(adresse);
+                        getFactory().getAdresseProxy().add(adresse);
                     }
                     // Création du compte
                     Compte compte = new Compte();
@@ -125,19 +130,19 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
                     compte.setNom(nom.toUpperCase());
                     compte.setPrenom(prenom.toUpperCase());
                     compte.setNumeroTelephone(numeroTelephone);
-                    compte.setAdresseId(factory.getAdresseProxy()
+                    compte.setAdresseId(getFactory().getAdresseProxy()
                             .findByVilleAndCodePostalAndNumeroAndRue(
                                     ville
                                     ,codePostal
                                     ,numero
                                     ,rue).getId());
-                    factory.getCompteProxy().add(compte);
+                    getFactory().getCompteProxy().add(compte);
 
                     // Création du panier
                     Panier panier = new Panier();
-                    panier.setCompteId(factory.getCompteProxy()
+                    panier.setCompteId(getFactory().getCompteProxy()
                             .findByEmail(email.toLowerCase()).getId());
-                    factory.getPanierProxy().add(panier);
+                    getFactory().getPanierProxy().add(panier);
 
                     vResult = ActionSupport.SUCCESS;
                 }
@@ -146,8 +151,8 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
             }
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
-            categorieList = factory.getCategorieProxy().findByDispo(true);
-            e.printStackTrace();
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
             vResult = ActionSupport.ERROR;
         }
         return vResult;
@@ -162,7 +167,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
     public String doNouveauMotDePasse(){
         try {
             if (email != null){
-                compte = factory.getCompteProxy().findByEmail(email.toLowerCase());
+                compte = getFactory().getCompteProxy().findByEmail(email.toLowerCase());
                 if (compte != null) {
                     String newMdp = RandomStringUtils.randomAlphanumeric(10);
                     MailGestion mailGestion = new MailGestion();
@@ -170,18 +175,18 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
                     String objet = "Votre nouveau mot de passe";
                     mailGestion.sendMail(objet, contenu, compte);
                     compte.setMotDePasse(EncryptionUtil.encrypt(newMdp, secretKey));
-                    factory.getCompteProxy().update(compte);
+                    getFactory().getCompteProxy().update(compte);
                 }
-                categorieList = factory.getCategorieProxy().findAll();
+                categorieList = getFactory().getCategorieProxy().findAll();
                 return ActionSupport.SUCCESS;
             }else {
-                categorieList = factory.getCategorieProxy().findAll();
+                categorieList = getFactory().getCategorieProxy().findAll();
                 return ActionSupport.INPUT;
             }
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
-            categorieList = factory.getCategorieProxy().findByDispo(true);
-            e.printStackTrace();
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
             return ActionSupport.ERROR;
         }
     }
@@ -192,14 +197,15 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
      */
     public String doProfil(){
         try {
-            String email = (String) ActionContext.getContext().getSession().get("email");
-            compte = factory.getCompteProxy().findByEmail(email.toLowerCase());
-            compte.setAdresse(factory.getAdresseProxy().getAdresse(compte.getAdresseId()));
-            categorieList = factory.getCategorieProxy().findAll();
+            String email = getEmailContext();
+            compte = getFactory().getCompteProxy().findByEmail(email.toLowerCase());
+            compte.setAdresse(getFactory().getAdresseProxy().getAdresse(compte.getAdresseId()));
+            categorieList = getFactory().getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
-            categorieList = factory.getCategorieProxy().findByDispo(true);
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
             return ActionSupport.ERROR;
         }
     }
@@ -212,9 +218,10 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
         try {
             this.session.remove("admin");
             this.session.remove("user");
-            categorieList = factory.getCategorieProxy().findByDispo(true);
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
             return ActionSupport.SUCCESS;
         }catch (Exception e){
+            getLogger().error(e);
             return ActionSupport.ERROR;
         }
     }
@@ -227,17 +234,18 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
     public String doChangeMotDePasse(){
         try {
             if (motDePasse.equals(verif)) {
-                String getEmail = (String) ActionContext.getContext().getSession().get("email");
-                compte = factory.getCompteProxy().findByEmail(getEmail.toLowerCase());
+                String getEmail = getEmailContext();
+                compte = getFactory().getCompteProxy().findByEmail(getEmail.toLowerCase());
                 compte.setMotDePasse(EncryptionUtil.encrypt(motDePasse, secretKey));
-                factory.getCompteProxy().update(compte);
-                compte.setAdresse(factory.getAdresseProxy().getAdresse(compte.getAdresseId()));
-                categorieList = factory.getCategorieProxy().findAll();
+                getFactory().getCompteProxy().update(compte);
+                compte.setAdresse(getFactory().getAdresseProxy().getAdresse(compte.getAdresseId()));
+                categorieList = getFactory().getCategorieProxy().findAll();
             }else {
                 this.addActionMessage("La vérification du mot de passe est invalide");
             }
             return ActionSupport.SUCCESS;
         }catch (Exception e){
+            getLogger().error(e);
             return ActionSupport.ERROR;
         }
     }
@@ -245,17 +253,18 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
     public String doChangeEmail(){
         try {
             if (email != null && email.equals(verif)) {
-                String getEmail = (String) ActionContext.getContext().getSession().get("email");
-                compte = factory.getCompteProxy().findByEmail(getEmail.toLowerCase());
+                String getEmail = getEmailContext();
+                compte = getFactory().getCompteProxy().findByEmail(getEmail.toLowerCase());
                 compte.setEmail(email);
-                compte.setAdresse(factory.getAdresseProxy().getAdresse(compte.getAdresseId()));
-                categorieList = factory.getCategorieProxy().findAll();
-                factory.getCompteProxy().update(compte);
+                compte.setAdresse(getFactory().getAdresseProxy().getAdresse(compte.getAdresseId()));
+                categorieList = getFactory().getCategorieProxy().findAll();
+                getFactory().getCompteProxy().update(compte);
             }else {
                 this.addActionMessage("La vérification de l'adresse éléctronique est invalide");
             }
             return ActionSupport.SUCCESS;
         }catch (Exception e){
+            getLogger().error(e);
             return ActionSupport.ERROR;
         }
     }
@@ -263,9 +272,9 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
     public String doChangeAdresse(){
         try {
             if (motDePasse != null && motDePasse.equals(verif)) {
-                String getEmail = (String) ActionContext.getContext().getSession().get("email");
-                compte = factory.getCompteProxy().findByEmail(getEmail.toLowerCase());
-                if (factory.getAdresseProxy()
+                String getEmail = getEmailContext();
+                compte = getFactory().getCompteProxy().findByEmail(getEmail.toLowerCase());
+                if (getFactory().getAdresseProxy()
                         .findByVilleAndCodePostalAndNumeroAndRue(
                                 ville
                                 ,codePostal
@@ -282,22 +291,36 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
                     adresse.setVille(ville);
                     adresse.setCodePostal(codePostal);
                     adresse.setNumero(numero);
-                    factory.getAdresseProxy().add(adresse);
+                    getFactory().getAdresseProxy().add(adresse);
                 }
-                compte.setAdresseId(factory.getAdresseProxy()
+                compte.setAdresseId(getFactory().getAdresseProxy()
                         .findByVilleAndCodePostalAndNumeroAndRue(
                                 ville
                                 ,codePostal
                                 ,numero
                                 ,rue).getId());
-                compte.setAdresse(factory.getAdresseProxy().getAdresse(compte.getAdresseId()));
-                categorieList = factory.getCategorieProxy().findAll();
-                factory.getCompteProxy().update(compte);
+                compte.setAdresse(getFactory().getAdresseProxy().getAdresse(compte.getAdresseId()));
+                categorieList = getFactory().getCategorieProxy().findAll();
+                getFactory().getCompteProxy().update(compte);
             }
             return ActionSupport.SUCCESS;
         }catch (Exception e){
+            getLogger().error(e);
             return ActionSupport.ERROR;
         }
+    }
+
+    protected String getEmailContext() {
+        return (String) ActionContext.getContext().getSession().get("email");
+    }
+
+
+    protected Factory getFactory() {
+        return factory;
+    }
+
+    protected Logger getLogger() {
+        return logger;
     }
 
 

@@ -6,6 +6,8 @@ import fr.yr.site.alegia.beans.Categorie;
 import fr.yr.site.alegia.beans.Image;
 import fr.yr.site.alegia.configuration.Factory;
 import fr.yr.site.alegia.configuration.GenerateMethod;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
@@ -13,8 +15,10 @@ import java.util.List;
 
 public class GestionIndexAction extends ActionSupport {
 
+    private static final Logger logger = LogManager.getLogger();
+
     @Autowired
-    Factory factory;
+    private     Factory             factory;
 
     private     GenerateMethod      gm = new GenerateMethod();
 
@@ -32,29 +36,23 @@ public class GestionIndexAction extends ActionSupport {
     public String accueil(){
         String vResult;
         try {
-            articleList = factory.getArticleProxy().findByDisponibleOrderById(true);
-            if (actuArticleList != null) {
-                gm.completeArticleList(factory, articleList);
-                actuArticleList = new ArrayList<>();
-                if (articleList.size() < 5){
-                    for(int i=0;i<articleList.size();i++){
-                        actuArticleList.add(articleList.get(i));
-                    }
-                }else {
-                    for(int i=articleList.size()-5;i<articleList.size();i++){
-                        actuArticleList.add(articleList.get(i));
-                    }
-                }
-            }
-            categorieList = factory.getCategorieProxy().findAll();
+            categorieList = getFactory().getCategorieProxy().findAll();
             vResult = ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
-            categorieList = factory.getCategorieProxy().findByDispo(true);
-            e.printStackTrace();
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
             vResult = ActionSupport.ERROR;
         }
         return vResult;
+    }
+
+    protected Factory getFactory() {
+        return factory;
+    }
+
+    protected Logger getLogger() {
+        return logger;
     }
 
 

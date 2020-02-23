@@ -90,7 +90,7 @@ public class TailleControllerTest {
     public void init(){
         controller = new TailleControllerFake();
         dao = mock(TailleDao.class);
-        logger = mock(org.apache.logging.log4j.core.Logger.class);
+        logger = mock(Logger.class);
         doNothing().when(logger).warn(anyString());
         doNothing().when(logger).error(anyString());
     }
