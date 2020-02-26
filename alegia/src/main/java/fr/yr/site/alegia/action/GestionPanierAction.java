@@ -23,10 +23,12 @@ public class GestionPanierAction extends ActionSupport {
 
     private Integer quantite;
     private Integer articleId;
+    private Integer contenuId;
     private Article article;
     private String taille;
     private Integer countArticle;
     private String totalPrix;
+    private String infoMessage;
     private List<Contenu> contenuList;
     private List<Categorie> categorieList;
     private Compte compte;
@@ -61,7 +63,7 @@ public class GestionPanierAction extends ActionSupport {
                 getFactory().getContenuProxy().update(contenu);
             }
             categorieList = getFactory().getCategorieProxy().findAll();
-            this.addActionMessage(" Article ajouté à votre panier");
+            infoMessage = "L'rticle a bien été ajouté votre panier";
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
@@ -86,6 +88,37 @@ public class GestionPanierAction extends ActionSupport {
             }
             totalPrix = Float.toString(totalContenu);
             categorieList = getFactory().getCategorieProxy().findAll();
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
+            return ActionSupport.ERROR;
+        }
+    }
+
+    /**
+     * Méthode pour supprimer un contenu d'un panier
+     * Récupére le panier du compte actif
+     * @return
+     */
+    public String doDeleteContenu(){
+        try {
+            factory.getContenuProxy().delete(contenuId);
+            infoMessage = "L'article a été retiré du panier";
+            generateCompteAndPanier();
+            contenuList = getFactory().getContenuProxy().findByPanierId(panier.getId());
+            countArticle = 0;
+            float totalContenu = 0;
+            for(Contenu contenu:contenuList){
+                contenu.setArticle(getFactory().getArticleProxy().getArticle(contenu.getArticleId()));
+                gm.completeArticle(getFactory(),contenu.getArticle());
+                contenu.setTaille(getFactory().getTailleProxy().findById(contenu.getTailleId()));
+                totalContenu = totalContenu+(contenu.getArticle().getPrixTtc()*contenu.getQuantite());
+                countArticle = countArticle+contenu.getQuantite();
+            }
+            categorieList = getFactory().getCategorieProxy().findAll();
+            totalPrix = Float.toString(totalContenu);
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
@@ -177,5 +210,21 @@ public class GestionPanierAction extends ActionSupport {
 
     public void setCountArticle(Integer countArticle) {
         this.countArticle = countArticle;
+    }
+
+    public String getInfoMessage() {
+        return infoMessage;
+    }
+
+    public void setInfoMessage(String infoMessage) {
+        this.infoMessage = infoMessage;
+    }
+
+    public Integer getContenuId() {
+        return contenuId;
+    }
+
+    public void setContenuId(Integer contenuId) {
+        this.contenuId = contenuId;
     }
 }

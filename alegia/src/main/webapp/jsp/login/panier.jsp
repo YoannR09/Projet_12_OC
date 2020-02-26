@@ -110,7 +110,8 @@
                                 <span class="spanDonne" style="font-weight: bold"><s:property value="article.prixTtc"/> €</span><br/>
                                 <em class="lab">quantité :  </em>
                                 <span class="spanDonne" style="font-weight: bold"><s:property value="quantite"/></span><br/>
-                                <span style="position: absolute;right: 10px;bottom: 10px"><s:a action="doListArticleByCategorieId" style="font-size:0.7em;">Supprimer</s:a></span>
+                                <span style="position: absolute;right: 10px;bottom: 10px"><s:a action="doDeleteContenu" style="font-size:0.7em;">
+                                    <s:param name="contenuId" value="id"/>Supprimer</s:a></span>
                             </div>
                         </section>
                     </div>

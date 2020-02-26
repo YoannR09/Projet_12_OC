@@ -34,6 +34,7 @@ public class GestionCategorieAction extends ActionSupport {
     private         String                  nom;
     private         String                  labelle;
     private         String                  radio;
+    private         String                  infoMessage;
     private         List<String>            radioList = Arrays.asList("Disponible","Indisponible");
 
     /**
@@ -69,10 +70,10 @@ public class GestionCategorieAction extends ActionSupport {
                 categorie.setDisponible(false);
                 if (getFactory().getCategorieProxy().findByNom(nom) == null) {
                     getFactory().getCategorieProxy().add(categorie);
-                    this.addActionMessage("La catégorie a bien été crée");
+                    infoMessage = "La catégorie a bien été créée";
                     return ActionSupport.SUCCESS;
                 } else {
-                    this.addActionMessage("Ce nom de catégorie est déjà utilisé");
+                    infoMessage = "Ce nom de catégorie est déjà utilisé";
                     return ActionSupport.INPUT;
                 }
             }else {
@@ -98,6 +99,7 @@ public class GestionCategorieAction extends ActionSupport {
             getFactory().getCategorieProxy().update(categorie);
             categories = getFactory().getCategorieProxy().findByDispo(false);
             categorieList = getFactory().getCategorieProxy().findAll();
+            infoMessage = " La catégorie est maintenant disponible ";
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
@@ -118,6 +120,7 @@ public class GestionCategorieAction extends ActionSupport {
             getFactory().getCategorieProxy().update(categorie);
             categories = getFactory().getCategorieProxy().findByDispo(true);
             categorieList = getFactory().getCategorieProxy().findAll();
+            infoMessage = "La catégorie est maintenant indisponible";
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
@@ -199,7 +202,16 @@ public class GestionCategorieAction extends ActionSupport {
         return radioList;
     }
 
+    
     public void setRadioList(List<String> radioList) {
         this.radioList = radioList;
+    }
+
+    public String getInfoMessage() {
+        return infoMessage;
+    }
+
+    public void setInfoMessage(String infoMessage) {
+        this.infoMessage = infoMessage;
     }
 }

@@ -156,6 +156,13 @@
             <result name="error">/jsp/error/error.jsp</result>
         </action>
 
+        <action name="doDeleteContenu"
+                class="fr.yr.site.alegia.action.GestionPanierAction"
+                method="doDeleteContenu">
+            <result name="success">/jsp/login/panier.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
         <action name="doRepriseCommande"
                 class="fr.yr.site.alegia.action.GestionCommandeAction"
                 method="doRepriseCommande">

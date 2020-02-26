@@ -45,6 +45,7 @@ public class GestionArticleAction extends ActionSupport {
     private         String              description;
     private         String              radio;
     private         String              reference;
+    private         String              infoMessage;
     private         List<Taille>        tailles;
     private         List<String>        radioList = Arrays.asList("Disponible","Indisponible");
 
@@ -107,6 +108,7 @@ public class GestionArticleAction extends ActionSupport {
                         lt.setArticleId(newArticle.getId());
                         getFactory().getListTailleProxy().add(lt);
                     }
+                    infoMessage = " L'article a bien été créé ";
                     vResult = ActionSupport.SUCCESS;
                 }else {
                     this.addActionMessage(" Vous devez choisir des tailles ");
@@ -137,6 +139,8 @@ public class GestionArticleAction extends ActionSupport {
             Article article = getFactory().getArticleProxy().getArticle(articleId);
             article.setDisponible(true);
             updateArticle(article,false);
+            infoMessage = "L'article est maintenant disponible";
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
@@ -155,6 +159,7 @@ public class GestionArticleAction extends ActionSupport {
             Article article = getFactory().getArticleProxy().getArticle(articleId);
             article.setDisponible(false);
             updateArticle(article,true);
+            infoMessage = "L'article est maintenant indisponible";
             categorieList = getFactory().getCategorieProxy().findByDispo(true);
             return ActionSupport.SUCCESS;
         }catch (Exception e){
@@ -368,6 +373,14 @@ public class GestionArticleAction extends ActionSupport {
 
     public void setReference(String reference) {
         this.reference = reference;
+    }
+
+    public String getInfoMessage() {
+        return infoMessage;
+    }
+
+    public void setInfoMessage(String infoMessage) {
+        this.infoMessage = infoMessage;
     }
 }
 

@@ -31,10 +31,31 @@
                         <s:a action="doListArticleByCategorieId" class="nav-link btnNav" style="font-size:0.9em;font-family: arial"><s:property value="nom"/><s:param name="categorieId" value="id"/></s:a>
                     </li>
                 </s:iterator>
-                <li class="nav-item" style="margin-top: 20px;'">
-                    <s:a action="gestion" class="nav-link btnNav" style="font-size:0.9em;font-family: arial;color:blue"> GESTION </s:a>
-                </li>
+                <s:if test="#session.admin">
+                    <li class="nav-item" style="margin-top: 20px;'">
+                        <s:a action="gestion" class="nav-link btnNav" style="font-size:0.9em;font-family: arial;color:blue"> GESTION </s:a>
+                    </li>
+                </s:if>
             </ul>
         </div>
     </nav>
 </div>
+<s:if test="infoMessage != null">
+    <div id="cardInfo" class="card text-center border shadow" style="bottom: 200px;position: fixed;right: 40px;z-index: 1
+    ;width: 20rem;">
+        <div class="card-body">
+            <i class="fas fa-info-circle"></i>  <s:property value="infoMessage"/>
+        </div>
+        <div class="card-footer">
+            <button id="btnInfo" class="btn btn-dark" style="font-size: 0.6em;">Fermer</button>
+        </div>
+    </div>
+</s:if>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $(function() {
+        $(document).on('click', '#btnInfo', function () {
+            $('#cardInfo').slideUp(500);
+        });
+    });
+</script>

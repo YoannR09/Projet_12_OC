@@ -34,6 +34,7 @@ public class GestionCommandeAdminAction extends ActionSupport {
     private String statutList;
     private Integer commandeId;
     private String numero;
+    private String infoMessage;
     private Compte compte;
     private Commande commande;
 
@@ -62,6 +63,7 @@ public class GestionCommandeAdminAction extends ActionSupport {
                 }
                 generateCommande(commande);
                 getFactory().getCommandeProxy().update(commande);
+                infoMessage = "Le statut de la commande a bien été changé";
                 categorieList = getFactory().getCategorieProxy().findAll();
             }
             return ActionSupport.SUCCESS;
@@ -295,5 +297,13 @@ public class GestionCommandeAdminAction extends ActionSupport {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getInfoMessage() {
+        return infoMessage;
+    }
+
+    public void setInfoMessage(String infoMessage) {
+        this.infoMessage = infoMessage;
     }
 }

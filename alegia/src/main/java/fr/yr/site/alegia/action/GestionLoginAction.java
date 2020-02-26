@@ -44,6 +44,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
     private String info;
     private String ville;
     private String verif;
+    private String infoMessage;
     private String codePostal;
     private Compte compte;
 
@@ -73,7 +74,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
             compte = getFactory().getCompteProxy().findByEmail(email.toLowerCase());
         }
         if (compte == null) {
-            this.addActionMessage("Identifiant invalide");
+            infoMessage = "Identifiant invalide";
             vResult = ActionSupport.ERROR;
         } else {
             if (compte != null) {
@@ -86,7 +87,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
                     }
                     vResult = ActionSupport.SUCCESS;
                 } else {
-                    this.addActionMessage("Mot de passe invalide");
+                    infoMessage = "Mot de passe invalide";
                     vResult = ActionSupport.ERROR;
                 }
             }
@@ -100,7 +101,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
         try {
             if (email != null){
                 if(getFactory().getCompteProxy().findByEmail(email) != null){
-                    this.addActionMessage("Adresse éléctronique déjà utilisée");
+                    infoMessage = "Adresse éléctronique déjà utilisée";
                     vResult = ActionSupport.ERROR;
                 }else {
                     if (getFactory().getAdresseProxy()
@@ -143,7 +144,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
                     panier.setCompteId(getFactory().getCompteProxy()
                             .findByEmail(email.toLowerCase()).getId());
                     getFactory().getPanierProxy().add(panier);
-
+                    infoMessage = "Votre compte a bien été créé";
                     vResult = ActionSupport.SUCCESS;
                 }
             }else {
@@ -176,6 +177,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
                     mailGestion.sendMail(objet, contenu, compte);
                     compte.setMotDePasse(EncryptionUtil.encrypt(newMdp, secretKey));
                     getFactory().getCompteProxy().update(compte);
+                    infoMessage = "Un email contenant le nouveau mot de passe vous a été transmis";
                 }
                 categorieList = getFactory().getCategorieProxy().findAll();
                 return ActionSupport.SUCCESS;
@@ -240,6 +242,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
                 getFactory().getCompteProxy().update(compte);
                 compte.setAdresse(getFactory().getAdresseProxy().getAdresse(compte.getAdresseId()));
                 categorieList = getFactory().getCategorieProxy().findAll();
+                infoMessage = "Votre mot de passe a été changé";
             }else {
                 this.addActionMessage("La vérification du mot de passe est invalide");
             }
@@ -259,6 +262,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
                 compte.setAdresse(getFactory().getAdresseProxy().getAdresse(compte.getAdresseId()));
                 categorieList = getFactory().getCategorieProxy().findAll();
                 getFactory().getCompteProxy().update(compte);
+                infoMessage = "Votre adresse éléctronique a été changé";
             }else {
                 this.addActionMessage("La vérification de l'adresse éléctronique est invalide");
             }
@@ -302,6 +306,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
                 compte.setAdresse(getFactory().getAdresseProxy().getAdresse(compte.getAdresseId()));
                 categorieList = getFactory().getCategorieProxy().findAll();
                 getFactory().getCompteProxy().update(compte);
+                infoMessage = "Votre adresse de livraison a été changée";
             }
             return ActionSupport.SUCCESS;
         }catch (Exception e){
@@ -434,5 +439,13 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
 
     public void setVerif(String verif) {
         this.verif = verif;
+    }
+
+    public String getInfoMessage() {
+        return infoMessage;
+    }
+
+    public void setInfoMessage(String infoMessage) {
+        this.infoMessage = infoMessage;
     }
 }

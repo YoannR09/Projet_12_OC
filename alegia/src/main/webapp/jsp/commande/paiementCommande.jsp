@@ -114,14 +114,14 @@
         <label class="textTop">Sélectionnez votre mode de paiement</label>
         <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreArticle">
             <div style="display: flex;justify-content: space-between">
-                <div>
-                    Carte
+                <div style="text-align: center">
+                    <p><i class="fas fa-credit-card"></i>  Carte bancaire</p>
                     <s:a action="doPaiementCommande" class="btn btn-dark" style="font-size: 0.8em;">
                         <s:param name="commandeId" value="commande.id"/>
                         Sélectionner</s:a>
                 </div>
-                <div>
-                    Paypal
+                <div style="text-align: center">
+                    <p><i class="fab fa-paypal"></i>  Paypal</p>
                     <s:a action="doPaiementCommande" class="btn btn-dark" style="font-size: 0.8em;">
                         <s:param name="commandeId" value="commande.id"/>
                         Sélectionner</s:a>
