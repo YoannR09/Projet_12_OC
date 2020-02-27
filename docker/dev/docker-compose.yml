@@ -3,10 +3,11 @@ services:
   myerp.db:
     image: postgres:9.4
     ports:
-      - "localhost:5432"
+      - "localhost:5444"
     volumes:
 #      - "./data/db:/var/lib/postgresql/data"
-       - "./init/db/docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d"
+       - "./init/db/docker-entrypoint-initdb.d/01_create_schema"
+       - "./init/db/docker-entrypoint-initdb.d/02_create_tables"
     environment:
       - POSTGRES_DB=alegia
       - POSTGRES_USER=postgres

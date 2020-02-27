@@ -1,9 +1,6 @@
 package fr.yr.site.alegia.configuration;
 
-import fr.yr.site.alegia.beans.Article;
-import fr.yr.site.alegia.beans.Commande;
-import fr.yr.site.alegia.beans.Image;
-import fr.yr.site.alegia.beans.LigneDeCommande;
+import fr.yr.site.alegia.beans.*;
 
 import java.util.List;
 
@@ -47,5 +44,18 @@ public class GenerateMethod {
             image.setUrl("indisponible.jpg");
             a.getImageList().add(image);
         }
+    }
+
+    public Integer generateCountPanier(Factory factory,String mail){
+        if (mail != null) {
+            Compte compte = factory.getCompteProxy().findByEmail(mail.toLowerCase());
+            return factory.getContenuProxy().findByPanierId(factory
+                    .getPanierProxy()
+                    .getPanierByCompteId(compte
+                            .getId()).getId()).size();
+        }else {
+            return null;
+        }
+
     }
 }

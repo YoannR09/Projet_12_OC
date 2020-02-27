@@ -113,15 +113,10 @@
     <div class="col-9" style="max-width: 500px">
         <label class="textTop">Adresse de livraison</label>
         <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreArticle">
-            <div style="display: flex;justify-content: space-between;width: 100%">
-                    <span style="font-size:0.9em;font-weight: bold">
-                Adresse de livraison lié à votre compte
+              <span style="font-size:0.9em;font-weight: bold">
+                Adresse de livraison lié au compte
                         </span>
-                <button class="btn btn-dark" style="font-size: 0.7em" id="selectionAdresseCompte">
-                    Sélectionner
-                </button>
-            </div>
-            <div id="cadreAdresseCompte" style="margin: 10px">
+            <div style="margin: 10px">
                 <em>Ville  :  </em>
                 <span class="spanAdresse">  <s:property value="adresse.ville"/></span><br/>
                 <em>Code postal  :  </em>
@@ -135,76 +130,57 @@
                 <span style="position: absolute;right: 10px;bottom: 10px">
                 <s:a action="doAdresseCompteCommande" class="btn btn-dark" style="font-size: 0.8em;">
                     <s:param name="commandeId" value="commandeId"/>
-                    Confirmer</s:a>
+                    <s:param name="adresseId" value="adresse.id"/>
+                    Sélectionner</s:a>
                     </span>
             </div>
         </div>
-        <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreAutreAdresse">
-            <div style="display: flex;justify-content: space-between;width: 100%">
+
+        <s:iterator value="adresseList">
+        <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreArticle">
+        <div style="margin: 10px">
+            <em>Ville  :  </em>
+            <span class="spanAdresse">  <s:property value="ville"/></span><br/>
+            <em>Code postal  :  </em>
+            <span class="spanAdresse">  <s:property value="codePostal"/></span><br/>
+            <em>Numéro  :  </em>
+            <span class="spanAdresse">  <s:property value="numero"/></span><br/>
+            <em>Rue  :  </em>
+            <span class="spanAdresse">  <s:property value="rue"/></span><br/>
+            <em>Information  :  </em>
+            <span class="spanAdresse">  <s:property value="info"/></span><br/>
+            <span style="position: absolute;right: 10px;bottom: 10px">
+                <s:a action="doAdresseCompteCommande" class="btn btn-dark btn-small" style="font-size: 0.8em;">
+                    <s:param name="commandeId" value="commandeId"/>
+                    <s:param name="adresseId" value="id"/>
+                    <s:param name="livraisonId" value="adresseLivraisonId"/>
+                    Sélectionner</s:a>
+                    </span>
+            <span style="position: absolute;right: 10px;top: 10px">
+                <s:a action="doSupprimerAdresseLivraison" class="text-danger" style="font-size: 1em;">
+                    <s:param name="commandeId" value="commandeId"/>
+                    <s:param name="adresseId" value="id"/>
+                    <s:param name="livraisonId" value="adresseLivraisonId"/>
+                    <i class="fas fa-trash-alt"></i></s:a>
+                    </span>
+        </div>
+        </div>
+    </s:iterator>
+    <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreAutreAdresse">
+        <div style="display: flex;justify-content: space-between;width: 100%">
                     <span style="font-size:0.9em;font-weight: bold">
                 Nouvelle adresse de livraison
                         </span>
-                <button class="btn btn-dark btn-small" style="font-size: 0.7em" id="selectionAdresseNouvelle">
-                    Sélectionner
-                </button>
-            </div>
-            <div style="margin: 10px" id="cadreNouvelleAdresse">
-                <s:form id="doNewAdresseCommande" action="" >
-                    <input name="commandeId" value="<s:property value="commandeId"/>" class="form-control" id="commandeId">
-                    <div style="padding-bottom: 20px">
-                        <div class="form-group divInput" style="margin-right: 20px;margin-left: 20px" >
-                            <label for="inputVille" >Ville</label>
-                            <input name="ville" class="form-control" id="inputVille">
-                        </div>
-                        <div class="form-group divInput" style="margin-right: 20px;margin-left: 20px">
-                            <label for="inputCode" >Code postal</label>
-                            <input name="codePostal" class="form-control" id="inputCode">
-                        </div>
-                        <div class="form-group divInput" style="margin-right: 20px;margin-left: 20px">
-                            <label for="inputNumero" >Numero</label>
-                            <input name="numero" class="form-control" id="inputNumero">
-                        </div>
-                        <div class="form-group divInput" style="margin-right: 20px;margin-left: 20px">
-                            <label for="inputRue" >Rue</label>
-                            <input name="rue" class="form-control" id="inputRue">
-                        </div>
-                        <div class="form-group divInput" style="margin-right: 20px;margin-left: 20px">
-                            <label for="inputInfo" >Informations supplémentaire</label>
-                            <textarea rows="3" name="info" class="form-control" id="inputInfo"></textarea>
-                        </div>
-                        <span style="position: absolute;right: 10px;bottom: 10px">
-                                    <button type="submit"id="btnRecherche" class="btn btn-dark">Confirmer</button>
-                        </span>
-                    </div>
-                </s:form>
-            </div>
+            <s:a action="doFormNewAdresseCommande" class="btn btn-dark btn-small" style="font-size: 0.8em;">
+                <s:param name="commandeId" value="commandeId"/>
+                <s:param name="adresseId" value="adresse.id"/>
+                Créer</s:a>
         </div>
     </div>
+</div>
 </div>
 <footer>
     <%@ include file="../_include/footer.jsp"%>
 </footer>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<script>
-    $(function() {
-        $('#cadreNouvelleAdresse').hide();
-        $('#selectionAdresseCompte').hide();
-        $('#commandeId').hide();
-    });
-
-    $(document).on('click', '#selectionAdresseNouvelle', function () {
-        $('#selectionAdresseNouvelle').hide();
-        $('#selectionAdresseCompte').show();
-        $('#cadreAdresseCompte').hide();
-        $('#cadreNouvelleAdresse').show();
-    });
-
-    $(document).on('click', '#selectionAdresseCompte', function () {
-        $('#selectionAdresseCompte').hide();
-        $('#selectionAdresseNouvelle').show();
-        $('#cadreAdresseCompte').show();
-        $('#cadreNouvelleAdresse').hide();
-    });
-</script>
 </html>

@@ -128,11 +128,11 @@
                         <tbody>
                         <s:iterator value="commande.ligneDeCommandeList">
                             <tr>
-                                <td><s:property value="commande.designation"/></td>
-                                <td><s:property value="commande.prixUnitTtc"/> €</td>
-                                <td><s:property value="commande.montantTtc"/> €</td>
-                                <td><s:property value="commande.quantite"/></td>
-                                <td><s:property value="commande.taille"/></td>
+                                <td><s:property value="designation"/></td>
+                                <td><s:property value="prixUnitTtc"/> €</td>
+                                <td><s:property value="montantTtc"/> €</td>
+                                <td><s:property value="quantite"/></td>
+                                <td><s:property value="taille"/></td>
                             </tr>
                         </s:iterator>
                         <td>TOTAL : <s:property value="commande.prixTotal"/>  €</td>
@@ -151,12 +151,13 @@
                     </div>
                 </div>
             </div>
-            <footer>
-                <%@ include file="../_include/footer.jsp"%>
-            </footer>
         </div>
     </div>
 </div>
+<footer>
+    <%@ include file="../_include/footer.jsp"%>
+</footer>
+
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>

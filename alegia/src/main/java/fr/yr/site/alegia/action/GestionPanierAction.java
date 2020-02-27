@@ -27,6 +27,7 @@ public class GestionPanierAction extends ActionSupport {
     private Article article;
     private String taille;
     private Integer countArticle;
+    private Integer countPanier;
     private String totalPrix;
     private String infoMessage;
     private List<Contenu> contenuList;
@@ -62,8 +63,9 @@ public class GestionPanierAction extends ActionSupport {
             }else {
                 getFactory().getContenuProxy().update(contenu);
             }
+            countPanier = gm.generateCountPanier(factory,getEmail());
             categorieList = getFactory().getCategorieProxy().findAll();
-            infoMessage = "L'rticle a bien été ajouté votre panier";
+            infoMessage = "L'article a bien été ajouté votre panier";
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
@@ -86,6 +88,7 @@ public class GestionPanierAction extends ActionSupport {
                 totalContenu = totalContenu+(contenu.getArticle().getPrixTtc()*contenu.getQuantite());
                 countArticle = countArticle+contenu.getQuantite();
             }
+            countPanier = gm.generateCountPanier(factory,getEmail());
             totalPrix = Float.toString(totalContenu);
             categorieList = getFactory().getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
@@ -117,6 +120,7 @@ public class GestionPanierAction extends ActionSupport {
                 totalContenu = totalContenu+(contenu.getArticle().getPrixTtc()*contenu.getQuantite());
                 countArticle = countArticle+contenu.getQuantite();
             }
+            countPanier = gm.generateCountPanier(factory,getEmail());
             categorieList = getFactory().getCategorieProxy().findAll();
             totalPrix = Float.toString(totalContenu);
             return ActionSupport.SUCCESS;
@@ -226,5 +230,21 @@ public class GestionPanierAction extends ActionSupport {
 
     public void setContenuId(Integer contenuId) {
         this.contenuId = contenuId;
+    }
+
+    public Integer getCountPanier() {
+        return countPanier;
+    }
+
+    public void setCountPanier(Integer countPanier) {
+        this.countPanier = countPanier;
+    }
+
+    public Panier getPanier() {
+        return panier;
+    }
+
+    public void setPanier(Panier panier) {
+        this.panier = panier;
     }
 }

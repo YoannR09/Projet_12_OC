@@ -8,6 +8,7 @@ import fr.yr.site.alegia.beans.Compte;
 import fr.yr.site.alegia.beans.Panier;
 import fr.yr.site.alegia.configuration.EncryptionUtil;
 import fr.yr.site.alegia.configuration.Factory;
+import fr.yr.site.alegia.configuration.GenerateMethod;
 import fr.yr.site.alegia.configuration.MailGestion;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -25,6 +26,8 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
 
     private static final Logger logger = LogManager.getLogger();
 
+    private GenerateMethod gm = new GenerateMethod();
+
     // --- Microservices ---
     @Autowired
     private Factory factory;
@@ -33,20 +36,21 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
 
     private Map<String, Object> session;
 
-    private List<Categorie> categorieList;
-    private String email;
-    private String motDePasse;
-    private String nom;
-    private String prenom;
-    private String rue;
-    private String numero;
-    private String numeroTelephone;
-    private String info;
-    private String ville;
-    private String verif;
-    private String infoMessage;
-    private String codePostal;
-    private Compte compte;
+    private         List<Categorie>     categorieList;
+    private         Integer             countPanier;
+    private         String              email;
+    private         String              motDePasse;
+    private         String              nom;
+    private         String              prenom;
+    private         String              rue;
+    private         String              numero;
+    private         String              numeroTelephone;
+    private         String              info;
+    private         String              ville;
+    private         String              verif;
+    private         String              infoMessage;
+    private         String              codePostal;
+    private         Compte              compte;
 
     public String pageLogin(){
         try {
@@ -85,6 +89,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
                     } else {
                         this.session.put("user", compte);
                     }
+                    countPanier = gm.generateCountPanier(factory,getEmail());
                     vResult = ActionSupport.SUCCESS;
                 } else {
                     infoMessage = "Mot de passe invalide";
@@ -167,6 +172,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
      */
     public String doNouveauMotDePasse(){
         try {
+            countPanier = gm.generateCountPanier(factory,getEmail());
             if (email != null){
                 compte = getFactory().getCompteProxy().findByEmail(email.toLowerCase());
                 if (compte != null) {
@@ -202,6 +208,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
             String email = getEmailContext();
             compte = getFactory().getCompteProxy().findByEmail(email.toLowerCase());
             compte.setAdresse(getFactory().getAdresseProxy().getAdresse(compte.getAdresseId()));
+            countPanier = gm.generateCountPanier(factory,getEmail());
             categorieList = getFactory().getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
@@ -235,6 +242,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
      */
     public String doChangeMotDePasse(){
         try {
+            countPanier = gm.generateCountPanier(factory,getEmail());
             if (motDePasse.equals(verif)) {
                 String getEmail = getEmailContext();
                 compte = getFactory().getCompteProxy().findByEmail(getEmail.toLowerCase());
@@ -255,6 +263,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
 
     public String doChangeEmail(){
         try {
+            countPanier = gm.generateCountPanier(factory,getEmail());
             if (email != null && email.equals(verif)) {
                 String getEmail = getEmailContext();
                 compte = getFactory().getCompteProxy().findByEmail(getEmail.toLowerCase());
@@ -275,6 +284,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
 
     public String doChangeAdresse(){
         try {
+            countPanier = gm.generateCountPanier(factory,getEmail());
             if (motDePasse != null && motDePasse.equals(verif)) {
                 String getEmail = getEmailContext();
                 compte = getFactory().getCompteProxy().findByEmail(getEmail.toLowerCase());
@@ -447,5 +457,13 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
 
     public void setInfoMessage(String infoMessage) {
         this.infoMessage = infoMessage;
+    }
+
+    public Integer getCountPanier() {
+        return countPanier;
+    }
+
+    public void setCountPanier(Integer countPanier) {
+        this.countPanier = countPanier;
     }
 }

@@ -68,13 +68,23 @@ public class AdresseController {
      * @param rue
      * @return
      */
-    @GetMapping(value = "Adresse/All/{ville},{codePostal},{numero},{rue}")
+    @GetMapping(value = "/Adresse/All/{ville},{codePostal},{numero},{rue}")
     public Adresse findByVilleAndCodePostalAndNumeroAndRue(
             @PathVariable String ville,@PathVariable String codePostal,
             @PathVariable String numero,@PathVariable String rue){
         try {
             return getDao().findByVilleAndCodePostalAndNumeroAndRue(ville, codePostal, numero, rue);
         }catch (Exception e){
+            return null;
+        }
+    }
+
+    @GetMapping(value = "/Adresse/OldCommande/{compteId}")
+    public List<Adresse> findOldByCompteId(@PathVariable int compteId){
+        try {
+            return getDao().findOldAdresseByCompteIdAnd(compteId);
+        }catch (Exception e){
+            logger.error(e);
             return null;
         }
     }

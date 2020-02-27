@@ -121,7 +121,13 @@
             padding:15px;text-align: center;background-color: whitesmoke">
                 <p><em class="lab">Prix total : </em><s:property value="totalPrix"/> €</p>
                 <p><em class="lab">Nombre d'article(s) : </em><s:property value="countArticle"/></p>
-                <s:a class="btn btn-dark" action="doCommande" style="font-size:0.8em;">Passer la commande</s:a>
+                <s:if test="countArticle == 0">
+                    <button class="btn btn-dark" style="font-size:0.8em;" disabled>Passer la commande</button>
+                </s:if>
+                <s:else>
+                    <s:a class="btn btn-dark" action="doCommande" style="font-size:0.8em;">Passer la commande</s:a>
+                </s:else>
+
             </div>
         </div>
     </div>

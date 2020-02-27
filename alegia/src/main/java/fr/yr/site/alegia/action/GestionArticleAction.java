@@ -1,5 +1,6 @@
 package fr.yr.site.alegia.action;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import fr.yr.site.alegia.beans.*;
 import fr.yr.site.alegia.configuration.Factory;
@@ -32,6 +33,7 @@ public class GestionArticleAction extends ActionSupport {
 
     private         Article             article;
     private         Integer             articleId;
+    private         Integer             countPanier;
     private         List<ListTaille>    listTailles;
     private         List<String>        tailleSelect;
     private         List<Taille>        tailleList;
@@ -67,6 +69,7 @@ public class GestionArticleAction extends ActionSupport {
                 lt.setTaille(getFactory().getTailleProxy().findById(lt.getTailleId()));
             }
             categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            countPanier = gm.generateCountPanier(factory,getEmail());
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
@@ -108,10 +111,15 @@ public class GestionArticleAction extends ActionSupport {
                         lt.setArticleId(newArticle.getId());
                         getFactory().getListTailleProxy().add(lt);
                     }
+                    countPanier = gm.generateCountPanier(factory,getEmail());
                     infoMessage = " L'article a bien été créé ";
                     vResult = ActionSupport.SUCCESS;
                 }else {
                     this.addActionMessage(" Vous devez choisir des tailles ");
+                    if (getEmail() != null){
+                        countPanier = gm.generateCountPanier(factory
+                                ,(String) ActionContext.getContext().getSession().get("email"));
+                    }
                     vResult = ActionSupport.ERROR;
                 }
             }else {
@@ -140,6 +148,7 @@ public class GestionArticleAction extends ActionSupport {
             article.setDisponible(true);
             updateArticle(article,false);
             infoMessage = "L'article est maintenant disponible";
+            countPanier = gm.generateCountPanier(factory,getEmail());
             categorieList = getFactory().getCategorieProxy().findByDispo(true);
             return ActionSupport.SUCCESS;
         }catch (Exception e){
@@ -160,6 +169,7 @@ public class GestionArticleAction extends ActionSupport {
             article.setDisponible(false);
             updateArticle(article,true);
             infoMessage = "L'article est maintenant indisponible";
+            countPanier = gm.generateCountPanier(factory,getEmail());
             categorieList = getFactory().getCategorieProxy().findByDispo(true);
             return ActionSupport.SUCCESS;
         }catch (Exception e){
@@ -186,6 +196,7 @@ public class GestionArticleAction extends ActionSupport {
                 articleList = getFactory().getArticleProxy()
                         .findByCategorieIdAndDisponible(a.getCategorieId(),false);
             }
+            countPanier = gm.generateCountPanier(factory,getEmail());
             completeArticleList(articleList);
             categorieList = getFactory().getCategorieProxy().findByDispo(true);
             return ActionSupport.SUCCESS;
@@ -206,6 +217,7 @@ public class GestionArticleAction extends ActionSupport {
             article = getFactory().getArticleProxy().getArticle(articleId);
             gm.completeArticle(getFactory(),article);
             categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            countPanier = gm.generateCountPanier(factory,getEmail());
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
@@ -221,6 +233,7 @@ public class GestionArticleAction extends ActionSupport {
                 .findByCategorieIdAndDisponible(article.getCategorieId(),dispo);
         categorieList = getFactory().getCategorieProxy().findAll();
         completeArticleList(articleList);
+
         categorieList = getFactory().getCategorieProxy().findByDispo(true);
     }
 
@@ -228,6 +241,10 @@ public class GestionArticleAction extends ActionSupport {
         for (Article a : vList) {
             gm.completeArticle(getFactory(),a);
         }
+    }
+
+    protected String getEmail() {
+        return (String) ActionContext.getContext().getSession().get("email");
     }
 
 
@@ -381,6 +398,14 @@ public class GestionArticleAction extends ActionSupport {
 
     public void setInfoMessage(String infoMessage) {
         this.infoMessage = infoMessage;
+    }
+
+    public Integer getCountPanier() {
+        return countPanier;
+    }
+
+    public void setCountPanier(Integer countPanier) {
+        this.countPanier = countPanier;
     }
 }
 

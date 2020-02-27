@@ -1,5 +1,6 @@
 package fr.yr.site.alegia.action;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import fr.yr.site.alegia.beans.Article;
 import fr.yr.site.alegia.beans.Categorie;
@@ -28,6 +29,7 @@ public class GestionCategorieAction extends ActionSupport {
     private GenerateMethod gm = new GenerateMethod();
 
     private         Integer                 categorieId;
+    private         Integer                 countPanier;
     private         List<Article>           articleList;
     private         List<Categorie>         categorieList;
     private         List<Categorie>         categories;
@@ -47,6 +49,10 @@ public class GestionCategorieAction extends ActionSupport {
                     .findByCategorieIdAndDisponible(categorieId,true);
             gm.completeArticleList(getFactory(),articleList);
             categorieList = getFactory().getCategorieProxy().findAll();
+            if (getEmail() != null){
+                countPanier = gm.generateCountPanier(factory
+                        ,(String) ActionContext.getContext().getSession().get("email"));
+            }
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
@@ -63,6 +69,7 @@ public class GestionCategorieAction extends ActionSupport {
     public String addCategorie(){
         try {
             categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            countPanier = gm.generateCountPanier(factory,getEmail());
             if (nom != null && labelle != null) {
                 Categorie categorie = new Categorie();
                 categorie.setNom(nom);
@@ -97,6 +104,7 @@ public class GestionCategorieAction extends ActionSupport {
             Categorie categorie = getFactory().getCategorieProxy().findById(categorieId);
             categorie.setDisponible(true);
             getFactory().getCategorieProxy().update(categorie);
+            countPanier = gm.generateCountPanier(factory,getEmail());
             categories = getFactory().getCategorieProxy().findByDispo(false);
             categorieList = getFactory().getCategorieProxy().findAll();
             infoMessage = " La catégorie est maintenant disponible ";
@@ -118,6 +126,7 @@ public class GestionCategorieAction extends ActionSupport {
             Categorie categorie = getFactory().getCategorieProxy().findById(categorieId);
             categorie.setDisponible(false);
             getFactory().getCategorieProxy().update(categorie);
+            countPanier = gm.generateCountPanier(factory,getEmail());
             categories = getFactory().getCategorieProxy().findByDispo(true);
             categorieList = getFactory().getCategorieProxy().findAll();
             infoMessage = "La catégorie est maintenant indisponible";
@@ -136,6 +145,10 @@ public class GestionCategorieAction extends ActionSupport {
 
     protected Factory getFactory() {
         return factory;
+    }
+
+    protected String getEmail() {
+        return (String) ActionContext.getContext().getSession().get("email");
     }
 
 
@@ -213,5 +226,13 @@ public class GestionCategorieAction extends ActionSupport {
 
     public void setInfoMessage(String infoMessage) {
         this.infoMessage = infoMessage;
+    }
+
+    public Integer getCountPanier() {
+        return countPanier;
+    }
+
+    public void setCountPanier(Integer countPanier) {
+        this.countPanier = countPanier;
     }
 }

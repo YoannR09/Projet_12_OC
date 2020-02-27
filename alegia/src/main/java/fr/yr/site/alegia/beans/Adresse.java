@@ -7,6 +7,7 @@ public class Adresse {
     private String codePostal;
     private String ville;
     private String info;
+    private Integer adresseLivraisonId;
     private String numero;
 
     public Integer getId() {
@@ -55,5 +56,13 @@ public class Adresse {
 
     public void setNumero(String numero) {
         this.numero = numero;
+    }
+
+    public Integer getAdresseLivraisonId() {
+        return adresseLivraisonId;
+    }
+
+    public void setAdresseLivraisonId(Integer adresseLivraisonId) {
+        this.adresseLivraisonId = adresseLivraisonId;
     }
 }

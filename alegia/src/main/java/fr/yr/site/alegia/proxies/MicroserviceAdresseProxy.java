@@ -42,6 +42,17 @@ public interface MicroserviceAdresseProxy {
 
 
     /**
+     * Méthode pour récupérer une liste d'adresse qui ont servies pour les commandes
+     * du compte en question
+     * @param compteId
+     * @return
+     */
+    @GetMapping(value = "/microservice-adresse/Adresse/OldCommande/{compteId}")
+    List<Adresse> findOldByCompteId(@PathVariable("compteId") int compteId);
+
+
+
+    /**
      * Méthode pour ajouter une adresse
      * @param adresse
      */

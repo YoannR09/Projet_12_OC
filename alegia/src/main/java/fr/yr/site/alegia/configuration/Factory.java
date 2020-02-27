@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 public class Factory {
 
     @Autowired
+    private MicroserviceAdresseLivraisonProxy microserviceAdresseLivraisonProxy;
+    @Autowired
     private MicroserviceLigneDeCommandeProxy microserviceLigneDeCommandeProxy;
     @Autowired
     private MicroserviceCommandeProxy microserviceCommandeProxy;
@@ -78,5 +80,9 @@ public class Factory {
 
     public MicroserviceNiveauAccesProxy getNiveauAccesProxy() {
         return microserviceNiveauAccesProxy;
+    }
+
+    public MicroserviceAdresseLivraisonProxy getLivraisonProxy() {
+        return microserviceAdresseLivraisonProxy;
     }
 }

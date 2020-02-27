@@ -1,5 +1,6 @@
 package fr.yr.site.alegia.action;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import fr.yr.site.alegia.beans.Categorie;
 import fr.yr.site.alegia.beans.Commande;
@@ -33,6 +34,7 @@ public class GestionCommandeAdminAction extends ActionSupport {
     private String statut;
     private String statutList;
     private Integer commandeId;
+    private Integer countPanier;
     private String numero;
     private String infoMessage;
     private Compte compte;
@@ -40,6 +42,7 @@ public class GestionCommandeAdminAction extends ActionSupport {
 
     public String doCommandeChangeStatut(){
         try {
+            countPanier = gm.generateCountPanier(factory,getEmailContext());
             MailGestion mailGestion = new MailGestion();
             if (statut != null && commandeId != null){
                 commande = getFactory().getCommandeProxy().getCommande(commandeId);
@@ -85,6 +88,7 @@ public class GestionCommandeAdminAction extends ActionSupport {
      */
     public String doListCommandeByStatut(){
         try {
+            countPanier = gm.generateCountPanier(factory,getEmailContext());
             commandeList = getFactory().getCommandeProxy()
                     .getCOmmandeByStatutId(Integer.parseInt(statut));
             for (Commande c:commandeList){
@@ -114,6 +118,7 @@ public class GestionCommandeAdminAction extends ActionSupport {
 
     public String doDetailCommande(){
         try {
+            countPanier = gm.generateCountPanier(factory,getEmailContext());
             if (commandeId != null){
                 commande = getFactory().getCommandeProxy().getCommande(commandeId);
                 generateCommande(commande);
@@ -138,6 +143,7 @@ public class GestionCommandeAdminAction extends ActionSupport {
 
     public String doRechercheForm(){
         try {
+            countPanier = gm.generateCountPanier(factory,getEmailContext());
             categorieList = getFactory().getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
@@ -156,39 +162,45 @@ public class GestionCommandeAdminAction extends ActionSupport {
      */
     public String doRechercheCommande(){
         try {
+            countPanier = gm.generateCountPanier(factory,getEmailContext());
             nom = nom.toUpperCase();
             prenom = prenom.toUpperCase();
             email = email.toLowerCase();
-            if (numero != null) {
+            if (numero != null && (prenom != null || nom != null || email != null)){
+            if (!numero.equals("")) {
                 commandeList = getFactory().getCommandeProxy().findCommandeByNumeroContaining(numero);
-                statutList = "Numéro : "+numero;
-            }
-            if (!nom.equals("") || !prenom.equals("") || !email.equals("")){
-                if (!nom.equals("") && !prenom.equals("") && !email.equals("")){
-                   commandeList = getFactory().getCommandeProxy().findByNomPrenomEmail(nom,prenom,email);
-                    statutList = "Nom : "+nom+"/ Prénom : "+prenom+"/ Adresse éléctronique : "+email;
-                }else if (nom.equals("") && !prenom.equals("") && !email.equals("")){
-                    commandeList =  getFactory().getCommandeProxy().findByPrenomEmail(prenom,email);
-                    statutList = "Prénom : "+prenom+"/ Adresse éléctronique : "+email;
-                }else if (!nom.equals("") && !prenom.equals("") && email.equals("")){
-                    commandeList = getFactory().getCommandeProxy().findByNomPrenom(nom,prenom);
-                    statutList = "Nom : "+nom+"/ Prénom : "+prenom;
-                }else if (!nom.equals("") && prenom.equals("") && !email.equals("")){
-                    commandeList = getFactory().getCommandeProxy().findByNomEmail(nom,email);
-                    statutList = "Nom : "+nom+"/ Adresse éléctronique : "+email;
-                }else if (!nom.equals("") && prenom.equals("") && email.equals("")){
-                    commandeList = getFactory().getCommandeProxy().findByNom(nom);
-                    statutList = "Nom : "+nom;
-                }else if (nom.equals("") && !prenom.equals("") && email.equals("")){
-                    commandeList = getFactory().getCommandeProxy().findByPrenom(prenom);
-                    statutList = "Prénom : "+prenom;
-                }else if (nom.equals("") && prenom.equals("") && !email.equals("")){
-                    commandeList = getFactory().getCommandeProxy().findByEmail(email);
-                    statutList = "Adresse éléctronique : "+email;
-                }
-                for (Commande c:commandeList){
+                statutList = "Numéro de la commande : "+numero;
+                for (Commande c : commandeList) {
                     generateCommande(c);
                 }
+            }
+            if (!nom.equals("") || !prenom.equals("") || !email.equals("")) {
+                if (!nom.equals("") && !prenom.equals("") && !email.equals("")) {
+                    commandeList = getFactory().getCommandeProxy().findByNomPrenomEmail(nom, prenom, email);
+                    statutList = "Nom : " + nom + "/ Prénom : " + prenom + "/ Adresse éléctronique : " + email;
+                } else if (nom.equals("") && !prenom.equals("") && !email.equals("")) {
+                    commandeList = getFactory().getCommandeProxy().findByPrenomEmail(prenom, email);
+                    statutList = "Prénom : " + prenom + "/ Adresse éléctronique : " + email;
+                } else if (!nom.equals("") && !prenom.equals("") && email.equals("")) {
+                    commandeList = getFactory().getCommandeProxy().findByNomPrenom(nom, prenom);
+                    statutList = "Nom : " + nom + "/ Prénom : " + prenom;
+                } else if (!nom.equals("") && prenom.equals("") && !email.equals("")) {
+                    commandeList = getFactory().getCommandeProxy().findByNomEmail(nom, email);
+                    statutList = "Nom : " + nom + "/ Adresse éléctronique : " + email;
+                } else if (!nom.equals("") && prenom.equals("") && email.equals("")) {
+                    commandeList = getFactory().getCommandeProxy().findByNom(nom);
+                    statutList = "Nom : " + nom;
+                } else if (nom.equals("") && !prenom.equals("") && email.equals("")) {
+                    commandeList = getFactory().getCommandeProxy().findByPrenom(prenom);
+                    statutList = "Prénom : " + prenom;
+                } else if (nom.equals("") && prenom.equals("") && !email.equals("")) {
+                    commandeList = getFactory().getCommandeProxy().findByEmail(email);
+                    statutList = "Adresse éléctronique : " + email;
+                }
+                for (Commande c : commandeList) {
+                    generateCommande(c);
+                }
+            }
                 categorieList = getFactory().getCategorieProxy().findAll();
             }
             return ActionSupport.SUCCESS;
@@ -209,6 +221,9 @@ public class GestionCommandeAdminAction extends ActionSupport {
     }
 
 
+    protected String getEmailContext() {
+        return (String) ActionContext.getContext().getSession().get("email");
+    }
 
     public List<Commande> getCommandeList() {
         return commandeList;
@@ -305,5 +320,13 @@ public class GestionCommandeAdminAction extends ActionSupport {
 
     public void setInfoMessage(String infoMessage) {
         this.infoMessage = infoMessage;
+    }
+
+    public Integer getCountPanier() {
+        return countPanier;
+    }
+
+    public void setCountPanier(Integer countPanier) {
+        this.countPanier = countPanier;
     }
 }

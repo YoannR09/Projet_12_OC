@@ -1,5 +1,6 @@
 package fr.yr.site.alegia.action;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import fr.yr.site.alegia.beans.Article;
 import fr.yr.site.alegia.beans.Categorie;
@@ -24,6 +25,7 @@ public class GestionIndexAction extends ActionSupport {
 
     private     List<Categorie>     categorieList;
     private     Integer             categorieId;
+    private     Integer             countPanier;
     private     List<Article>       articleList;
     private     List<Article>       actuArticleList;
 
@@ -37,6 +39,7 @@ public class GestionIndexAction extends ActionSupport {
         String vResult;
         try {
             categorieList = getFactory().getCategorieProxy().findAll();
+            countPanier = gm.generateCountPanier(factory,getEmail());
             vResult = ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
@@ -55,6 +58,9 @@ public class GestionIndexAction extends ActionSupport {
         return logger;
     }
 
+    protected String getEmail() {
+        return (String) ActionContext.getContext().getSession().get("email");
+    }
 
     //----------- GETTERS ET SETTERS ----------------
 
@@ -88,5 +94,13 @@ public class GestionIndexAction extends ActionSupport {
 
     public void setActuArticleList(List<Article> actuArticleList) {
         this.actuArticleList = actuArticleList;
+    }
+
+    public Integer getCountPanier() {
+        return countPanier;
+    }
+
+    public void setCountPanier(Integer countPanier) {
+        this.countPanier = countPanier;
     }
 }

@@ -177,10 +177,24 @@
             <result name="error">/jsp/error/error.jsp</result>
         </action>
 
+        <action name="doFormNewAdresseCommande"
+                class="fr.yr.site.alegia.action.GestionCommandeAction"
+                method="doFormNewAdresse">
+            <result name="success">/jsp/commande/newAdresseCommande.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doSupprimerAdresseLivraison"
+                class="fr.yr.site.alegia.action.GestionCommandeAction"
+                method="doSupprimerAdresseLivraison">
+            <result name="success">/jsp/commande/adresseCommande.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
         <action name="doNewAdresseCommande"
                 class="fr.yr.site.alegia.action.GestionCommandeAction"
                 method="doConfirmNewAdresse">
-            <result name="success">/jsp/commande/paiementCommande.jsp</result>
+            <result name="success">/jsp/commande/adresseCommande.jsp</result>
             <result name="error">/jsp/error/error.jsp</result>
         </action>
 

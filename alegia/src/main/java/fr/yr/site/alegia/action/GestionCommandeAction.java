@@ -9,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -23,44 +24,102 @@ public class GestionCommandeAction extends ActionSupport {
 
     private GenerateMethod gm = new GenerateMethod();
 
-    private List<Contenu> contenuList;
-    private List<Categorie> categorieList;
-    private List<Commande> commandeList;
-    private Adresse adresse;
-    private Compte compte;
-    private Commande commande;
-    private String codePostal;
-    private String rue;
-    private String numero;
-    private String info;
-    private String ville;
-    private String numeroCommande;
-    private Integer commandeId;
+    private         List<Contenu>       contenuList;
+    private         List<Categorie>     categorieList;
+    private         List<Commande>      commandeList;
+    private         List<Adresse>       adresseList;
+    private         Adresse             adresse;
+    private         Compte              compte;
+    private         Commande            commande;
+    private         String              codePostal;
+    private         String              rue;
+    private         String              numero;
+    private         String              info;
+    private         String              ville;
+    private         String              numeroCommande;
+    private         Integer             commandeId;
+    private         Integer             adresseId;
+    private         Integer             livraisonId;
+    private         Integer             countPanier;
+
+
+    public String doFormNewAdresse(){
+        try {
+            countPanier = gm.generateCountPanier(factory,getEmail());
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            commande = getFactory().getCommandeProxy().getCommande(commandeId);
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
+            return ActionSupport.ERROR;
+        }
+    }
+
+    public String doSupprimerAdresseLivraison(){
+        try {
+            countPanier = gm.generateCountPanier(factory,getEmail());
+            String mail = getEmail();
+            compte = getFactory().getCompteProxy().findByEmail(mail);
+            getFactory().getLivraisonProxy().delete(livraisonId);
+            adresse = getFactory().getAdresseProxy().getAdresse(compte.getAdresseId());
+            adresseList = new ArrayList<>();
+            for (AdresseLivraison al:factory.getLivraisonProxy().findByCompteId(compte.getId())){
+                Adresse adresseAdd = factory.getAdresseProxy().getAdresse(al.getAdresseId());
+                adresseAdd.setAdresseLivraisonId(al.getId());
+                adresseList.add(adresseAdd);
+            }
+
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
+            return ActionSupport.ERROR;
+        }
+    }
 
     public String doConfirmNewAdresse(){
         try {
+            countPanier = gm.generateCountPanier(factory,getEmail());
+            String mail = (String) ActionContext.getContext().getSession().get("email");
+            compte = getFactory().getCompteProxy().findByEmail(mail);
             commande = getFactory().getCommandeProxy().getCommande(commandeId);
-            Adresse adresse = new Adresse();
-            adresse.setInfo(info);
-            adresse.setVille(ville);
-            adresse.setRue(rue);
-            adresse.setNumero(numero);
-            adresse.setCodePostal(codePostal);
+            Adresse newAdresse = new Adresse();
+            if (info.equals("") || info == null) {
+                newAdresse.setInfo("Aucune information");
+            } else {
+                newAdresse.setInfo(info);
+            }
+            newAdresse.setVille(ville);
+            newAdresse.setRue(rue);
+            newAdresse.setNumero(numero);
+            newAdresse.setCodePostal(codePostal);
             if (getFactory().getAdresseProxy()
                     .findByVilleAndCodePostalAndNumeroAndRue(
                             ville
                             ,codePostal
                             ,numero
                             ,rue) == null) {
-                getFactory().getAdresseProxy().add(adresse);
-            }else {
-                commande.setAdresseId(getFactory().getAdresseProxy()
-                        .findByVilleAndCodePostalAndNumeroAndRue(
-                                ville
-                                ,codePostal
-                                ,numero
-                                ,rue).getId());
+                getFactory().getAdresseProxy().add(newAdresse);
             }
+            AdresseLivraison al = new AdresseLivraison();
+            al.setAdresseId(getFactory().getAdresseProxy()
+                    .findByVilleAndCodePostalAndNumeroAndRue(
+                            ville
+                            ,codePostal
+                            ,numero
+                            ,rue).getId());
+            al.setCompteId(commande.getCompteId());
+            getFactory().getLivraisonProxy().add(al);
+            adresseList = new ArrayList<>();
+            for (AdresseLivraison a:factory.getLivraisonProxy().findByCompteId(compte.getId())){
+                Adresse adresseAdd = factory.getAdresseProxy().getAdresse(a.getAdresseId());
+                adresseAdd.setAdresseLivraisonId(a.getId());
+                adresseList.add(adresseAdd);
+            }
+            adresse = getFactory().getAdresseProxy().getAdresse(compte.getAdresseId());
             categorieList = getFactory().getCategorieProxy().findByDispo(true);
             return ActionSupport.SUCCESS;
         }catch (Exception e){
@@ -73,6 +132,7 @@ public class GestionCommandeAction extends ActionSupport {
 
     public String doConfirmAdresseCompte(){
         try {
+            countPanier = gm.generateCountPanier(factory,getEmail());
             commande = getFactory().getCommandeProxy().getCommande(commandeId);
             categorieList = getFactory().getCategorieProxy().findByDispo(true);
             return ActionSupport.SUCCESS;
@@ -86,6 +146,10 @@ public class GestionCommandeAction extends ActionSupport {
 
     public String doConfirmPaiement(){
         try {
+            if (getEmail() != null){
+                countPanier = gm.generateCountPanier(factory
+                        ,(String) ActionContext.getContext().getSession().get("email"));
+            }
             commande = getFactory().getCommandeProxy().getCommande(commandeId);
             int count = 0;
             float total = 0;
@@ -137,6 +201,14 @@ public class GestionCommandeAction extends ActionSupport {
                 getFactory().getContenuProxy().delete(contenu.getId());
                 commandeId = vList.get(vList.size()-1).getId();
             }
+            adresseList = new ArrayList<>();
+            adresse = getFactory().getAdresseProxy().getAdresse(compte.getAdresseId());
+            for (AdresseLivraison al:factory.getLivraisonProxy().findByCompteId(compte.getId())){
+                Adresse adresseAdd = factory.getAdresseProxy().getAdresse(al.getAdresseId());
+                adresseAdd.setAdresseLivraisonId(al.getId());
+                adresseList.add(adresseAdd);
+            }
+            countPanier = gm.generateCountPanier(factory,getEmail());
             categorieList = getFactory().getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
@@ -147,47 +219,20 @@ public class GestionCommandeAction extends ActionSupport {
         }
     }
 
-    /**
-     * Méthode pour intégrer une nouvelle adresse pour la livraison de la commande.
-     * @return
-     */
-    public String doAdresseCommande(){
-        try {
-            if(codePostal != null && rue != null && numero != null && ville == null) {
-                Adresse adresse = new Adresse();
-                if (info.equals("") || info == null) {
-                    adresse.setInfo("Aucune information");
-                } else {
-                    adresse.setInfo(info);
-                }
-                adresse.setCodePostal(codePostal);
-                adresse.setRue(rue);
-                adresse.setNumero(numero);
-                adresse.setVille(ville);
-                getFactory().getAdresseProxy().add(adresse);
-                commande = getFactory().getCommandeProxy().getCommande(commandeId);
-                commande.setAdresseId(getFactory().getAdresseProxy()
-                        .findByVilleAndCodePostalAndNumeroAndRue(ville,codePostal,numero,rue).getId());
-                getFactory().getCommandeProxy().update(commande);
-            }else {
-                commande = getFactory().getCommandeProxy().getCommande(commandeId);
-            }
-            categorieList = getFactory().getCategorieProxy().findAll();
-            return ActionSupport.SUCCESS;
-        }catch (Exception e){
-            this.addActionMessage("Un problème est survenu... ");
-            categorieList = getFactory().getCategorieProxy().findByDispo(true);
-            getLogger().error(e);
-            return ActionSupport.ERROR;
-        }
-    }
 
     public String doRepriseCommande(){
         try {
+            countPanier = gm.generateCountPanier(factory,getEmail());
             String email = getEmail();
             compte = getFactory().getCompteProxy().findByEmail(email.toLowerCase());
             commande = getFactory().getCommandeProxy().getCommande(commandeId);
             adresse = getFactory().getAdresseProxy().getAdresse(compte.getAdresseId());
+            adresseList = new ArrayList<>();
+            for (AdresseLivraison al:factory.getLivraisonProxy().findByCompteId(compte.getId())){
+                Adresse adresseAdd = factory.getAdresseProxy().getAdresse(al.getAdresseId());
+                adresseAdd.setAdresseLivraisonId(al.getId());
+                adresseList.add(adresseAdd);
+            }
             categorieList = getFactory().getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
@@ -216,6 +261,7 @@ public class GestionCommandeAction extends ActionSupport {
                 c.setPrixTotal(Float.toString(total));
                 c.setCountArticle(count);
             }
+            countPanier = gm.generateCountPanier(factory,getEmail());
             categorieList = getFactory().getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
@@ -332,5 +378,37 @@ public class GestionCommandeAction extends ActionSupport {
 
     public void setCommandeId(Integer commandeId) {
         this.commandeId = commandeId;
+    }
+
+    public List<Adresse> getAdresseList() {
+        return adresseList;
+    }
+
+    public void setAdresseList(List<Adresse> adresseList) {
+        this.adresseList = adresseList;
+    }
+
+    public Integer getAdresseId() {
+        return adresseId;
+    }
+
+    public void setAdresseId(Integer adresseId) {
+        this.adresseId = adresseId;
+    }
+
+    public Integer getLivraisonId() {
+        return livraisonId;
+    }
+
+    public void setLivraisonId(Integer livraisonId) {
+        this.livraisonId = livraisonId;
+    }
+
+    public Integer getCountPanier() {
+        return countPanier;
+    }
+
+    public void setCountPanier(Integer countPanier) {
+        this.countPanier = countPanier;
     }
 }

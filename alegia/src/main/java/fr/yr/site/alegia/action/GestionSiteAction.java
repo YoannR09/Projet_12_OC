@@ -1,5 +1,6 @@
 package fr.yr.site.alegia.action;
 
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import fr.yr.site.alegia.beans.Article;
 import fr.yr.site.alegia.beans.Categorie;
@@ -33,6 +34,7 @@ public class GestionSiteAction extends ActionSupport {
     private     Article                 article;
     private     Integer                 categorieId;
     private     Integer                 articleId;
+    private     Integer                 countPanier;
     private     String                  categorieSelect;
     private     File                    file;
     private     String                  contentType;
@@ -52,6 +54,7 @@ public class GestionSiteAction extends ActionSupport {
     public String doGestion(){
         String vResult;
         try {
+            countPanier = gm.generateCountPanier(factory,getEmail());
             categorieList = getFactory().getCategorieProxy().findAll();
             vResult = ActionSupport.SUCCESS;
         }catch (Exception e){
@@ -70,6 +73,7 @@ public class GestionSiteAction extends ActionSupport {
     public String formAddArticle(){
         String vResult;
         try {
+            countPanier = gm.generateCountPanier(factory,getEmail());
             tailleList = getFactory().getTailleProxy().findAll();
             categorieList = getFactory().getCategorieProxy().findAll();
             vResult = ActionSupport.SUCCESS;
@@ -91,6 +95,7 @@ public class GestionSiteAction extends ActionSupport {
     public String gestionArticle(){
         String vResult;
         try {
+            countPanier = gm.generateCountPanier(factory,getEmail());
             if (radio != null){
                 Categorie categorie = getFactory().getCategorieProxy().findByNom(categorieSelect);
                 if (radio.equals("Disponible")){
@@ -124,6 +129,7 @@ public class GestionSiteAction extends ActionSupport {
     public String gestionCategorie(){
         String vResult;
         try {
+            countPanier = gm.generateCountPanier(factory,getEmail());
             if (radio != null){
                 if (radio.equals("Disponible")){
                     categories = getFactory().getCategorieProxy().findByDispo(true);
@@ -150,6 +156,7 @@ public class GestionSiteAction extends ActionSupport {
 
     public String doAjoutImage() {
         try {
+            countPanier = gm.generateCountPanier(factory,getEmail());
             File fileToCreate = new File(filePath,file.getName());
             FileUtils.copyFile(file, fileToCreate);
             Image image = new Image();
@@ -176,7 +183,9 @@ public class GestionSiteAction extends ActionSupport {
         return factory;
     }
 
-
+    protected String getEmail() {
+        return (String) ActionContext.getContext().getSession().get("email");
+    }
 
     //----------- GETTERS ET SETTERS ----------------
 
@@ -290,5 +299,13 @@ public class GestionSiteAction extends ActionSupport {
 
     public void setFilename(String filename) {
         this.filename = filename;
+    }
+
+    public Integer getCountPanier() {
+        return countPanier;
+    }
+
+    public void setCountPanier(Integer countPanier) {
+        this.countPanier = countPanier;
     }
 }
