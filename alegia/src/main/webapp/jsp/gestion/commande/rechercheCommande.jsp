@@ -35,18 +35,13 @@
         {
             font-size: 0.7em;
         }
-        divInput
-        {
-            display: flex;
-            justify-content: space-around;
-        }
 
     </style>
 </head>
 <body>
 <%@ include file="../../_include/header.jsp"%>
 <div id="blocCenter" style="display: flex;justify-content: center;">
-    <div class="col-8" style="padding: auto">
+    <div class="col-8" style="padding: auto;max-width: 800px">
             <div id="barreDeRecherche" class="border shadow p-3 mb-5 bg-white rounded" style="padding: auto">
                 <section class="row" style="text-align: center;display: flex;justify-content: center">
                         <button class="btn btn-dark" id="btnClient" style="margin: 10px">Client</button>

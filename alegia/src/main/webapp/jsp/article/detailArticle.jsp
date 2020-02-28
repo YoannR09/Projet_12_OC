@@ -64,10 +64,19 @@
                 <br/>
                 <label for="inputQuantite" style="font-size: 0.7em;"><em>Quantité</em></label>
                 <input name="quantite" class="form-control" type="number" value="1" id="inputQuantite" style="width: 100px;font-size: 0.8em">
+                <s:if test="#session.user || #session.admin">
                 <div style="margin-top: 20px">
                     <s:param value="article.id" name="articleId"/>
                     <button type="submit" class="btn btn-dark btn-sm border mb-2">Ajouter au panier</button>
                 </div>
+                </s:if>
+                <s:else>
+                <div style="margin-top: 20px">
+                    <button data-toggle="tooltip" data-placement="right" title="Vous devez être connecté" type="submit"
+                            class="btn btn-dark btn-sm border mb-2" disabled>Ajouter au panier</button>
+                </div>
+                </s:else>
+
             </s:form>
         </div>
     </div>
