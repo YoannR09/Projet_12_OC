@@ -27,6 +27,7 @@ public class GenerateMethod {
             total = total+lc.getMontantTtc();
             count = count+lc.getQuantite();
         }
+        commande.setTotal(total);
         commande.setAdresse(factory.getAdresseProxy().getAdresse(commande.getAdresseId()));
         commande.setCountArticle(count);
         commande.setPrixTotal(Float.toString(total));

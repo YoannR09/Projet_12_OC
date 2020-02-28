@@ -205,6 +205,27 @@
             <result name="error">/jsp/error/error.jsp</result>
         </action>
 
+        <action name="execute"
+                class="fr.yr.site.alegia.action.GestionPayPalAction"
+                method="doExecute">
+            <result name="success">/jsp/paypal/receipt.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
+        <action name="review"
+                class="fr.yr.site.alegia.action.GestionPayPalAction"
+                method="doReview">
+            <result name="success">/jsp/commande/recapCommande.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
+        <action name="authorize_payment"
+                class="fr.yr.site.alegia.action.GestionPayPalAction"
+                method="doPayPalAuth">
+            <result name="success" type="redirect">${url}</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
         <action name="doAdresseCommande"
                 class="fr.yr.site.alegia.action.GestionCommandeAction"
                 method="doAdresseCommande">

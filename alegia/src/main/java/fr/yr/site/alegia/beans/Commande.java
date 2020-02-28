@@ -16,6 +16,7 @@ public class Commande {
     private Integer statutId;
     private Integer adresseId;
     private String  prixTotal;
+    private Float   total;
     private Integer countArticle;
 
     public Integer getCountArticle() {
@@ -112,6 +113,14 @@ public class Commande {
 
     public void setAdresse(Adresse adresse) {
         this.adresse = adresse;
+    }
+
+    public Float getTotal() {
+        return total;
+    }
+
+    public void setTotal(Float total) {
+        this.total = total;
     }
 
     public String generateStatut(){
