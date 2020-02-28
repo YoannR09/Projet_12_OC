@@ -2,9 +2,12 @@ package fr.yr.site.alegia.action;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
+import com.paypal.base.rest.PayPalRESTException;
 import fr.yr.site.alegia.beans.*;
 import fr.yr.site.alegia.configuration.Factory;
 import fr.yr.site.alegia.configuration.GenerateMethod;
+import fr.yr.site.alegia.paypal.OrderDetail;
+import fr.yr.site.alegia.paypal.PaymentServices;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +20,14 @@ public class GestionCommandeAction extends ActionSupport {
 
 
     private static final Logger logger = LogManager.getLogger();
+    private static final long serialVersionUID = 1L;
 
     // Microseervices
     @Autowired
     private Factory factory;
 
     private GenerateMethod gm = new GenerateMethod();
+
 
     private         List<Contenu>       contenuList;
     private         List<Categorie>     categorieList;
