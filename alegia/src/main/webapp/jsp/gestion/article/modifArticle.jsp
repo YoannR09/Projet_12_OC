@@ -3,7 +3,6 @@
 <html>
 <head>
     <%@ include file="../../_include/head.jsp"%>
-    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
     <style type="text/css">
         #page {
             display: flex;
@@ -65,7 +64,6 @@
     <div id="bottom" >
         <div id="cadre" class="shadow p-3 mb-5 bg-white rounded">
             <label class="form-check-label" id="label"> Modifier l'article </label>
-            <em id="message" ><s:actionmessage/></em>
             <div class="col-12 container" id="cadreLog">
                 <div class="col-12">
                     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style=" margin-bottom: 5px">
@@ -104,7 +102,6 @@
                 </div>
             </div>
 
-            <s:form action="doAddArticle" enctype="multipart/form-data" method="POST" namespace="/">
                 <div class="form-group" style="margin: 20px;">
                     <label for="inputNom" style="color: black;">Nom de l'article</label>
                     <input name="nom" type="text" class="form-control" id="inputNom" value="<s:property value="article.nom"/>" required>
@@ -115,16 +112,16 @@
                 </div>
                 <div class="form-group " style="margin: 20px">
                     <label for="prixHt" style="color: black;">Prix HT</label>
-                    <input name="prixHt" class="form-control" type="number" value="<s:property value="article.prixHt"/>" id="prixHt">
+                    <input name="prixHt" class="form-control" value="<s:property value="article.prixHt"/>" id="prixHt">
                 </div>
                 <div class="form-group " style="margin: 20px">
                     <label for="prixTtc" style="color: black;">Prix TTC</label>
-                    <input name="prixTtc" class="form-control" type="number" id="prixTtc" value="<s:property value="article.prixTtc"/>">
+                    <input name="prixTtc" class="form-control" id="prixTtc" value="<s:property value="article.prixTtc"/>">
                 </div>
                 <div style="display: flex;justify-content: center;margin: 10px">
                     <button type="submit" style="font-size: 0.8em" class="btn btn-dark">Confirmer</button>
                 </div>
-            </s:form>
+
         </div>
     </div>
 </div>
@@ -141,7 +138,7 @@
                 <s:form action="doAddImage" method="post" enctype="multipart/form-data">
                     <input value="Description de l'image" style="width: 100%" name="descriptionImage"/>
                     <input id="idArticle" name="articleId" value="<s:property value="article.id"/>">
-                    <s:file name="upload" label="File"/>
+                    <input type = "file" name = "myFile" />
                     <s:submit value="Confirmer" />
                 </s:form>
             </div>
@@ -152,8 +149,8 @@
     <div class="modal-dialog modal-dialog-centered " role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" >Retirer une image</h5>
-                <button type="button" class="close" data-dismiss="modalRetirer" aria-label="Close">
+                <h5 class="modal-title" >Supprimer une image</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
@@ -163,8 +160,9 @@
                         <div style="display: flex;justify-content: center;border-bottom: 1px darkslategrey solid">
                             <img src="./image/<s:property value="url"/>" class="rounded mx-auto d-block"
                                  alt="<s:property value="description"/>" style="width: 100px;height: 100px">
-                            <s:a action="prolongationPret" class="btn btn-red" style="font-size:1em;margin:auto">
+                            <s:a action="doDeleteImage" class="btn btn-red" style="font-size:1em;margin:auto">
                                 <s:param name="imageId" value="id" />
+                                <s:param name="articleId" value="article.id" />
                                 <i class="fas fa-trash-alt"></i></s:a>
                         </div>
                     </s:if>

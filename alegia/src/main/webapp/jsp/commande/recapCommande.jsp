@@ -42,11 +42,6 @@
         {
             font-size: 0.8em;
         }
-        .lab
-        {
-            font-size: 0.7em;
-            color: black;
-        }
         .textTop
         {
             font-size: 1.3em;
@@ -99,10 +94,9 @@
         {
             font-size: 0.7em;
         }
-        .spanAdresse
+        .lab
         {
-            font-size: 0.8em;
-            font-weight: bold;
+            font-size: 0.7em;
         }
 
     </style>
@@ -110,10 +104,10 @@
 <body>
 <%@ include file="../_include/header.jsp"%>
 <div id="blocCenter" style="display: flex;justify-content: center;">
-    <div class="col-9" style="max-width: 500px">
+    <div class="col-9" style="max-width: 600px">
         <label class="textTop">Votre commande</label>
         <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreArticle">
-            <div style="display: flex;justify-content: space-between">
+            <div style="display: flex;justify-content: center">
                 <div>
                     <table class="table table-bordered table-hover">
                         <thead class="thead">
@@ -135,7 +129,10 @@
                                 <td><s:property value="taille"/></td>
                             </tr>
                         </s:iterator>
-                        <td>TOTAL : <s:property value="commande.prixTotal"/>  €</td>
+                        <td><em class="lab">montant ht : </em><label class="lab"><s:property value="commande.prixTotal"/> €</label></td>
+                        <td><em class="lab">TVA à 10% :  </em><label class="lab"><s:property value="commande.tva"/> €</label></td>
+                        <td><em class="lab">livraison : </em><label class="lab"> 10 €</label></td>
+                        <td><em class="lab">Total à payer : </em><label class="lab"><s:property value="commande.totalPayer"/> €</label></td>
                         </tbody>
                     </table>
                     <div style="width: 100%">
@@ -150,6 +147,14 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div style="width: 100%;text-align: center">
+<s:form action="execute">
+    <input type="hidden" name="paymentId" value="<s:property value="paymentId"/>" />
+    <input type="hidden" name="PayerID" value="<s:property value="PayerID"/>" />
+    <input type="hidden" name="commandeId" value="<s:property value="commande.id"/>" />
+    <button type="submit" style="font-size: 0.7em" class="btn btn-dark">Confirmer le paiement</button>
+</s:form>
             </div>
         </div>
     </div>

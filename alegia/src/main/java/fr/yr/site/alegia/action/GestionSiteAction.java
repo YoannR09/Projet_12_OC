@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.servlet.http.Part;
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
@@ -34,13 +35,16 @@ public class GestionSiteAction extends ActionSupport {
     private     Article                 article;
     private     Integer                 categorieId;
     private     Integer                 articleId;
+    private     Integer                 imageId;
     private     Integer                 countPanier;
     private     String                  categorieSelect;
-    private     File                    file;
-    private     String                  contentType;
-    private     String                  filename;
+    private     File                    myFile;
+    private     String                  myFileContentType;
+    private     String                  myFileFileName;
     private     String                  descriptionImage;
     private     String                  radio;
+    private     String                  infoMessage;
+    private     Part                    ficher;
     private     List<String>            radioList = Arrays.asList("Disponible","Indisponible");
     private     String                  filePath = "C:/Users/El-ra/Documents" +
             "/Projet_12_OC/alegia/src/main/webapp/image/";
@@ -154,18 +158,20 @@ public class GestionSiteAction extends ActionSupport {
         return vResult;
     }
 
-    public String doAjoutImage() {
+    public String doAjoutImage(){
         try {
-            countPanier = gm.generateCountPanier(factory,getEmail());
-            File fileToCreate = new File(filePath,file.getName());
-            FileUtils.copyFile(file, fileToCreate);
+            File destFile = new File(filePath+ "/", myFileFileName);
+            FileUtils.copyFile(myFile, destFile);
             Image image = new Image();
-            image.setUrl(file.getName());
+            image.setUrl(myFileFileName);
             image.setArticleId(articleId);
             image.setLabelle("Image de l'article à l'id suivant : " + articleId);
             getFactory().getImageProxy().add(image);
             article = getFactory().getArticleProxy().getArticle(articleId);
             gm.completeArticle(getFactory(),article);
+            infoMessage = "L'image a bien été ajoutée à la base de données";
+            countPanier = gm.generateCountPanier(factory,getEmail());
+            categorieList = getFactory().getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
@@ -174,6 +180,26 @@ public class GestionSiteAction extends ActionSupport {
             return ActionSupport.ERROR;
         }
     }
+
+    /**
+     * Méthode pour supprimer une image.
+     * Actuellement supprime seulement le lien dans la bdd
+     * @return
+     */
+    public String doDeleteImage(){
+        try {
+            getFactory().getImageProxy().delete(imageId);
+            article = getFactory().getArticleProxy().getArticle(articleId);
+            gm.completeArticle(getFactory(),article);
+            categorieList = getFactory().getCategorieProxy().findAll();
+            countPanier = gm.generateCountPanier(factory,getEmail());
+            infoMessage = "L'image a bien été supprimée de la base de données";
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            return ActionSupport.ERROR;
+        }
+    }
+
 
     protected Logger getLogger() {
         return logger;
@@ -277,28 +303,28 @@ public class GestionSiteAction extends ActionSupport {
         this.descriptionImage = descriptionImage;
     }
 
-    public File getFile() {
-        return file;
+    public File getMyFile() {
+        return myFile;
     }
 
-    public void setFile(File file) {
-        this.file = file;
+    public void setMyFile(File myFile) {
+        this.myFile = myFile;
     }
 
-    public String getContentType() {
-        return contentType;
+    public String getMyFileContentType() {
+        return myFileContentType;
     }
 
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
+    public void setMyFileContentType(String myFileContentType) {
+        this.myFileContentType = myFileContentType;
     }
 
-    public String getFilename() {
-        return filename;
+    public String getMyFileFileName() {
+        return myFileFileName;
     }
 
-    public void setFilename(String filename) {
-        this.filename = filename;
+    public void setMyFileFileName(String myFileFileName) {
+        this.myFileFileName = myFileFileName;
     }
 
     public Integer getCountPanier() {
@@ -307,5 +333,37 @@ public class GestionSiteAction extends ActionSupport {
 
     public void setCountPanier(Integer countPanier) {
         this.countPanier = countPanier;
+    }
+
+    public Part getFicher() {
+        return ficher;
+    }
+
+    public void setFicher(Part ficher) {
+        this.ficher = ficher;
+    }
+
+    public String getFilePath() {
+        return filePath;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public Integer getImageId() {
+        return imageId;
+    }
+
+    public void setImageId(Integer imageId) {
+        this.imageId = imageId;
+    }
+
+    public String getInfoMessage() {
+        return infoMessage;
+    }
+
+    public void setInfoMessage(String infoMessage) {
+        this.infoMessage = infoMessage;
     }
 }

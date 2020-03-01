@@ -9,11 +9,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.text.NumberFormat;
 import java.util.List;
 
 public class GestionPanierAction extends ActionSupport {
 
     private static final Logger logger = LogManager.getLogger();
+    final NumberFormat instance = NumberFormat.getNumberInstance();
 
     // Microseervices
     @Autowired
@@ -26,6 +28,8 @@ public class GestionPanierAction extends ActionSupport {
     private Integer contenuId;
     private Article article;
     private String taille;
+    private String tva;
+    private String totalPayer;
     private Integer countArticle;
     private Integer countPanier;
     private String totalPrix;
@@ -90,6 +94,8 @@ public class GestionPanierAction extends ActionSupport {
             }
             countPanier = gm.generateCountPanier(factory,getEmail());
             totalPrix = Float.toString(totalContenu);
+            tva = instance.format((totalContenu*1.1)-totalContenu);
+            totalPayer = instance.format((totalContenu*1.1)+10);
             categorieList = getFactory().getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
@@ -246,5 +252,21 @@ public class GestionPanierAction extends ActionSupport {
 
     public void setPanier(Panier panier) {
         this.panier = panier;
+    }
+
+    public String getTva() {
+        return tva;
+    }
+
+    public void setTva(String tva) {
+        this.tva = tva;
+    }
+
+    public String getTotalPayer() {
+        return totalPayer;
+    }
+
+    public void setTotalPayer(String totalPayer) {
+        this.totalPayer = totalPayer;
     }
 }

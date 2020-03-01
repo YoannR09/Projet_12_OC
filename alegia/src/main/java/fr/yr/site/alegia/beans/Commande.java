@@ -8,6 +8,7 @@ public class Commande {
     private Integer id;
     private Date date;
     private String statut;
+    private String tva;
     private List<LigneDeCommande> ligneDeCommandeList;
     private Adresse adresse;
     private String numero;
@@ -16,6 +17,7 @@ public class Commande {
     private Integer statutId;
     private Integer adresseId;
     private String  prixTotal;
+    private String  totalPayer;
     private Float   total;
     private Integer countArticle;
 
@@ -121,6 +123,22 @@ public class Commande {
 
     public void setTotal(Float total) {
         this.total = total;
+    }
+
+    public String getTva() {
+        return tva;
+    }
+
+    public void setTva(String tva) {
+        this.tva = tva;
+    }
+
+    public String getTotalPayer() {
+        return totalPayer;
+    }
+
+    public void setTotalPayer(String totalPayer) {
+        this.totalPayer = totalPayer;
     }
 
     public String generateStatut(){

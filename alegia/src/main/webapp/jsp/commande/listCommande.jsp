@@ -96,7 +96,7 @@
                                 </div>
                                 <div>
                                     <em class="lab">TOTAL</em><br/>
-                                    <span style="font-weight: bold"><s:property value="prixTotal"/>  €</span>
+                                    <span style="font-weight: bold"><s:property value="totalPayer"/>  €</span>
                                 </div>
                                 <di>
                                     <em class="lab">STATUT</em><br/>
@@ -127,6 +127,10 @@
                                         <td><s:property value="taille"/></td>
                                     </tr>
                                 </s:iterator>
+                                <td><em class="lab">montant ht : </em><label class="lab"><s:property value="prixTotal"/> €</label></td>
+                                <td><em class="lab">TVA à 10% :  </em><label class="lab"><s:property value="tva"/> €</label></td>
+                                <td><em class="lab">livraison : </em><label class="lab"> 10 €</label></td>
+                                <td><em class="lab">Total payé : </em><label class="lab"><s:property value="totalPayer"/> €</label></td>
                                 </tbody>
                             </table>
                             <s:if test="!statut.equals('EN ATTENTE DE VALIDATION')">
@@ -190,7 +194,7 @@
                                 </div>
                             </s:elseif>
                             <s:if test="statut.equals('EN ATTENTE DE VALIDATION')">
-                                <div style="display:flex;width: 100%;justify-content: space-around;margin-top: 10px">
+                                <div style="display:flex;width: 100%;justify-content: space-around;margin-top: 20px">
                                     <s:a action="doRepriseCommande" class="btn btn-dark" style="font-size:0.7em;"><s:param value="id" name="commandeId"/>Reprendre ma commande</s:a>
                                 </div>
                             </s:if>

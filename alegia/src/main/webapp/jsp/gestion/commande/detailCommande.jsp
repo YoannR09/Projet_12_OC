@@ -103,7 +103,10 @@
                                     <td><s:property value="taille"/></td>
                                 </tr>
                             </s:iterator>
-                            <td>TOTAL : <s:property value="commande.prixTotal"/>  €</td>
+                            <td>Montant ht : <s:property value="commande.prixTotal"/> €</td>
+                            <td>TVA à 10% : + <s:property value="commande.tva"/> €</td>
+                            <td>Livraison : + 10 €</td>
+                            <td>Total payé : <s:property value="commande.totalPayer"/> €</td>
                             </tbody>
 
                         </table>
