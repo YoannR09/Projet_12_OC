@@ -32,6 +32,7 @@
         {
             width: 100%;
             margin: 10px;
+            height: 120px;
         }
         #cadreBtn
         {
@@ -110,16 +111,18 @@
 <body>
 <%@ include file="../_include/header.jsp"%>
 <div id="blocCenter" style="display: flex;justify-content: center;">
-    <div class="col-9" style="max-width: 500px">
+    <div class="col-10" style="max-width: 600px">
         <label class="textTop">Sélectionnez votre mode de paiement</label>
         <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreArticle">
-            <div style="display: flex;justify-content: space-between">
-                <div style="text-align: center">
-                    <p><i class="fab fa-paypal"></i>  Paypal</p>
-                    <s:a action="authorize_payment" class="btn btn-dark" style="font-size: 0.8em;">
+            <div style="width: 100%">
+                      <span style="font-size:0.9em;font-weight: bold;justify-content: space-between">
+                        <i class="fab fa-cc-paypal text-primary" style="font-size: 3em;margin-right: 10px"></i>
+                          <em style="font-size: 0.9em;vertical-align: center">Payez votre commande en toute sécurité avec PayPal !</em>
+                        </span>
+                    <s:a action="authorize_payment" class="btn btn-dark btn-small"
+                         style="font-size: 0.7em;position:absolute;right:10px;bottom:10px">
                         <s:param name="commandeId" value="commande.id"/>
-                        Sélectionner</s:a>
-                </div>
+                        Continuer</s:a>
             </div>
         </div>
     </div>

@@ -40,6 +40,19 @@ public class ImageController {
         }
     }
 
+    /**
+     * Méthode pour supprimer une image
+     * @param id
+     */
+    @DeleteMapping(value = "/Image/{id}")
+    public void delete(@PathVariable int id){
+        try {
+            getDao().deleteById(id);
+        }catch (Exception e){
+            getLogger().error(e);
+        }
+    }
+
     protected Logger getLogger() {
         return logger;
     }

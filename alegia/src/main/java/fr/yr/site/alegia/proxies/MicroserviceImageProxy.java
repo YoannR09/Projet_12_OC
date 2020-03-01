@@ -2,10 +2,7 @@ package fr.yr.site.alegia.proxies;
 
 import fr.yr.site.alegia.beans.Image;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -24,4 +21,11 @@ public interface MicroserviceImageProxy {
      */
     @PostMapping(value = "/microservice-image/Image")
     void add(@RequestBody Image image);
+
+    /**
+     * Méthode pour supprimer une image
+     * @param id
+     */
+    @DeleteMapping(value = "/microservice-image/Image/{id}")
+    void delete(@PathVariable("id") int id);
 }

@@ -257,14 +257,7 @@ public class GestionCommandeAction extends ActionSupport {
                 c.setStatut(c.generateStatut());
                 float total = 0;
                 int count = 0;
-                c.setLigneDeCommandeList(getFactory().getLigneProxy().findByCommandeId(c.getId()));
-                for (LigneDeCommande lc : c.getLigneDeCommandeList()){
-                    count = count+lc.getQuantite();
-                    total = total+lc.getMontantTtc();
-                }
-                c.setAdresse(getFactory().getAdresseProxy().getAdresse(c.getAdresseId()));
-                c.setPrixTotal(Float.toString(total));
-                c.setCountArticle(count);
+                gm.generateCommande(c,count,total,getFactory());
             }
             countPanier = gm.generateCountPanier(factory,getEmail());
             categorieList = getFactory().getCategorieProxy().findAll();

@@ -85,7 +85,7 @@
                         <tr>
                             <td><s:property value="date"/></td>
                             <td><s:property value="numero"/></td>
-                            <td><s:property value="prixTotal"/>  €</td>
+                            <td><s:property value="totalPayer"/>  €</td>
                             <td><s:a action="doDetailCommande">
                                 <s:param value="id" name="commandeId"/>
                                 <i style="font-size: 1em" class="fas fa-caret-square-right"></i>

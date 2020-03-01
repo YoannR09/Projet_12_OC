@@ -90,15 +90,13 @@ public class GestionPayPalAction extends ActionSupport {
             transaction = payment.getTransactions().get(0);
             shippingAddress = transaction.getItemList().getShippingAddress();
 
-            if ((String) ActionContext.getContext().getSession().get("email") != null){
+            if (ActionContext.getContext().getSession().get("email") != null){
                 countPanier = gm.generateCountPanier(factory
                         ,(String) ActionContext.getContext().getSession().get("email"));
             }
             int count = 0;
             float total = 0;
             gm.generateCommande(commande,count,total, factory);
-            commande.setStatutId(2);
-            factory.getCommandeProxy().update(commande);
             categorieList = factory.getCategorieProxy().findByDispo(true);
 
             return ActionSupport.SUCCESS;
@@ -110,10 +108,15 @@ public class GestionPayPalAction extends ActionSupport {
     public String doExecute() throws PayPalRESTException {
 
         PaymentServices paymentServices = new PaymentServices();
+        commande = factory.getCommandeProxy().getCommande(commandeId);
         payment = paymentServices.executePayment(paymentId, PayerID);
-
         payerInfo = payment.getPayer().getPayerInfo();
         transaction = payment.getTransactions().get(0);
+        int count = 0;
+        float total = 0;
+        gm.generateCommande(commande,count,total, factory);
+        commande.setStatutId(2);
+        factory.getCommandeProxy().update(commande);
 
 
         return ActionSupport.SUCCESS;

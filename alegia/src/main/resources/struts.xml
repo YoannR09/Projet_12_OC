@@ -7,10 +7,7 @@
 
     <constant name="struts.devMode" value="true" />
     <constant name="struts.objectFactory" value="spring" />
-    <constant name="struts.multipart.maxSize" value="20000000" />
-
-    <constant name="struts.multipart.saveDir" value="C:/Users/El-ra/Documents/Projet_12_OC/alegia/src/main/webapp/image/" />
-    <constant name="struts.custom.i18n.resources" value="global" />
+    <constant name = "struts.multipart.maxSize" value = "10000000" />
 
     <package name="base" abstract="true" extends="struts-default">
 
@@ -302,13 +299,6 @@
             <result name="error">jsp/error/error.jsp</result>
         </action>
 
-        <action name="doAddImage" class="fr.yr.site.alegia.action.GestionSiteAction" method="doAjoutImage">
-            <interceptor-ref name="fileUpload"/>
-            <interceptor-ref name="basicStack"/>
-            <result name="success">/jsp/gestion/article/modifArticle.jsp</result>
-            <result name="error">jsp/error/error.jsp</result>
-        </action>
-
         <action name="doRechercheCommande" class="fr.yr.site.alegia.action.GestionCommandeAdminAction" method="doRechercheCommande">
             <result name="success">/jsp/gestion/commande/listCommande.jsp</result>
             <result name="error">jsp/error/error.jsp</result>
@@ -368,6 +358,16 @@
         <action name="gestionCategorie" class="fr.yr.site.alegia.action.GestionSiteAction" method="gestionCategorie">
             <result>/jsp/gestion/categorie/gestionCategorie.jsp</result>
             <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doAddImage" class="fr.yr.site.alegia.action.GestionSiteAction" method="doAjoutImage">
+            <result name="success">/jsp/gestion/article/modifArticle.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doDeleteImage" class="fr.yr.site.alegia.action.GestionSiteAction" method="doDeleteImage">
+            <result name="success">/jsp/gestion/article/modifArticle.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
         </action>
 
     </package>

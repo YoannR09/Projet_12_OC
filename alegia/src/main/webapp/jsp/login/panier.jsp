@@ -117,10 +117,26 @@
                     </div>
                 </s:iterator>
             </div>
-            <div class="border shadow p-3 mb-5 bg-white rounded" style="width: 200px;height:150px;
+            <div class="border shadow p-3 mb-5 bg-white rounded" style="width: 200px;
             padding:15px;text-align: center;background-color: whitesmoke">
-                <p><em class="lab">Prix total : </em><s:property value="totalPrix"/> €</p>
-                <p><em class="lab">Nombre d'article(s) : </em><s:property value="countArticle"/></p>
+                <p><span style="width: 100%;text-align: center;font-size: 1.1em;font-weight: bold">Votre commande</span></p>
+                <span style="display:flex;justify-content: space-between">
+                <em class="lab">nombre d'article(s) : </em><label class="lab"><s:property value="countArticle"/></label>
+                    </span>
+
+                <span style="display:flex;justify-content: space-between">
+                    <em class="lab">montant ht : </em><label class="lab"><s:property value="totalPrix"/> €</label>
+                </span>
+                <span style="display:flex;justify-content: space-between">
+                    <em class="lab">TVA à 10% : </em><label class="lab"><s:property value="tva"/> €</label>
+                </span>
+                <span style="display:flex;justify-content: space-between">
+                    <em class="lab">livraison : </em><label class="lab">10 €</label>
+                </span><br/>
+
+                <p> <span style="display:flex;justify-content: space-between">
+                    <em class="lab" style="font-size: 0.9em;">Total à payer : </em><label class="lab"><s:property value="totalPayer"/> €</label>
+                </span></p>
                 <s:if test="countArticle == 0">
                     <button class="btn btn-dark" style="font-size:0.8em;" disabled>Passer la commande</button>
                 </s:if>
