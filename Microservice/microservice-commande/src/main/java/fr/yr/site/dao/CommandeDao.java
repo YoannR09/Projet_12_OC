@@ -13,11 +13,11 @@ public interface CommandeDao extends JpaRepository<Commande, Integer> {
 
     Commande findByNumero(String numero);
 
-    List<Commande> findByCompteId(int compteId);
+    List<Commande> findByCompteIdOrderByIdDesc(int compteId);
 
-    List<Commande> findByStatutId(int statutId);
+    List<Commande> findByStatutIdOrderByIdDesc(int statutId);
 
-    List<Commande> findByNumeroContaining(String numero);
+    List<Commande> findByNumeroContainingOrderByIdDesc(String numero);
 
     @Query(value = "SELECT * FROM commande,compte WHERE nom LIKE %:nom%"+
             " AND prenom LIKE %:prenom%" +

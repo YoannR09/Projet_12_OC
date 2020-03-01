@@ -4,13 +4,12 @@ public class LigneDeCommande {
 
     private Integer quantite;
     private String designation;
+    private String ref;
     private Commande commande;
     private Integer commandeId;
     private String taille;
-    private Float montantHt;
-    private Float montantTtc;
-    private Float prixUnitHt;
-    private Float prixUnitTtc;
+    private Float montant;
+    private Float prixUnit;
 
 
     public Integer getQuantite() {
@@ -21,36 +20,20 @@ public class LigneDeCommande {
         this.quantite = quantite;
     }
 
-    public Float getPrixUnitHt() {
-        return prixUnitHt;
+    public Float getMontant() {
+        return montant;
     }
 
-    public void setPrixUnitHt(Float prixUnitHt) {
-        this.prixUnitHt = prixUnitHt;
+    public void setMontant(Float montant) {
+        this.montant = montant;
     }
 
-    public Float getPrixUnitTtc() {
-        return prixUnitTtc;
+    public Float getPrixUnit() {
+        return prixUnit;
     }
 
-    public void setPrixUnitTtc(Float prixUnitTtc) {
-        this.prixUnitTtc = prixUnitTtc;
-    }
-
-    public Float getMontantHt() {
-        return montantHt;
-    }
-
-    public void setMontantHt(Float montantHt) {
-        this.montantHt = montantHt;
-    }
-
-    public Float getMontantTtc() {
-        return montantTtc;
-    }
-
-    public void setMontantTtc(Float montantTtc) {
-        this.montantTtc = montantTtc;
+    public void setPrixUnit(Float prixUnit) {
+        this.prixUnit = prixUnit;
     }
 
     public String getDesignation() {
@@ -83,5 +66,13 @@ public class LigneDeCommande {
 
     public void setTaille(String taille) {
         this.taille = taille;
+    }
+
+    public String getRef() {
+        return ref;
+    }
+
+    public void setRef(String ref) {
+        this.ref = ref;
     }
 }

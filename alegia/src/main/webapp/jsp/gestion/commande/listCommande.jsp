@@ -66,7 +66,7 @@
 <body>
 <%@ include file="../../_include/header.jsp"%>
 <div id="blocCenter" style="display: flex;justify-content: center;">
-    <div class="col-9">
+    <div class="col-9" style="max-width: 800px">
         <s:if test="panierVide"><label class="textTop">Vous n'avez effectué aucune commande.</label></s:if>
         <s:else><label class="textTop">Liste des commande "<em style="font-size: 0.8em"><s:property value="statutList" /></em> "</label></s:else>
         <div class="col-12 " style="display: flex;justify-content: space-around">

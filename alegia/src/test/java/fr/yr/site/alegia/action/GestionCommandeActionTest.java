@@ -79,7 +79,7 @@ public class GestionCommandeActionTest {
                 .getCOmmandeByStatutId(anyInt())).thenReturn(commandeList);
         LigneDeCommande ldc = new LigneDeCommande();
         ldc.setQuantite(3);
-        ldc.setMontantTtc(new Float(3));
+        ldc.setMontant(new Float(3));
         List<LigneDeCommande> ligneDeCommandeList = new ArrayList<>();
         ligneDeCommandeList.add(ldc);
         when(factory.getLigneProxy().findByCommandeId(anyInt())).thenReturn(ligneDeCommandeList);

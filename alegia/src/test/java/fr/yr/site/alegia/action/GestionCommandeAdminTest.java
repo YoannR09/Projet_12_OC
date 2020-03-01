@@ -46,7 +46,7 @@ public class GestionCommandeAdminTest {
         when(factory.getAdresseProxy().getAdresse(anyInt())).thenReturn(new Adresse());
         LigneDeCommande ldc = new LigneDeCommande();
         ldc.setQuantite(3);
-        ldc.setMontantTtc(new Float(3));
+        ldc.setMontant(new Float(3));
         List<LigneDeCommande> ligneDeCommandeList = new ArrayList<>();
         ligneDeCommandeList.add(ldc);
         when(factory.getLigneProxy().findByCommandeId(anyInt())).thenReturn(ligneDeCommandeList);

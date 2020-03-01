@@ -195,10 +195,8 @@ public class GestionCommandeAction extends ActionSupport {
                 List<Commande> vList = getFactory().getCommandeProxy().getCommandeByCompteId(compte.getId());
                 ligneDeCommande.setCommandeId(vList.get(vList.size()-1).getId());
                 ligneDeCommande.setDesignation(contenu.getArticle().getNom());
-                ligneDeCommande.setPrixUnitHt(contenu.getArticle().getPrixHt());
-                ligneDeCommande.setPrixUnitTtc(contenu.getArticle().getPrixTtc());
-                ligneDeCommande.setMontantHt(contenu.getArticle().getPrixHt()*contenu.getQuantite());
-                ligneDeCommande.setMontantTtc(contenu.getArticle().getPrixTtc()*contenu.getQuantite());
+                ligneDeCommande.setPrixUnit(contenu.getArticle().getPrix());
+                ligneDeCommande.setMontant(contenu.getArticle().getPrix()*contenu.getQuantite());
                 ligneDeCommande.setQuantite(contenu.getQuantite());
                 contenu.setTaille(getFactory().getTailleProxy().findById(contenu.getTailleId()));
                 ligneDeCommande.setTaille(contenu.getTaille().getTaille());

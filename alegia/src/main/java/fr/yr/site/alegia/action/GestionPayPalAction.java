@@ -49,23 +49,18 @@ public class GestionPayPalAction extends ActionSupport {
     private         List<Categorie>     categorieList;
 
 
-
-    public String doPaypalPaiement(){
-        commande = factory.getCommandeProxy().getCommande(commandeId);
-        return ActionSupport.SUCCESS;
-    }
-
     public String doPayPalAuth() {
         commande = factory.getCommandeProxy().getCommande(commandeId);
         float totalC = 0;
         int count = 0;
         gm.generateCommande(commande,count,totalC,factory);
+        String tax = String.valueOf(commande.getTotal()*1.1-commande.getTotal());
         OrderDetail orderDetail = new OrderDetail(
                 commande.getNumero()
                 ,String.valueOf(commande.getTotal())
                 ,"10"
-                ,"10"
-                ,String.valueOf(commande.getTotal()+20));
+                ,tax
+                ,String.valueOf(commande.getTotal()+10+(commande.getTotal()*1.1-commande.getTotal())));
         try {
             PaymentServices paymentServices = new PaymentServices();
             String approvalLink = paymentServices.authorizePayment(orderDetail);
@@ -117,7 +112,10 @@ public class GestionPayPalAction extends ActionSupport {
         gm.generateCommande(commande,count,total, factory);
         commande.setStatutId(2);
         factory.getCommandeProxy().update(commande);
-
+        if (ActionContext.getContext().getSession().get("email") != null){
+            countPanier = gm.generateCountPanier(factory
+                    ,(String) ActionContext.getContext().getSession().get("email"));
+        }
 
         return ActionSupport.SUCCESS;
     }

@@ -42,8 +42,7 @@ public class GestionArticleAction extends ActionSupport {
     private         List<Categorie>     categorieList;
     private         String              categorieSelect;
     private         String              nom;
-    private         String              prixTtc;
-    private         String              prixHt;
+    private         String              prix;
     private         String              description;
     private         String              radio;
     private         String              reference;
@@ -88,14 +87,13 @@ public class GestionArticleAction extends ActionSupport {
         String vResult;
         try {
             if (nom != null && description != null && description != null
-                    && prixHt != null && prixTtc != null && categorieSelect != null){
+                    && prix != null && categorieSelect != null){
                 Article article = new Article();
                 article.setNom(nom);
                 article.setDescription(description);
                 Integer categorieId = getFactory().getCategorieProxy().findByNom(categorieSelect).getId();
                 article.setCategorieId(categorieId);
-                article.setPrixHt(Float.parseFloat(prixHt));
-                article.setPrixTtc(Float.parseFloat(prixTtc));
+                article.setPrix(Float.parseFloat(prix));
                 article.setDisponible(false);
                 article.setReference(reference);
                 getFactory().getArticleProxy().add(article);
@@ -320,20 +318,12 @@ public class GestionArticleAction extends ActionSupport {
         this.nom = nom;
     }
 
-    public String getPrixTtc() {
-        return prixTtc;
+    public String getPrix() {
+        return prix;
     }
 
-    public void setPrixTtc(String prixTtc) {
-        this.prixTtc = prixTtc;
-    }
-
-    public String getPrixHt() {
-        return prixHt;
-    }
-
-    public void setPrixHt(String prixHt) {
-        this.prixHt = prixHt;
+    public void setPrix(String prix) {
+        this.prix = prix;
     }
 
     public String getDescription() {

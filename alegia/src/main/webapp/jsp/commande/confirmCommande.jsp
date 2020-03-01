@@ -107,7 +107,8 @@
     <div class="col-9" style="max-width: 600px">
         <label class="textTop">Votre commande est bien pris en compte</label>
         <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreArticle">
-            <div style="display: flex;justify-content: center">
+            <div>
+                <p><i class="fas fa-check-circle text-success" style="font-size: 2em"></i></p>
                 <p>Nous vous remercions pour votre commande !
                     Nous vous confirmons que votre commande est bien pris en compte.</p>
                 <p>Vous allez recevoir un mail pour vous informer de la situation de votre commande.</p>

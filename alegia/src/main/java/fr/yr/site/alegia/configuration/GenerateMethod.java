@@ -29,8 +29,9 @@ public class GenerateMethod {
         instance.setMaximumFractionDigits(2);
         commande.setLigneDeCommandeList(factory.getLigneProxy().findByCommandeId(commande.getId()));
         for (LigneDeCommande lc : commande.getLigneDeCommandeList()){
-            total = total+lc.getMontantTtc();
+            total = total+lc.getMontant();
             count = count+lc.getQuantite();
+            lc.setRef(factory.getArticleProxy().findByNom(lc.getDesignation()).getReference());
         }
         commande.setTotal(total);
         String totalP = instance.format((total+10)*1.1);

@@ -13,10 +13,8 @@ public class LigneDeCommande {
     private Integer id;
     private Integer commandeId;
     private String designation;
-    private Float prixUnitHt;
-    private Float prixUnitTtc;
-    private Float montantTtc;
-    private Float montantHt;
+    private Float prixUnit;
+    private Float montant;
     private Integer quantite;
     private String taille;
 
@@ -44,36 +42,20 @@ public class LigneDeCommande {
         this.designation = designation;
     }
 
-    public Float getPrixUnitHt() {
-        return prixUnitHt;
+    public Float getPrixUnit() {
+        return prixUnit;
     }
 
-    public void setPrixUnitHt(Float prixUnitHt) {
-        this.prixUnitHt = prixUnitHt;
+    public void setPrixUnit(Float prixUnit) {
+        this.prixUnit = prixUnit;
     }
 
-    public Float getPrixUnitTtc() {
-        return prixUnitTtc;
+    public Float getMontant() {
+        return montant;
     }
 
-    public void setPrixUnitTtc(Float prixUnitTtc) {
-        this.prixUnitTtc = prixUnitTtc;
-    }
-
-    public Float getMontantTtc() {
-        return montantTtc;
-    }
-
-    public void setMontantTtc(Float montantTtc) {
-        this.montantTtc = montantTtc;
-    }
-
-    public Float getMontantHt() {
-        return montantHt;
-    }
-
-    public void setMontantHt(Float montantHt) {
-        this.montantHt = montantHt;
+    public void setMontant(Float montant) {
+        this.montant = montant;
     }
 
     public Integer getQuantite() {

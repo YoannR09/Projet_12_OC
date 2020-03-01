@@ -9,8 +9,7 @@ public class Article {
     private String reference;
     private Integer id;
     private Integer categorieId;
-    private Float prixHt;
-    private Float prixTtc;
+    private Float prix;
     private Boolean disponible;
     private Boolean supprimable;
     private List<Image> imageList;
@@ -39,20 +38,12 @@ public class Article {
         this.categorieId = categorieId;
     }
 
-    public Float getPrixHt() {
-        return prixHt;
+    public Float getPrix() {
+        return prix;
     }
 
-    public void setPrixHt(Float prixHt) {
-        this.prixHt = prixHt;
-    }
-
-    public Float getPrixTtc() {
-        return prixTtc;
-    }
-
-    public void setPrixTtc(Float prixTtc) {
-        this.prixTtc = prixTtc;
+    public void setPrix(Float prix) {
+        this.prix = prix;
     }
 
     public List<Image> getImageList() {

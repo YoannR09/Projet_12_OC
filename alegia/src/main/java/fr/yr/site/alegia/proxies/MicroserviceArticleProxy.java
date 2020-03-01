@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Classe pour récupérer les données du MicroserviceArticle
  */
-@FeignClient(name = "zuul-server", url = "localhost:9004")
+@FeignClient(name = "zuul-server", url = "192.168.1.61:9004")
 public interface MicroserviceArticleProxy {
 
     /**
@@ -54,6 +54,14 @@ public interface MicroserviceArticleProxy {
      */
     @GetMapping(value = "/microservice-article/Article/Dispo/{dispo}")
     List<Article> findByDisponibleOrderById(@PathVariable Boolean dispo);
+
+    /**
+     * Méthode pour récupérer un article via son nom
+     * @param nom
+     * @return
+     */
+    @GetMapping(value = "/microservice-article/Article/Nom/{nom}")
+    Article findByNom(@PathVariable("nom") String nom);
 
     /**
      * Méthode pour ajouter un article

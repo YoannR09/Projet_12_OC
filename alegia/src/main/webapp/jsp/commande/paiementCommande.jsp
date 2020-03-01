@@ -117,7 +117,7 @@
             <div style="width: 100%">
                       <span style="font-size:0.9em;font-weight: bold;justify-content: space-between">
                         <i class="fab fa-cc-paypal text-primary" style="font-size: 3em;margin-right: 10px"></i>
-                          <em style="font-size: 0.9em;vertical-align: center">Payez votre commande en toute sécurité avec PayPal !</em>
+                          <em style="font-size: 0.9em;vertical-align: top">Payez votre commande en toute sécurité avec PayPal !</em>
                         </span>
                     <s:a action="authorize_payment" class="btn btn-dark btn-small"
                          style="font-size: 0.7em;position:absolute;right:10px;bottom:10px">

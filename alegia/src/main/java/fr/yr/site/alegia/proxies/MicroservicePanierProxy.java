@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 /**
  * Classe pour récupérer les données du MicroserviceAdresse
  */
-@FeignClient(name = "zuul-server", url = "localhost:9004")
+@FeignClient(name = "zuul-server", url = "192.168.1.61:9004")
 public interface MicroservicePanierProxy {
 
 

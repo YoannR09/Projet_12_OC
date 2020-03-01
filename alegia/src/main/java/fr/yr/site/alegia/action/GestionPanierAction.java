@@ -89,11 +89,11 @@ public class GestionPanierAction extends ActionSupport {
                 contenu.setArticle(getFactory().getArticleProxy().getArticle(contenu.getArticleId()));
                 gm.completeArticle(getFactory(),contenu.getArticle());
                 contenu.setTaille(getFactory().getTailleProxy().findById(contenu.getTailleId()));
-                totalContenu = totalContenu+(contenu.getArticle().getPrixTtc()*contenu.getQuantite());
+                totalContenu = totalContenu+(contenu.getArticle().getPrix()*contenu.getQuantite());
                 countArticle = countArticle+contenu.getQuantite();
             }
             countPanier = gm.generateCountPanier(factory,getEmail());
-            totalPrix = Float.toString(totalContenu);
+            totalPrix = instance.format(totalContenu);
             tva = instance.format((totalContenu*1.1)-totalContenu);
             totalPayer = instance.format((totalContenu*1.1)+10);
             categorieList = getFactory().getCategorieProxy().findAll();
@@ -123,7 +123,7 @@ public class GestionPanierAction extends ActionSupport {
                 contenu.setArticle(getFactory().getArticleProxy().getArticle(contenu.getArticleId()));
                 gm.completeArticle(getFactory(),contenu.getArticle());
                 contenu.setTaille(getFactory().getTailleProxy().findById(contenu.getTailleId()));
-                totalContenu = totalContenu+(contenu.getArticle().getPrixTtc()*contenu.getQuantite());
+                totalContenu = totalContenu+(contenu.getArticle().getPrix()*contenu.getQuantite());
                 countArticle = countArticle+contenu.getQuantite();
             }
             countPanier = gm.generateCountPanier(factory,getEmail());

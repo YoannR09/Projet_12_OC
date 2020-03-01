@@ -79,7 +79,7 @@ public class ArticleController {
     }
 
     /**
-     * Méthode pour récupérer tout les articles disponibles
+     * Méthode pour récupérer tous les articles disponibles
      * @param dispo
      * @return
      */
@@ -87,6 +87,21 @@ public class ArticleController {
     public List<Article> findByDisponibleOrderById(@PathVariable Boolean dispo){
         try {
             return getArticleDao().findByDisponibleOrderById(dispo);
+        }catch (Exception e){
+            getLogger().error(e);
+            return null;
+        }
+    }
+
+    /**
+     * Méthode pour récupérer un article via son nom
+     * @param nom
+     * @return
+     */
+    @GetMapping(value = "/Article/Nom/{nom}")
+    public Article findByNom(@PathVariable String nom){
+        try {
+            return getArticleDao().findByNom(nom);
         }catch (Exception e){
             getLogger().error(e);
             return null;

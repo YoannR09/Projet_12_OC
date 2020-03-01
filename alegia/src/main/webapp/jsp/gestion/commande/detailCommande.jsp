@@ -70,9 +70,8 @@
 <body>
 <%@ include file="../../_include/header.jsp"%>
 <div id="blocCenter" style="display: flex;justify-content: center;">
-    <div class="col-9">
-        <s:if test="panierVide"><label class="textTop">Vous n'avez effectué aucune commande.</label></s:if>
-        <s:else><label class="textTop">Détails de la commande</label></s:else>
+    <div class="col-9" style="max-width: 900px">
+        <label class="textTop">Détails de la commande</label>
         <div class="col-12" style="display: flex;justify-content: space-around">
             <div style="width: 800px">
                 <div class="col-12 container border shadow bg-white rounded" id="cadreArticle">
@@ -87,6 +86,7 @@
                             <thead class="thead">
                             <tr style="max-height: 10px">
                                 <th scope="col">ARTICLE</th>
+                                <th scope="col">REFERENCE</th>
                                 <th scope="col">PRIX</th>
                                 <th scope="col">MONTANT</th>
                                 <th scope="col">QUANTITE</th>
@@ -97,6 +97,7 @@
                             <s:iterator value="commande.ligneDeCommandeList">
                                 <tr>
                                     <td><s:property value="designation"/></td>
+                                    <td><s:property value="ref"/></td>
                                     <td><s:property value="prixUnitTtc"/> €</td>
                                     <td><s:property value="montantTtc"/> €</td>
                                     <td><s:property value="quantite"/></td>

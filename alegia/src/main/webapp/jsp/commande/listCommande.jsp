@@ -72,11 +72,13 @@
 <body>
 <%@ include file="../_include/header.jsp"%>
 <div id="blocCenter" style="display: flex;justify-content: center;">
-    <div class="col-9">
-        <s:if test="panierVide"><label class="textTop">Vous n'avez effectué aucune commande.</label></s:if>
-        <s:else><label class="textTop">Mes commandes</label></s:else>
+    <div class="col-9" style="max-width: 900px">
+        <label class="textTop">Mes commandes</label>
         <div class="col-12" style="display: flex;justify-content: space-around">
             <div style="width: 800px">
+                <s:if test="commandeList.size == 0">
+                    <label style="font-size: 0.8em"><em>Vous n'avez pas effectué de commande pour le moment.</em></label>
+                </s:if>
                 <s:iterator value="commandeList">
                     <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreArticle">
                         <section class="row">

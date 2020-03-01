@@ -235,4 +235,6 @@ public class GestionCategorieAction extends ActionSupport {
     public void setCountPanier(Integer countPanier) {
         this.countPanier = countPanier;
     }
+
+
 }

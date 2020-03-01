@@ -205,7 +205,7 @@
         <action name="execute"
                 class="fr.yr.site.alegia.action.GestionPayPalAction"
                 method="doExecute">
-            <result name="success">/jsp/paypal/receipt.jsp</result>
+            <result name="success">/jsp/commande/confirmCommande.jsp</result>
             <result name="error">/jsp/error/error.jsp</result>
         </action>
 

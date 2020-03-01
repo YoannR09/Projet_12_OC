@@ -41,7 +41,7 @@ public class GestionPanierActionTest {
         when(factory.getContenuProxy().findByPanierId(anyInt())).thenReturn(contenuList);
         Article article = new Article();
         article.setId(2);
-        article.setPrixTtc(new Float(2));
+        article.setPrix(new Float(2));
         when(factory.getArticleProxy().getArticle(anyInt())).thenReturn(article);
         List<Image> imageList = new ArrayList<>();
         when(factory.getImageProxy().findByArticleId(anyInt())).thenReturn(imageList);

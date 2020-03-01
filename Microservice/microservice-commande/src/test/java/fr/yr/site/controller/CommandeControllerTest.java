@@ -233,14 +233,14 @@ public class CommandeControllerTest {
         //GIVEN
         List<Commande> vList = new ArrayList<>();
         initList(vList);
-        when(dao.findByNumeroContaining(anyString())).thenReturn(vList);
+        when(dao.findByNumeroContainingOrderByIdDesc(anyString())).thenReturn(vList);
 
         // WHEN
         List<Commande> vListTest = controller.findCommandeByNumeroContaining("Numero");
 
         //THEN
         assertEquals(vListTest.size(),2);
-        when(dao.findByNumeroContaining(anyString()))
+        when(dao.findByNumeroContainingOrderByIdDesc(anyString()))
                 .then((Answer<Void>) invocationOnMock -> {
                     throw new NotFoundException("Erreur");
                 });
@@ -254,14 +254,14 @@ public class CommandeControllerTest {
         //GIVEN
         List<Commande> vList = new ArrayList<>();
         initList(vList);
-        when(dao.findByCompteId(anyInt())).thenReturn(vList);
+        when(dao.findByCompteIdOrderByIdDesc(anyInt())).thenReturn(vList);
 
         // WHEN
         List<Commande> vListTest = controller.getCommandeByCompteId(1);
 
         //THEN
         assertEquals(vListTest.size(),2);
-        when(dao.findByCompteId(anyInt()))
+        when(dao.findByCompteIdOrderByIdDesc(anyInt()))
                 .then((Answer<Void>) invocationOnMock -> {
                     throw new NotFoundException("Erreur");
                 });
@@ -275,14 +275,14 @@ public class CommandeControllerTest {
         //GIVEN
         List<Commande> vList = new ArrayList<>();
         initList(vList);
-        when(dao.findByStatutId(anyInt())).thenReturn(vList);
+        when(dao.findByStatutIdOrderByIdDesc(anyInt())).thenReturn(vList);
 
         // WHEN
         List<Commande> vListTest = controller.getCOmmandeByStatutId(1);
 
         //THEN
         assertEquals(vListTest.size(),2);
-        when(dao.findByStatutId(anyInt()))
+        when(dao.findByStatutIdOrderByIdDesc(anyInt()))
                 .then((Answer<Void>) invocationOnMock -> {
                     throw new NotFoundException("Erreur");
                 });

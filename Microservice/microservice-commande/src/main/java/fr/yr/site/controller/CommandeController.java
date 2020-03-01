@@ -121,7 +121,7 @@ public class CommandeController {
     @GetMapping(value = "/Commande/NumeroContaining/{numero}")
     public List<Commande> findCommandeByNumeroContaining(@PathVariable String numero){
         try {
-            return getCommandeDao().findByNumeroContaining(numero);
+            return getCommandeDao().findByNumeroContainingOrderByIdDesc(numero);
         }catch (Exception e){
             return null;
         }
@@ -135,7 +135,7 @@ public class CommandeController {
     @GetMapping(value = "/Commande/Compte/{compteId}")
     public List<Commande> getCommandeByCompteId(@PathVariable int compteId){
         try {
-            return getCommandeDao().findByCompteId(compteId);
+            return getCommandeDao().findByCompteIdOrderByIdDesc(compteId);
         }catch (Exception e){
             getLogger().error(e);
             return null;
@@ -150,7 +150,7 @@ public class CommandeController {
     @GetMapping(value = "/Commande/Statut/{statutId}")
     public List<Commande> getCOmmandeByStatutId(@PathVariable int statutId){
         try {
-            return getCommandeDao().findByStatutId(statutId);
+            return getCommandeDao().findByStatutIdOrderByIdDesc(statutId);
         }catch (Exception e){
             getLogger().error(e);
             return null;

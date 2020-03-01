@@ -66,11 +66,13 @@
 <div id="blocCenter" style="display: flex;justify-content: center;">
     <div style="width: 800px">
         <div style="text-align: left">
-            <s:if test="panierVide"><label class="textTop">Votre panier est vide pour le moment.</label></s:if>
-            <s:else><label class="textTop" style="text-align: left">Mon panier</label></s:else>
+            <label class="textTop" style="text-align: left">Mon panier</label>
         </div>
         <div class="col-12" style="display: flex;justify-content: space-between">
             <div style="width: 350px">
+                <s:if test="contenuList.size == 0">
+                    <label style="font-size: 0.8em"><em>Votre panier est vide pour le moment.</em></label>
+                </s:if>
                 <s:iterator value="contenuList">
                     <div class="col-12 container border shadow bg-white rounded" id="cadreArticle">
                         <section class="row">
@@ -87,20 +89,12 @@
                                                     </s:a>
                                                 </div>
                                             </s:if>
-                                            <s:elseif test="%{#imageList.count > 1}">
-                                                <div class="carousel-item border" style="width: 100%;height: 100%">
-                                                    <s:a action="doDetailArticle">
-                                                        <s:param name="articleId" value="article.id"/>
-                                                        <img class="d-block w-100 " src="./image/<s:property value="url"/>">
-                                                    </s:a>
-                                                </div>
-                                            </s:elseif>
                                         </s:iterator>
                                     </div>
                                 </div>
                             </div>
                             <div class="col" style="padding: 7px;">
-                                <s:a action="doListArticleByCategorieId"
+                                <s:a action="doDetailArticle"
                                      style="font-size:1em;font-weight: bold;margin-top:10px;">
                                     <s:param name="articleId" value="article.id"/>
                                     <s:property value="article.nom"/></s:a><br/>
@@ -117,7 +111,7 @@
                     </div>
                 </s:iterator>
             </div>
-            <div class="border shadow p-3 mb-5 bg-white rounded" style="width: 200px;
+            <div class="border shadow p-3 mb-5 bg-white rounded" style="width: 200px;height: 280px;
             padding:15px;text-align: center;background-color: whitesmoke">
                 <p><span style="width: 100%;text-align: center;font-size: 1.1em;font-weight: bold">Votre commande</span></p>
                 <span style="display:flex;justify-content: space-between">

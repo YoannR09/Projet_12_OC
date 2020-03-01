@@ -502,10 +502,10 @@
    </relationship>
   </relationships>
  </target-database>
- <ddl-generator type="ca.sqlpower.architect.ddl.PostgresDDLGenerator" allow-connection="false" target-schema="public"> </ddl-generator>
+ <ddl-generator type="ca.sqlpower.architect.ddl.PostgresDDLGenerator" allow-connection="true" target-schema="public"> </ddl-generator>
  <liquibase-settings useSeparateChangeSets="false" generateId="false" idStart="1"/>
  <create-kettle-job-settings filePath="" jobName="" schemaName="" kettleJoinType="0" savingToFile="true" />
- <play-pen zoom="1.0" viewportX="195" viewportY="12" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
+ <play-pen zoom="1.0" viewportX="0" viewportY="12" relationship-style="rectilinear" names-displayLogicalNames="true" showPrimaryTag="true" showForeignTag="true" showAlternateTag="true" columnVisibility="ALL" relationshipLabelVisibility="true">
   <table-pane table-ref="TAB1" x="37" y="58" bgColor="0xe8cfdb" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB13" x="394" y="77" bgColor="0xf6bcbc" fgColor="0x000000" rounded="false" dashed="false"/>
   <table-pane table-ref="TAB22" x="75" y="278" bgColor="0xe8cfdb" fgColor="0x000000" rounded="false" dashed="false"/>
