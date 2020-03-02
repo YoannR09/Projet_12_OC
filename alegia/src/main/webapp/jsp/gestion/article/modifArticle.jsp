@@ -61,9 +61,9 @@
     <%@ include file="../../_include/header.jsp"%>
 </header>
 <div id="page">
-    <div id="bottom" >
+    <div id="bottom" style="width: 600px">
+        <label class="form-check-label" id="label"> Modifier l'article </label>
         <div id="cadre" class="shadow p-3 mb-5 bg-white rounded">
-            <label class="form-check-label" id="label"> Modifier l'article </label>
             <div class="col-12 container" id="cadreLog">
                 <div class="col-12">
                     <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style=" margin-bottom: 5px">
@@ -101,7 +101,8 @@
                             data-target="#modalRetirer" style="width: 200px">Retirer une image</button>
                 </div>
             </div>
-
+            <s:form action="doModifArticle">
+                <input type="hidden" name="articleId" value="<s:property value="article.id"/>">
                 <div class="form-group" style="margin: 20px;">
                     <label for="inputNom" style="color: black;">Nom de l'article</label>
                     <input name="nom" type="text" class="form-control" id="inputNom" value="<s:property value="article.nom"/>" required>
@@ -111,17 +112,13 @@
                     <textarea name="description" rows="3" class="form-control" id="inputDescription" required><s:property value="article.description"/></textarea>
                 </div>
                 <div class="form-group " style="margin: 20px">
-                    <label for="prixHt" style="color: black;">Prix HT</label>
-                    <input name="prixHt" class="form-control" value="<s:property value="article.prixHt"/>" id="prixHt">
-                </div>
-                <div class="form-group " style="margin: 20px">
-                    <label for="prixTtc" style="color: black;">Prix TTC</label>
-                    <input name="prixTtc" class="form-control" id="prixTtc" value="<s:property value="article.prixTtc"/>">
+                    <label for="prix" style="color: black;">Prix</label>
+                    <input name="prix" class="form-control" value="<s:property value="article.prix"/>" id="prix">
                 </div>
                 <div style="display: flex;justify-content: center;margin: 10px">
                     <button type="submit" style="font-size: 0.8em" class="btn btn-dark">Confirmer</button>
                 </div>
-
+            </s:form>
         </div>
     </div>
 </div>
@@ -136,9 +133,8 @@
             </div>
             <div class="modal-body" style="text-align: center;">
                 <s:form action="doAddImage" method="post" enctype="multipart/form-data">
-                    <input value="Description de l'image" style="width: 100%" name="descriptionImage"/>
                     <input id="idArticle" name="articleId" value="<s:property value="article.id"/>">
-                    <input type = "file" name = "myFile" />
+                    <input type = "file" name = "myFile" style="margin: 10px"/>
                     <s:submit value="Confirmer" />
                 </s:form>
             </div>

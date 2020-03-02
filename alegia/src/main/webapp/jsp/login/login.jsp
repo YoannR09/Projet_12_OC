@@ -58,7 +58,7 @@
             <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreLog">
                 <s:form action="doLogin">
                     <div class="form-group" style="margin: 20px;">
-                        <label for="inputEmail" >Adresse éléctronique</label>
+                        <label for="inputEmail" >Adresse électronique</label>
                         <input name="email" type="text" class="form-control" id="inputEmail" required>
                     </div>
                     <div class="form-group " style="margin: 20px">

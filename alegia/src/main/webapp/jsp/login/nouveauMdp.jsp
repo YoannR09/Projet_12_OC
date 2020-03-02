@@ -58,10 +58,10 @@
             <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreLog">
                 <s:form action="doNouveauMdp">
                     <div class="form-group" style="margin: 20px;">
-                        <label for="inputEmail" >Adresse éléctronique du compte </label>
+                        <label for="inputEmail" >Adresse électronique du compte </label>
                         <input name="email" type="text" class="form-control" id="inputEmail" required>
                     </div>
-                    <div style="display: flex;justify-content: space-between;padding-top: 25px">
+                    <div style="display: flex;justify-content: space-around;padding-top: 25px">
                         <button type="submit" style="font-size: 0.7em" class="btn btn-dark">Confirmer</button>
                     </div>
                 </s:form>

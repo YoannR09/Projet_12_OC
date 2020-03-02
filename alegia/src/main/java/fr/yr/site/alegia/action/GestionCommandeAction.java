@@ -192,8 +192,7 @@ public class GestionCommandeAction extends ActionSupport {
             for(Contenu contenu:contenuList){
                 contenu.setArticle(getFactory().getArticleProxy().getArticle(contenu.getArticleId()));
                 LigneDeCommande ligneDeCommande = new LigneDeCommande();
-                List<Commande> vList = getFactory().getCommandeProxy().getCommandeByCompteId(compte.getId());
-                ligneDeCommande.setCommandeId(vList.get(vList.size()-1).getId());
+                ligneDeCommande.setCommandeId(factory.getCommandeProxy().getCommandeByNumero(numeroCommande).getId());
                 ligneDeCommande.setDesignation(contenu.getArticle().getNom());
                 ligneDeCommande.setPrixUnit(contenu.getArticle().getPrix());
                 ligneDeCommande.setMontant(contenu.getArticle().getPrix()*contenu.getQuantite());
@@ -202,7 +201,7 @@ public class GestionCommandeAction extends ActionSupport {
                 ligneDeCommande.setTaille(contenu.getTaille().getTaille());
                 getFactory().getLigneProxy().add(ligneDeCommande);
                 getFactory().getContenuProxy().delete(contenu.getId());
-                commandeId = vList.get(vList.size()-1).getId();
+                commandeId = factory.getCommandeProxy().getCommandeByNumero(numeroCommande).getId();
             }
             adresseList = new ArrayList<>();
             adresse = getFactory().getAdresseProxy().getAdresse(compte.getAdresseId());

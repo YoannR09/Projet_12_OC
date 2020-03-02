@@ -24,6 +24,20 @@ public class GenerateMethod {
         }
     }
 
+    public void imageListSizeNull(List<Image> vList) {
+        if (vList.size() == 0 ){
+            Image image = new Image();
+            image.setUrl("indisponible.jpg");
+            vList.add(image);
+        }
+    }
+
+    public void generateTaille(List<ListTaille> vList, Factory factory) {
+        for(ListTaille lt:vList){
+            lt.setTaille(factory.getTailleProxy().findById(lt.getTailleId()));
+        }
+    }
+
     public void generateCommande(Commande commande,int count, float total, Factory factory){
         instance.setMinimumFractionDigits(2);
         instance.setMaximumFractionDigits(2);
@@ -34,12 +48,12 @@ public class GenerateMethod {
             lc.setRef(factory.getArticleProxy().findByNom(lc.getDesignation()).getReference());
         }
         commande.setTotal(total);
-        String totalP = instance.format((total+10)*1.1);
         commande.setAdresse(factory.getAdresseProxy().getAdresse(commande.getAdresseId()));
-        commande.setTotalPayer(totalP);
         commande.setTva(instance.format((total*1.1)-total));
+        String totalP = instance.format(total+10+(total*1.1)-total);
+        commande.setTotalPayer(totalP);
         commande.setCountArticle(count);
-        commande.setPrixTotal(Float.toString(total));
+        commande.setPrixTotal(instance.format(total));
     }
 
     /**

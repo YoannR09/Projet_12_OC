@@ -45,7 +45,7 @@
                         </div>
                     </div>
                     <p style="font-size: 0.8em;font-weight: bolder"> <s:property value="nom"/> </p>
-                    <p style="font-size: 0.8em;color: darkgray"> <s:property value="prixTtc"/> €</p>
+                    <p style="font-size: 0.8em;color: darkgray"> <s:property value="prix"/> €</p>
                 </li>
             </s:iterator>
         </section>

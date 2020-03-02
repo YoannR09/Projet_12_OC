@@ -15,9 +15,13 @@ import org.apache.logging.log4j.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.text.NumberFormat;
 import java.util.List;
 
-
+/**
+ * Classe qui gére le paiement avec PayPal
+ * Fonctionne avec une API fournit par PayPal
+ */
 public class GestionPayPalAction extends ActionSupport {
 
     // Microseervices
@@ -27,6 +31,7 @@ public class GestionPayPalAction extends ActionSupport {
     private GenerateMethod gm = new GenerateMethod();
 
     private static final Logger logger = LogManager.getLogger();
+    final NumberFormat instance = NumberFormat.getNumberInstance();
     private static final long serialVersionUID = 1L;
 
     private         String              product;
@@ -49,7 +54,15 @@ public class GestionPayPalAction extends ActionSupport {
     private         List<Categorie>     categorieList;
 
 
+    /**
+     * Méthode pour récupérer les informations de la commande.
+     * Transmet toutes les informations de la commande à l'API PayPal
+     * Affiche la page de connexion Paypal
+     * @return
+     */
     public String doPayPalAuth() {
+        instance.setMinimumFractionDigits(2);
+        instance.setMaximumFractionDigits(2);
         commande = factory.getCommandeProxy().getCommande(commandeId);
         float totalC = 0;
         int count = 0;
@@ -60,7 +73,7 @@ public class GestionPayPalAction extends ActionSupport {
                 ,String.valueOf(commande.getTotal())
                 ,"10"
                 ,tax
-                ,String.valueOf(commande.getTotal()+10+(commande.getTotal()*1.1-commande.getTotal())));
+                ,String.valueOf(commande.getTotal()+10+Float.parseFloat(tax)));
         try {
             PaymentServices paymentServices = new PaymentServices();
             String approvalLink = paymentServices.authorizePayment(orderDetail);
@@ -74,6 +87,10 @@ public class GestionPayPalAction extends ActionSupport {
         }
     }
 
+    /**
+     * Affiche un récapitulatif de la commande pour l'acheteur.
+     * @return
+     */
     public String doReview(){
         try {
             PaymentServices paymentServices = new PaymentServices();
@@ -100,6 +117,13 @@ public class GestionPayPalAction extends ActionSupport {
         }
     }
 
+    /**
+     * L'utilisateur à confirmer la commande
+     * Le paiement PayPal s'effectue
+     * Le statut de la commande évolue à l'étape suivante.
+     * @return
+     * @throws PayPalRESTException
+     */
     public String doExecute() throws PayPalRESTException {
 
         PaymentServices paymentServices = new PaymentServices();
@@ -116,7 +140,7 @@ public class GestionPayPalAction extends ActionSupport {
             countPanier = gm.generateCountPanier(factory
                     ,(String) ActionContext.getContext().getSession().get("email"));
         }
-
+        categorieList = factory.getCategorieProxy().findByDispo(true);
         return ActionSupport.SUCCESS;
     }
 

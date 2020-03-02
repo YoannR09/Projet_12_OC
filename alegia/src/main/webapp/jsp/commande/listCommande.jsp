@@ -123,8 +123,8 @@
                                 <s:iterator value="ligneDeCommandeList">
                                     <tr>
                                         <td><s:property value="designation"/></td>
-                                        <td><s:property value="prixUnitTtc"/> €</td>
-                                        <td><s:property value="montantTtc"/> €</td>
+                                        <td><s:property value="prixUnit"/> €</td>
+                                        <td><s:property value="montant"/> €</td>
                                         <td><s:property value="quantite"/></td>
                                         <td><s:property value="taille"/></td>
                                     </tr>

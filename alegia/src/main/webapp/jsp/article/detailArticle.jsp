@@ -53,7 +53,7 @@
                 <input id="idArticle" name="articleId" class="form-control" type="number" value="<s:property value="article.id"/>" style="width: 100px;font-size: 0.8em;visibility: revert">
                 <p style="font-size: 1.1em;font-weight: bolder"><s:property value="article.nom"/></p>
                 <p style="font-size: 0.9em;color: darkslategrey"><s:property value="article.description"/></p>
-                <p style="font-size: 0.9em;color: darkslategrey"><s:property value="article.prixTtc"/> €</p>
+                <p style="font-size: 0.9em;color: darkslategrey"><s:property value="article.prix"/> €</p>
                 <label for="selectTaille" style="font-size: 0.7em;"><em>Sélectionner une taille</em></label>
                 <br/>
                 <select class="custom-select custom-select-sm" name="taille" style="width: 100px;font-size: 0.8em;" id="selectTaille">

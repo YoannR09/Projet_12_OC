@@ -36,6 +36,8 @@ public class GestionPanierAction extends ActionSupport {
     private String infoMessage;
     private List<Contenu> contenuList;
     private List<Categorie> categorieList;
+    private         List<ListTaille>    listTailles;
+    private         List<Image>         imageList;
     private Compte compte;
     private Panier panier;
 
@@ -67,9 +69,13 @@ public class GestionPanierAction extends ActionSupport {
             }else {
                 getFactory().getContenuProxy().update(contenu);
             }
+            listTailles = getFactory().getListTailleProxy().findByArticleId(articleId);
+            imageList = getFactory().getImageProxy().findByArticleId(articleId);
+            gm.imageListSizeNull(imageList);
+            gm.generateTaille(listTailles,factory);
             countPanier = gm.generateCountPanier(factory,getEmail());
             categorieList = getFactory().getCategorieProxy().findAll();
-            infoMessage = "L'article a bien été ajouté votre panier";
+            infoMessage = "L'article a bien été ajouté à votre panier";
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
@@ -79,8 +85,12 @@ public class GestionPanierAction extends ActionSupport {
         }
     }
 
+
+
     public String doConsulterPanier(){
         try{
+            instance.setMinimumFractionDigits(2);
+            instance.setMaximumFractionDigits(2);
             generateCompteAndPanier();
             contenuList = getFactory().getContenuProxy().findByPanierId(panier.getId());
             float totalContenu = 0;
@@ -129,6 +139,8 @@ public class GestionPanierAction extends ActionSupport {
             countPanier = gm.generateCountPanier(factory,getEmail());
             categorieList = getFactory().getCategorieProxy().findAll();
             totalPrix = Float.toString(totalContenu);
+            totalPrix = instance.format(totalContenu);
+            tva = instance.format((totalContenu*1.1)-totalContenu);
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
@@ -268,5 +280,21 @@ public class GestionPanierAction extends ActionSupport {
 
     public void setTotalPayer(String totalPayer) {
         this.totalPayer = totalPayer;
+    }
+
+    public List<ListTaille> getListTailles() {
+        return listTailles;
+    }
+
+    public void setListTailles(List<ListTaille> listTailles) {
+        this.listTailles = listTailles;
+    }
+
+    public List<Image> getImageList() {
+        return imageList;
+    }
+
+    public void setImageList(List<Image> imageList) {
+        this.imageList = imageList;
     }
 }

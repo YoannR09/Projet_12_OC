@@ -59,14 +59,8 @@ public class GestionArticleAction extends ActionSupport {
             article = getFactory().getArticleProxy().getArticle(articleId);
             listTailles = getFactory().getListTailleProxy().findByArticleId(articleId);
             imageList = getFactory().getImageProxy().findByArticleId(articleId);
-            if (imageList.size() == 0 ){
-                Image image = new Image();
-                image.setUrl("indisponible.jpg");
-                imageList.add(image);
-            }
-            for(ListTaille lt:listTailles){
-                lt.setTaille(getFactory().getTailleProxy().findById(lt.getTailleId()));
-            }
+            gm.imageListSizeNull(imageList);
+            gm.generateTaille(listTailles,factory);
             categorieList = getFactory().getCategorieProxy().findByDispo(true);
             countPanier = gm.generateCountPanier(factory,getEmail());
             return ActionSupport.SUCCESS;
@@ -216,6 +210,32 @@ public class GestionArticleAction extends ActionSupport {
             gm.completeArticle(getFactory(),article);
             categorieList = getFactory().getCategorieProxy().findByDispo(true);
             countPanier = gm.generateCountPanier(factory,getEmail());
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
+            return ActionSupport.ERROR;
+        }
+    }
+
+
+    /**
+     * Méthode pour modifier les informations d'un article déjà existant
+     * @return
+     */
+    public String doModifArticle(){
+        try {
+            article = factory.getArticleProxy().getArticle(articleId);
+            article.setNom(nom);
+            article.setDescription(description);
+            article.setPrix(Float.parseFloat(prix));
+            getFactory().getArticleProxy().update(article);
+            article = getFactory().getArticleProxy().getArticle(articleId);
+            countPanier = gm.generateCountPanier(factory,getEmail());
+            gm.completeArticle(getFactory(),article);
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            infoMessage = "L'article a bien été modifié";
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");

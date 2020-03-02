@@ -123,8 +123,8 @@
                         <s:iterator value="commande.ligneDeCommandeList">
                             <tr>
                                 <td><s:property value="designation"/></td>
-                                <td><s:property value="prixUnitTtc"/> €</td>
-                                <td><s:property value="montantTtc"/> €</td>
+                                <td><s:property value="prixUnit"/> €</td>
+                                <td><s:property value="montant"/> €</td>
                                 <td><s:property value="quantite"/></td>
                                 <td><s:property value="taille"/></td>
                             </tr>
@@ -149,12 +149,12 @@
                 </div>
             </div>
             <div style="width: 100%;text-align: center">
-<s:form action="execute">
-    <input type="hidden" name="paymentId" value="<s:property value="paymentId"/>" />
-    <input type="hidden" name="PayerID" value="<s:property value="PayerID"/>" />
-    <input type="hidden" name="commandeId" value="<s:property value="commande.id"/>" />
-    <button type="submit" style="font-size: 0.7em" class="btn btn-dark">Confirmer le paiement</button>
-</s:form>
+                <s:form action="execute">
+                    <input type="hidden" name="paymentId" value="<s:property value="paymentId"/>" />
+                    <input type="hidden" name="PayerID" value="<s:property value="PayerID"/>" />
+                    <input type="hidden" name="commandeId" value="<s:property value="commande.id"/>" />
+                    <button type="submit" style="font-size: 0.7em" class="btn btn-dark">Confirmer le paiement</button>
+                </s:form>
             </div>
         </div>
     </div>

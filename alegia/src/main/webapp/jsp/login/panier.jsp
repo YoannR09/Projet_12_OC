@@ -101,7 +101,7 @@
                                 <em class="lab">taille :  </em>
                                 <span class="spanDonne" style="font-weight: bold"><s:property value="taille.taille"/></span><br/>
                                 <em class="lab">prix :  </em>
-                                <span class="spanDonne" style="font-weight: bold"><s:property value="article.prixTtc"/> €</span><br/>
+                                <span class="spanDonne" style="font-weight: bold"><s:property value="article.prix"/> €</span><br/>
                                 <em class="lab">quantité :  </em>
                                 <span class="spanDonne" style="font-weight: bold"><s:property value="quantite"/></span><br/>
                                 <span style="position: absolute;right: 10px;bottom: 10px"><s:a action="doDeleteContenu" style="font-size:0.7em;">
