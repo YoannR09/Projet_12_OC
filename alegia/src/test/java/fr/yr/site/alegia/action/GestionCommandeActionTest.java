@@ -26,41 +26,6 @@ public class GestionCommandeActionTest {
     private GestionCommandeAction action;
 
 
-    @Test
-    public void doRepriseCommande(){
-        // GIVEN
-        action.setCommandeId(2);
-        Compte compte = new Compte();
-        compte.setAdresseId(2);
-        when(factory.getCompteProxy().findByEmail(anyString())).thenReturn(compte);
-        when(factory.getCommandeProxy().getCommande(anyInt())).thenReturn(new Commande());
-        when(factory.getAdresseProxy().getAdresse(anyInt())).thenReturn(new Adresse());
-        Categorie categorie = new Categorie();
-        List<Categorie> categorieList = new ArrayList<>();
-        categorieList.add(categorie);
-        when(factory.getCategorieProxy().findByDispo(anyBoolean())).thenReturn(categorieList);
-
-        // WHEN
-        String result = action.doRepriseCommande();
-
-        // THEN
-        assertEquals(result,ActionSupport.SUCCESS);
-        assertNotNull(action.getCommande());
-        assertNotNull(action.getAdresse());
-        assertNotNull(action.getCategorieList());
-    }
-
-    @Test
-    public void doRepriseCommandeException(){
-        // GIVEN
-        when(factory.getCommandeProxy().getCommande(anyInt())).thenReturn(null);
-
-        // WHEN
-        String result = action.doRepriseCommande();
-
-        // THEN
-        assertEquals(result, ActionSupport.ERROR);
-    }
 
     @Test
     public void doConsulterCommande(){
@@ -122,7 +87,6 @@ public class GestionCommandeActionTest {
         when(factory.getContenuProxy()).thenReturn(mock(MicroserviceContenuPanierProxy.class));
         when(factory.getLigneProxy()).thenReturn(mock(MicroserviceLigneDeCommandeProxy.class));
         when(factory.getPanierProxy()).thenReturn(mock(MicroservicePanierProxy.class));
-        when(factory.getNiveauAccesProxy()).thenReturn(mock(MicroserviceNiveauAccesProxy.class));
         logger = mock(Logger.class);
         doNothing().when(logger).error(anyString());
         doNothing().when(logger).warn(anyString());

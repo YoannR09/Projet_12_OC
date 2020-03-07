@@ -4,12 +4,6 @@
 <head>
     <%@ include file="../../_include/head.jsp"%>
     <style type="text/css">
-
-        body
-        {
-            margin:0;
-            padding:0;
-        }
         #blocCenter
         {
             display: flex;
@@ -49,11 +43,11 @@
 </header>
 
 <div id="blocCenter" style="display: flex;justify-content: center;">
-    <div class="col-9" style="max-width: 700px">
+    <div class="col-9" style="max-width: 600px">
         <label class="textTop">Ajouter un article</label>
         <div class="col-12" style="display: flex;justify-content: space-around">
-            <div style="width: 600px">
-                <div class="col-12 container border shadow bg-white" id="cadreLog">
+            <div style="width: 500px">
+                <div class="col-12 container border border-secondary shadow bgTran" id="cadreLog">
                     <s:form action="doAddArticle" enctype="multipart/form-data" method="POST" namespace="/">
                         <div class="form-group" style="margin: 20px;">
                             <label for="inputNom" style="color: black;">Nom de l'article</label>
@@ -80,7 +74,7 @@
                             </select>
                         </div>
                         <label style="color: black;margin-left: 20px">Sélectionner les tailles</label>
-                        <s:checkboxlist list="tailleList" name="tailleSelect" style="font-size:0.8em;margin-left:15px"
+                        <s:checkboxlist list="tailleList" name="tailleSelect" style="font-size:0.8em;"
                                         listLabelKey="taille" listKey="taille" />
 
                         <div style="display: flex;justify-content:space-around;padding-top: 25px">

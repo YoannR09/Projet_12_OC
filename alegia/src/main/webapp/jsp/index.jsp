@@ -44,7 +44,7 @@
 </head>
 <body>
 <%@ include file="./_include/header.jsp"%>
-<div id="blocCenter" style="display: flex;justify-content: center;">
+<div id="blocCenter" style="display: flex;justify-content: center;z-index: 3">
     <div class="nav-item" style="text-align: center;width: 660px;border-radius: 15px;
     box-shadow: 0px 0px 30px -8px rgba(0,0,0,0.50);">
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel"

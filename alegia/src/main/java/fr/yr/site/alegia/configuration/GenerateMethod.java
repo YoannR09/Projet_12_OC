@@ -14,12 +14,14 @@ public class GenerateMethod {
      * @param vList
      */
     public void completeArticleList(Factory factory,List<Article> vList){
-        for (Article a : vList) {
-            a.setImageList(factory.getImageProxy().findByArticleId(a.getId()));
-            if (a.getImageList().size() == 0) {
-                Image image = new Image();
-                image.setUrl("indisponible.jpg");
-                a.getImageList().add(image);
+        if (vList != null) {
+            for (Article a : vList) {
+                a.setImageList(factory.getImageProxy().findByArticleId(a.getId()));
+                if (a.getImageList().size() == 0) {
+                    Image image = new Image();
+                    image.setUrl("indisponible.jpg");
+                    a.getImageList().add(image);
+                }
             }
         }
     }
@@ -46,10 +48,13 @@ public class GenerateMethod {
             total = total+lc.getMontant();
             count = count+lc.getQuantite();
             lc.setRef(factory.getArticleProxy().findByNom(lc.getDesignation()).getReference());
+            lc.setPrixHt(instance.format(lc.getPrixUnit()));
+            lc.setMontantHt(instance.format(lc.getMontant()));
         }
         commande.setTotal(total);
         commande.setAdresse(factory.getAdresseProxy().getAdresse(commande.getAdresseId()));
         commande.setTva(instance.format((total*1.1)-total));
+        commande.setLivraison(instance.format(10));
         String totalP = instance.format(total+10+(total*1.1)-total);
         commande.setTotalPayer(totalP);
         commande.setCountArticle(count);

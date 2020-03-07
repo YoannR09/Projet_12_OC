@@ -42,7 +42,7 @@
 <%@ include file="../../_include/header.jsp"%>
 <div id="blocCenter" style="display: flex;justify-content: center;">
     <div class="col-8" style="padding: auto">
-        <div id="barreDeRecherche" class="border shadow p-3 mb-5 bg-white rounded" style="display:flex;justify-content: space-around;margin: auto">
+        <div id="barreDeRecherche" class="border border-secondary shadow p-3 mb-5 bgTran rounded" style="display:flex;justify-content: space-around;margin: auto">
             <s:form id="formulaire" action="gestionArticle" >
                 <div class="input-group">
                     <div class="input-group">
@@ -58,9 +58,9 @@
         </div>
         <section class="row" style="margin: auto;justify-content: space-around">
             <s:iterator value="articleList">
-                <li class="nav-item border shadow p-3 mb-5 bg-white rounded" style="text-align: center;margin: 15px;padding:10px;width:200px">
-                    <p style="font-weight: bold;font-size: 1.1em;"><s:property value="nom"/></p>
-                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style=" margin-bottom: 5px">
+                <li class="nav-item border border-secondary shadow p-3 mb-5 bgTrans rounded" style="text-align: center;margin: 15px;padding:10px;width:200px">
+                    <p style="font-weight: bold;font-size: 0.9em;"><s:property value="nom"/></p>
+                    <div id="carouselExampleControls" class="carousel slide border rounded" data-ride="carousel" style=" margin-bottom: 5px">
                         <div class="carousel-inner" style="height: 100%">
                             <s:iterator value="imageList" status="imageList">
                                 <s:if test="%{#imageList.count == 1}">
@@ -94,16 +94,6 @@
                             <s:param name="articleId" value="id"/>
                             <s:param name="radio" value="radio"/>
                         </s:a>
-                    </s:else>
-                    <s:if test="supprimable">
-                        <s:a action="doArticleSupprimer" class="btn btn-danger btnUnder">
-                            Supprimer
-                            <s:param name="articleId" value="id"/>
-                            <s:param name="radio" value="radio"/>
-                        </s:a>
-                    </s:if>
-                    <s:else>
-                        <button disabled class="btn btn-danger btnUnder" >Supprimer</button>
                     </s:else>
                 </li>
             </s:iterator>

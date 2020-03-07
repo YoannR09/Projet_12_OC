@@ -106,7 +106,7 @@
 <div id="blocCenter" style="display: flex;justify-content: center;">
     <div class="col-9" style="max-width: 600px">
         <label class="textTop">Votre commande</label>
-        <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreArticle">
+        <div class="col-12 container border border-secondary shadow p-3 mb-5 bgTran rounded" id="cadreArticle">
             <div style="display: flex;justify-content: center">
                 <div>
                     <table class="table table-bordered table-hover">
@@ -123,16 +123,16 @@
                         <s:iterator value="commande.ligneDeCommandeList">
                             <tr>
                                 <td><s:property value="designation"/></td>
-                                <td><s:property value="prixUnit"/> €</td>
-                                <td><s:property value="montant"/> €</td>
+                                <td><s:property value="prixHt"/> €</td>
+                                <td><s:property value="montantHt"/> €</td>
                                 <td><s:property value="quantite"/></td>
                                 <td><s:property value="taille"/></td>
                             </tr>
                         </s:iterator>
-                        <td><em class="lab">montant ht : </em><label class="lab"><s:property value="commande.prixTotal"/> €</label></td>
+                        <td><em class="lab">Montant HT : </em><label class="lab"><s:property value="commande.prixTotal"/> €</label></td>
                         <td><em class="lab">TVA à 10% :  </em><label class="lab"><s:property value="commande.tva"/> €</label></td>
-                        <td><em class="lab">livraison : </em><label class="lab"> 10 €</label></td>
-                        <td><em class="lab">Total à payer : </em><label class="lab"><s:property value="commande.totalPayer"/> €</label></td>
+                        <td><em class="lab">Livraison : </em><label class="lab"> 10 €</label></td>
+                        <td><em class="lab">TOTAL TTC : </em><label class="lab"><s:property value="commande.totalPayer"/> €</label></td>
                         </tbody>
                     </table>
                     <div style="width: 100%">

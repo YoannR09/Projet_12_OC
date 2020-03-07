@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +28,9 @@ public class GestionCommandeAdminAction extends ActionSupport {
     private GenerateMethod gm = new GenerateMethod();
 
     private List<Commande> commandeList;
+    private List<Commande> commandeListSize;
     private List<Categorie> categorieList;
+    private boolean max;
     private String nom;
     private String prenom;
     private String email;
@@ -35,6 +38,7 @@ public class GestionCommandeAdminAction extends ActionSupport {
     private String statutList;
     private Integer commandeId;
     private Integer countPanier;
+    private Integer listSize;
     private String numero;
     private String infoMessage;
     private Compte compte;
@@ -88,12 +92,14 @@ public class GestionCommandeAdminAction extends ActionSupport {
      */
     public String doListCommandeByStatut(){
         try {
+            commandeListSize = new ArrayList<>();
             countPanier = gm.generateCountPanier(factory,getEmailContext());
             commandeList = getFactory().getCommandeProxy()
                     .getCOmmandeByStatutId(Integer.parseInt(statut));
             for (Commande c:commandeList){
                 generateCommande(c);
             }
+
             if (commandeList.size() != 0){
                 statutList = commandeList.get(0).getStatut();
             }else {
@@ -105,6 +111,7 @@ public class GestionCommandeAdminAction extends ActionSupport {
                     statutList = "ACHEVEES";
                 }
             }
+            doListSize(commandeList);
             categorieList = getFactory().getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
@@ -162,44 +169,17 @@ public class GestionCommandeAdminAction extends ActionSupport {
      */
     public String doRechercheCommande(){
         try {
+            commandeListSize = new ArrayList<>();
             countPanier = gm.generateCountPanier(factory,getEmailContext());
             nom = nom.toUpperCase();
             prenom = prenom.toUpperCase();
             email = email.toLowerCase();
-            if (numero != null && (prenom != null || nom != null || email != null)){
+            if (numero != null || (prenom != null || nom != null || email != null)){
             if (!numero.equals("")) {
-                commandeList = getFactory().getCommandeProxy().findCommandeByNumeroContaining(numero);
-                statutList = "Numéro de la commande : "+numero;
-                for (Commande c : commandeList) {
-                    generateCommande(c);
-                }
+                rechercheByNumero();
             }
             if (!nom.equals("") || !prenom.equals("") || !email.equals("")) {
-                if (!nom.equals("") && !prenom.equals("") && !email.equals("")) {
-                    commandeList = getFactory().getCommandeProxy().findByNomPrenomEmail(nom, prenom, email);
-                    statutList = "Nom : " + nom + "/ Prénom : " + prenom + "/ Adresse éléctronique : " + email;
-                } else if (nom.equals("") && !prenom.equals("") && !email.equals("")) {
-                    commandeList = getFactory().getCommandeProxy().findByPrenomEmail(prenom, email);
-                    statutList = "Prénom : " + prenom + "/ Adresse éléctronique : " + email;
-                } else if (!nom.equals("") && !prenom.equals("") && email.equals("")) {
-                    commandeList = getFactory().getCommandeProxy().findByNomPrenom(nom, prenom);
-                    statutList = "Nom : " + nom + "/ Prénom : " + prenom;
-                } else if (!nom.equals("") && prenom.equals("") && !email.equals("")) {
-                    commandeList = getFactory().getCommandeProxy().findByNomEmail(nom, email);
-                    statutList = "Nom : " + nom + "/ Adresse éléctronique : " + email;
-                } else if (!nom.equals("") && prenom.equals("") && email.equals("")) {
-                    commandeList = getFactory().getCommandeProxy().findByNom(nom);
-                    statutList = "Nom : " + nom;
-                } else if (nom.equals("") && !prenom.equals("") && email.equals("")) {
-                    commandeList = getFactory().getCommandeProxy().findByPrenom(prenom);
-                    statutList = "Prénom : " + prenom;
-                } else if (nom.equals("") && prenom.equals("") && !email.equals("")) {
-                    commandeList = getFactory().getCommandeProxy().findByEmail(email);
-                    statutList = "Adresse éléctronique : " + email;
-                }
-                for (Commande c : commandeList) {
-                    generateCommande(c);
-                }
+                rechercheByClient();
             }
                 categorieList = getFactory().getCategorieProxy().findAll();
             }
@@ -210,6 +190,90 @@ public class GestionCommandeAdminAction extends ActionSupport {
             getLogger().error(e);
             return ActionSupport.ERROR;
         }
+    }
+
+    public String doVoirPlus(){
+        try {
+            commandeListSize = new ArrayList<>();
+            listSize += 10;
+            if (statut != null && !statut.equals("")){
+                commandeList = getFactory().getCommandeProxy()
+                        .getCOmmandeByStatutId(Integer.parseInt(statut));
+                doListSize(commandeList);
+                if(Integer.parseInt(statut) == 2){
+                    statutList = "EN COURS DE PREPARATION";
+                }else if(Integer.parseInt(statut) == 4){
+                    statutList = "ACHEVEES";
+                }else if(Integer.parseInt(statut) == 3){
+                    statutList = "EN COURS DE LIVRAISON";
+                }
+            }
+            if (numero != null && (prenom != null || nom != null || email != null)) {
+                if (!nom.equals("") || !prenom.equals("") || !email.equals("")) {
+                    rechercheByClient();
+                }
+                if (!numero.equals("")) {
+                    rechercheByNumero();
+                }
+            }
+            countPanier = gm.generateCountPanier(factory,getEmailContext());
+            categorieList = getFactory().getCategorieProxy().findAll();
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            e.printStackTrace();
+            return ActionSupport.ERROR;
+        }
+    }
+
+    public void doListSize(List<Commande> commandeList){
+        if (listSize == null){
+            listSize = 3;
+        }
+        if (listSize > commandeList.size()){
+            listSize = commandeList.size();
+            max = true;
+        }
+        for(int i = 0;i<listSize;i++){
+            commandeListSize.add(commandeList.get(i));
+        }
+    }
+
+    public void rechercheByNumero(){
+        commandeList = getFactory().getCommandeProxy().findCommandeByNumeroContaining(numero);
+        statutList = "Numéro de la commande : "+numero;
+        for (Commande c : commandeList) {
+            generateCommande(c);
+        }
+        doListSize(commandeList);
+    }
+
+    public void rechercheByClient(){
+        if (!nom.equals("") && !prenom.equals("") && !email.equals("")) {
+            commandeList = getFactory().getCommandeProxy().findByNomPrenomEmail(nom, prenom, email);
+            statutList = "Nom : " + nom + "/ Prénom : " + prenom + "/ Adresse éléctronique : " + email;
+        } else if (nom.equals("") && !prenom.equals("") && !email.equals("")) {
+            commandeList = getFactory().getCommandeProxy().findByPrenomEmail(prenom, email);
+            statutList = "Prénom : " + prenom + "/ Adresse éléctronique : " + email;
+        } else if (!nom.equals("") && !prenom.equals("") && email.equals("")) {
+            commandeList = getFactory().getCommandeProxy().findByNomPrenom(nom, prenom);
+            statutList = "Nom : " + nom + "/ Prénom : " + prenom;
+        } else if (!nom.equals("") && prenom.equals("") && !email.equals("")) {
+            commandeList = getFactory().getCommandeProxy().findByNomEmail(nom, email);
+            statutList = "Nom : " + nom + "/ Adresse éléctronique : " + email;
+        } else if (!nom.equals("") && prenom.equals("") && email.equals("")) {
+            commandeList = getFactory().getCommandeProxy().findByNom(nom);
+            statutList = "Nom : " + nom;
+        } else if (nom.equals("") && !prenom.equals("") && email.equals("")) {
+            commandeList = getFactory().getCommandeProxy().findByPrenom(prenom);
+            statutList = "Prénom : " + prenom;
+        } else if (nom.equals("") && prenom.equals("") && !email.equals("")) {
+            commandeList = getFactory().getCommandeProxy().findByEmail(email);
+            statutList = "Adresse éléctronique : " + email;
+        }
+        for (Commande c : commandeList) {
+            generateCommande(c);
+        }
+        doListSize(commandeList);
     }
 
     protected Logger getLogger() {
@@ -328,5 +392,29 @@ public class GestionCommandeAdminAction extends ActionSupport {
 
     public void setCountPanier(Integer countPanier) {
         this.countPanier = countPanier;
+    }
+
+    public List<Commande> getCommandeListSize() {
+        return commandeListSize;
+    }
+
+    public void setCommandeListSize(List<Commande> commandeListSize) {
+        this.commandeListSize = commandeListSize;
+    }
+
+    public Integer getListSize() {
+        return listSize;
+    }
+
+    public void setListSize(Integer listSize) {
+        this.listSize = listSize;
+    }
+
+    public boolean isMax() {
+        return max;
+    }
+
+    public void setMax(boolean max) {
+        this.max = max;
     }
 }

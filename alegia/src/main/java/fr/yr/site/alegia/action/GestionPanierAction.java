@@ -23,23 +23,24 @@ public class GestionPanierAction extends ActionSupport {
 
     private GenerateMethod gm = new GenerateMethod();
 
-    private Integer quantite;
-    private Integer articleId;
-    private Integer contenuId;
-    private Article article;
-    private String taille;
-    private String tva;
-    private String totalPayer;
-    private Integer countArticle;
-    private Integer countPanier;
-    private String totalPrix;
-    private String infoMessage;
-    private List<Contenu> contenuList;
-    private List<Categorie> categorieList;
-    private         List<ListTaille>    listTailles;
-    private         List<Image>         imageList;
-    private Compte compte;
-    private Panier panier;
+    private         Integer                 quantite;
+    private         Integer                 articleId;
+    private         Integer                 contenuId;
+    private         Article                 article;
+    private         String                  taille;
+    private         String                  tva;
+    private         String                  totalPayer;
+    private         String                  livraison;
+    private         Integer                 countArticle;
+    private         Integer                 countPanier;
+    private         String                  totalPrix;
+    private         String                  infoMessage;
+    private         List<Contenu>           contenuList;
+    private         List<Categorie>         categorieList;
+    private         List<ListTaille>        listTailles;
+    private         List<Image>             imageList;
+    private         Compte                  compte;
+    private         Panier                  panier;
 
     public String doAddPanier(){
         try {
@@ -85,8 +86,6 @@ public class GestionPanierAction extends ActionSupport {
         }
     }
 
-
-
     public String doConsulterPanier(){
         try{
             instance.setMinimumFractionDigits(2);
@@ -102,6 +101,7 @@ public class GestionPanierAction extends ActionSupport {
                 totalContenu = totalContenu+(contenu.getArticle().getPrix()*contenu.getQuantite());
                 countArticle = countArticle+contenu.getQuantite();
             }
+            livraison = instance.format(10);
             countPanier = gm.generateCountPanier(factory,getEmail());
             totalPrix = instance.format(totalContenu);
             tva = instance.format((totalContenu*1.1)-totalContenu);
@@ -127,19 +127,21 @@ public class GestionPanierAction extends ActionSupport {
             infoMessage = "L'article a été retiré du panier";
             generateCompteAndPanier();
             contenuList = getFactory().getContenuProxy().findByPanierId(panier.getId());
-            countArticle = 0;
             float totalContenu = 0;
-            for(Contenu contenu:contenuList){
-                contenu.setArticle(getFactory().getArticleProxy().getArticle(contenu.getArticleId()));
-                gm.completeArticle(getFactory(),contenu.getArticle());
-                contenu.setTaille(getFactory().getTailleProxy().findById(contenu.getTailleId()));
-                totalContenu = totalContenu+(contenu.getArticle().getPrix()*contenu.getQuantite());
-                countArticle = countArticle+contenu.getQuantite();
+            countArticle = 0;
+            for(Contenu c:contenuList){
+                c.setArticle(getFactory().getArticleProxy().getArticle(c.getArticleId()));
+                gm.completeArticle(getFactory(), c.getArticle());
+                c.setTaille(getFactory().getTailleProxy().findById(c.getTailleId()));
+                totalContenu = totalContenu + (c.getArticle().getPrix() * c.getQuantite());
+                countArticle = countArticle + c.getQuantite();
             }
             countPanier = gm.generateCountPanier(factory,getEmail());
+            livraison = instance.format(10);
             categorieList = getFactory().getCategorieProxy().findAll();
             totalPrix = Float.toString(totalContenu);
             totalPrix = instance.format(totalContenu);
+
             tva = instance.format((totalContenu*1.1)-totalContenu);
             return ActionSupport.SUCCESS;
         }catch (Exception e){
@@ -149,6 +151,74 @@ public class GestionPanierAction extends ActionSupport {
             return ActionSupport.ERROR;
         }
     }
+
+    public String doMoinsContenu(){
+        try {
+            Contenu contenu = getFactory().getContenuProxy().findById(contenuId);
+            contenu.setQuantite(contenu.getQuantite() - 1);
+            getFactory().getContenuProxy().update(contenu);
+            instance.setMinimumFractionDigits(2);
+            instance.setMaximumFractionDigits(2);
+            generateCompteAndPanier();
+            float totalContenu = 0;
+            contenuList = getFactory().getContenuProxy().findByPanierId(panier.getId());
+            countArticle = 0;
+            for (Contenu c : contenuList) {
+                c.setArticle(getFactory().getArticleProxy().getArticle(c.getArticleId()));
+                gm.completeArticle(getFactory(), c.getArticle());
+                c.setTaille(getFactory().getTailleProxy().findById(c.getTailleId()));
+                totalContenu = totalContenu + (c.getArticle().getPrix() * c.getQuantite());
+                countArticle = countArticle + c.getQuantite();
+            }
+            countPanier = gm.generateCountPanier(factory, getEmail());
+            totalPrix = instance.format(totalContenu);
+            livraison = instance.format(10);
+            categorieList = getFactory().getCategorieProxy().findAll();
+            tva = instance.format((totalContenu * 1.1) - totalContenu);
+            totalPayer = instance.format((totalContenu * 1.1) + 10);
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
+            return ActionSupport.ERROR;
+        }
+    }
+
+    public String doPlusContenu(){
+        try {
+            Contenu contenu = getFactory().getContenuProxy().findById(contenuId);
+            contenu.setQuantite(contenu.getQuantite() + 1);
+            getFactory().getContenuProxy().update(contenu);
+            instance.setMaximumFractionDigits(2);
+            instance.setMinimumFractionDigits(2);
+            generateCompteAndPanier();
+            contenuList = getFactory().getContenuProxy().findByPanierId(panier.getId());
+            countArticle = 0;
+            float totalContenu = 0;
+            for (Contenu c : contenuList) {
+                c.setArticle(getFactory().getArticleProxy().getArticle(c.getArticleId()));
+                gm.completeArticle(getFactory(), c.getArticle());
+                c.setTaille(getFactory().getTailleProxy().findById(c.getTailleId()));
+                totalContenu = totalContenu + (c.getArticle().getPrix() * c.getQuantite());
+                countArticle = countArticle + c.getQuantite();
+            }
+            totalPrix = instance.format(totalContenu);
+            countPanier = gm.generateCountPanier(factory, getEmail());
+            livraison = instance.format(10);
+            tva = instance.format((totalContenu * 1.1) - totalContenu);
+            categorieList = getFactory().getCategorieProxy().findAll();
+            totalPayer = instance.format((totalContenu * 1.1) + 10);
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
+            return ActionSupport.ERROR;
+        }
+    }
+
+
 
     public void generateCompteAndPanier() {
         String email = getEmail();
@@ -296,5 +366,13 @@ public class GestionPanierAction extends ActionSupport {
 
     public void setImageList(List<Image> imageList) {
         this.imageList = imageList;
+    }
+
+    public String getLivraison() {
+        return livraison;
+    }
+
+    public void setLivraison(String livraison) {
+        this.livraison = livraison;
     }
 }

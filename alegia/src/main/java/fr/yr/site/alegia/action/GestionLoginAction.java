@@ -48,6 +48,8 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
     private         String              info;
     private         String              ville;
     private         String              verif;
+    private         String              verifEmail;
+    private         String              verifMdp;
     private         String              infoMessage;
     private         String              codePostal;
     private         Compte              compte;
@@ -104,57 +106,63 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
         String vResult;
         categorieList = getFactory().getCategorieProxy().findAll();
         try {
-            if (email != null){
-                if(getFactory().getCompteProxy().findByEmail(email) != null){
-                    infoMessage = "Adresse éléctronique déjà utilisée";
-                    vResult = ActionSupport.ERROR;
-                }else {
-                    if (getFactory().getAdresseProxy()
-                            .findByVilleAndCodePostalAndNumeroAndRue(
-                                    ville
-                                    ,codePostal
-                                    ,numero
-                                    ,rue) == null) {
-                        // Création de l'adresse
-                        Adresse adresse = new Adresse();
-                        adresse.setCodePostal(codePostal);
-                        if (info.equals("") || info == null){
-                            adresse.setInfo("Aucune information");
-                        }else {
-                            adresse.setInfo(info);
+            if (email != null) {
+                if (email != null && email.equals(verifEmail) && motDePasse != null && motDePasse.equals(verifMdp)) {
+                    if (getFactory().getCompteProxy().findByEmail(email) != null) {
+                        infoMessage = "Adresse éléctronique déjà utilisée";
+                        vResult = ActionSupport.ERROR;
+                    } else {
+                        if (getFactory().getAdresseProxy()
+                                .findByVilleAndCodePostalAndNumeroAndRue(
+                                        ville
+                                        , codePostal
+                                        , numero
+                                        , rue) == null) {
+                            // Création de l'adresse
+                            Adresse adresse = new Adresse();
+                            adresse.setCodePostal(codePostal);
+                            if (info.equals("") || info == null) {
+                                adresse.setInfo("Aucune information");
+                            } else {
+                                adresse.setInfo(info);
+                            }
+                            adresse.setNumero(numero);
+                            adresse.setRue(rue);
+                            adresse.setVille(ville);
+                            getFactory().getAdresseProxy().add(adresse);
                         }
-                        adresse.setNumero(numero);
-                        adresse.setRue(rue);
-                        adresse.setVille(ville);
-                        getFactory().getAdresseProxy().add(adresse);
-                    }
-                    // Création du compte
-                    Compte compte = new Compte();
-                    compte.setEmail(email.toLowerCase());
-                    compte.setMotDePasse(EncryptionUtil.encrypt(motDePasse, secretKey));
-                    compte.setNiveauAccesId(1);
-                    compte.setNom(nom.toUpperCase());
-                    compte.setPrenom(prenom.toUpperCase());
-                    compte.setNumeroTelephone(numeroTelephone);
-                    compte.setAdresseId(getFactory().getAdresseProxy()
-                            .findByVilleAndCodePostalAndNumeroAndRue(
-                                    ville
-                                    ,codePostal
-                                    ,numero
-                                    ,rue).getId());
-                    getFactory().getCompteProxy().add(compte);
+                        // Création du compte
+                        Compte compte = new Compte();
+                        compte.setEmail(email.toLowerCase());
+                        compte.setMotDePasse(EncryptionUtil.encrypt(motDePasse, secretKey));
+                        compte.setNiveauAccesId(1);
+                        compte.setNom(nom.toUpperCase());
+                        compte.setPrenom(prenom.toUpperCase());
+                        compte.setNumeroTelephone(numeroTelephone);
+                        compte.setAdresseId(getFactory().getAdresseProxy()
+                                .findByVilleAndCodePostalAndNumeroAndRue(
+                                        ville
+                                        , codePostal
+                                        , numero
+                                        , rue).getId());
+                        getFactory().getCompteProxy().add(compte);
 
-                    // Création du panier
-                    Panier panier = new Panier();
-                    panier.setCompteId(getFactory().getCompteProxy()
-                            .findByEmail(email.toLowerCase()).getId());
-                    getFactory().getPanierProxy().add(panier);
-                    infoMessage = "Votre compte a bien été créé";
-                    vResult = ActionSupport.SUCCESS;
+                        // Création du panier
+                        Panier panier = new Panier();
+                        panier.setCompteId(getFactory().getCompteProxy()
+                                .findByEmail(email.toLowerCase()).getId());
+                        getFactory().getPanierProxy().add(panier);
+                        infoMessage = "Votre compte a bien été créé";
+                        vResult = ActionSupport.SUCCESS;
+                    }
+                }else {
+                    infoMessage = "Les champs de confirmation ne corréspondent pas";
+                    vResult = ActionSupport.INPUT;
                 }
-            }else {
+            } else {
                 vResult = ActionSupport.INPUT;
             }
+
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
             categorieList = getFactory().getCategorieProxy().findByDispo(true);
@@ -172,9 +180,8 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
      */
     public String doNouveauMotDePasse(){
         try {
-            countPanier = gm.generateCountPanier(factory,getEmail());
             if (email != null){
-                compte = getFactory().getCompteProxy().findByEmail(email.toLowerCase());
+                compte = getFactory().getCompteProxy().findByEmail(getEmailContext().toLowerCase());
                 if (compte != null) {
                     String newMdp = RandomStringUtils.randomAlphanumeric(10);
                     MailGestion mailGestion = new MailGestion();
@@ -185,6 +192,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
                     getFactory().getCompteProxy().update(compte);
                     infoMessage = "Un email contenant le nouveau mot de passe vous a été transmis";
                 }
+                countPanier = gm.generateCountPanier(factory,getEmail());
                 categorieList = getFactory().getCategorieProxy().findAll();
                 return ActionSupport.SUCCESS;
             }else {
@@ -227,6 +235,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
         try {
             this.session.remove("admin");
             this.session.remove("user");
+            this.session.remove("email");
             categorieList = getFactory().getCategorieProxy().findByDispo(true);
             return ActionSupport.SUCCESS;
         }catch (Exception e){
@@ -263,14 +272,14 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
 
     public String doChangeEmail(){
         try {
-            countPanier = gm.generateCountPanier(factory,getEmail());
-            if (email != null && email.equals(verif)) {
+            if (email != null && email.equals(verifEmail)) {
                 String getEmail = getEmailContext();
                 compte = getFactory().getCompteProxy().findByEmail(getEmail.toLowerCase());
                 compte.setEmail(email);
-                compte.setAdresse(getFactory().getAdresseProxy().getAdresse(compte.getAdresseId()));
                 categorieList = getFactory().getCategorieProxy().findAll();
                 getFactory().getCompteProxy().update(compte);
+                ActionContext.getContext().getSession().put("email", email);
+                countPanier = gm.generateCountPanier(factory,getEmail());
                 infoMessage = "Votre adresse éléctronique a été changé";
             }else {
                 this.addActionMessage("La vérification de l'adresse éléctronique est invalide");
@@ -465,5 +474,21 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
 
     public void setCountPanier(Integer countPanier) {
         this.countPanier = countPanier;
+    }
+
+    public String getVerifEmail() {
+        return verifEmail;
+    }
+
+    public void setVerifEmail(String verifEmail) {
+        this.verifEmail = verifEmail;
+    }
+
+    public String getVerifMdp() {
+        return verifMdp;
+    }
+
+    public void setVerifMdp(String verifMdp) {
+        this.verifMdp = verifMdp;
     }
 }

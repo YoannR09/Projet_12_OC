@@ -106,7 +106,7 @@
 <div id="blocCenter" style="display: flex;justify-content: center;">
     <div class="col-9" style="max-width: 600px">
         <label class="textTop">Votre commande est bien pris en compte</label>
-        <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreArticle">
+        <div class="col-12 container border border-secondary shadow p-3 mb-5 bgTran rounded" id="cadreArticle">
             <div>
                 <p><i class="fas fa-check-circle text-success" style="font-size: 2em"></i></p>
                 <p>Nous vous remercions pour votre commande !

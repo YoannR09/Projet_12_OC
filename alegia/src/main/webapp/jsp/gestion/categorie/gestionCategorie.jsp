@@ -41,7 +41,7 @@
 <%@ include file="../../_include/header.jsp"%>
 <div id="blocCenter" style="display: flex;justify-content: center;">
     <div class="col-8" style="padding: auto">
-        <div id="barreDeRecherche" class="border shadow p-3 mb-5 bg-white rounded" style="display:flex;justify-content: space-around;margin: auto">
+        <div id="barreDeRecherche" class="border border-secondary shadow p-3 mb-5 bgTran rounded" style="display:flex;justify-content: space-around;margin: auto">
             <s:form id="formulaire" action="gestionCategorie" >
                 <div class="input-group">
                     <div class="input-group">

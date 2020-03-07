@@ -31,8 +31,7 @@ public class Factory {
     private MicroserviceTailleProxy microserviceTailleProxy;
     @Autowired
     private MicroserviceListTaille microserviceListTaille;
-    @Autowired
-    private MicroserviceNiveauAccesProxy microserviceNiveauAccesProxy;
+
 
     public MicroserviceLigneDeCommandeProxy getLigneProxy() {
         return microserviceLigneDeCommandeProxy;
@@ -76,10 +75,6 @@ public class Factory {
 
     public MicroserviceListTaille getListTailleProxy() {
         return microserviceListTaille;
-    }
-
-    public MicroserviceNiveauAccesProxy getNiveauAccesProxy() {
-        return microserviceNiveauAccesProxy;
     }
 
     public MicroserviceAdresseLivraisonProxy getLivraisonProxy() {

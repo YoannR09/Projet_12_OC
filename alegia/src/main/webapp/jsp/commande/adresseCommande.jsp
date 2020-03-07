@@ -112,7 +112,7 @@
 <div id="blocCenter" style="display: flex;justify-content: center;">
     <div class="col-9" style="max-width: 500px">
         <label class="textTop">Adresse de livraison</label>
-        <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreArticle">
+        <div class="col-12 container border border-secondary shadow p-3 mb-5 bgTran rounded" id="cadreArticle">
               <span style="font-size:0.9em;font-weight: bold">
                 Adresse de livraison lié au compte
                         </span>
@@ -137,7 +137,7 @@
         </div>
 
         <s:iterator value="adresseList">
-        <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreArticle">
+        <div class="col-12 container border border-secondary shadow p-3 mb-5 bgTran rounded" id="cadreArticle">
         <div style="margin: 10px">
             <em>Ville  :  </em>
             <span class="spanAdresse">  <s:property value="ville"/></span><br/>
@@ -150,7 +150,7 @@
             <em>Information  :  </em>
             <span class="spanAdresse">  <s:property value="info"/></span><br/>
             <span style="position: absolute;right: 10px;bottom: 10px">
-                <s:a action="doAdresseCompteCommande" class="btn btn-dark btn-small" style="font-size: 0.8em;">
+                <s:a action="doAdresseCommande" class="btn btn-dark btn-small" style="font-size: 0.8em;">
                     <s:param name="commandeId" value="commandeId"/>
                     <s:param name="adresseId" value="id"/>
                     <s:param name="livraisonId" value="adresseLivraisonId"/>
@@ -166,7 +166,7 @@
         </div>
         </div>
     </s:iterator>
-    <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreAutreAdresse">
+    <div class="col-12 container border border-secondary shadow p-3 mb-5 bgTran rounded" id="cadreAutreAdresse">
         <div style="display: flex;justify-content: space-between;width: 100%">
                     <span style="font-size:0.9em;font-weight: bold">
                 Nouvelle adresse de livraison

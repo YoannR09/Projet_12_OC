@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<div style="box-shadow: 0px -5px 50px -3px rgba(0,0,0,0.49);margin-top: 75px;background: url(../../image/black.png);
+<div style="box-shadow: 0px -5px 50px -3px rgba(0,0,0,0.49);background: url(../../image/black.png);
 display: flex;justify-content: space-around;">
     <div style="width: 25%;text-align: center;margin: 25px">
         <div style="color: lightgray;width: 100%;text-align: center;margin-bottom: 17px"><em style="font-size: 0.6em;font-weight: bold"> Réseaux sociaux </em> </div>

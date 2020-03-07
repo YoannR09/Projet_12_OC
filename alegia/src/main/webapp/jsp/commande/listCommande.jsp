@@ -37,7 +37,6 @@
         #cadreArticle
         {
             width: 100%;
-            background-color: whitesmoke;
             border-radius: 4px;
             margin: 10px;
         }
@@ -80,7 +79,7 @@
                     <label style="font-size: 0.8em"><em>Vous n'avez pas effectué de commande pour le moment.</em></label>
                 </s:if>
                 <s:iterator value="commandeList">
-                    <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreArticle">
+                    <div class="col-12 container border border-secondary shadow p-3 mb-5 bgTran rounded" id="cadreArticle">
                         <section class="row">
                             <div class="col" style="display:flex;justify-content: space-around;padding: 5px">
                                 <div>
@@ -113,8 +112,8 @@
                                 <thead class="thead">
                                 <tr style="max-height: 10px">
                                     <th scope="col">ARTICLE</th>
-                                    <th scope="col">PRIX</th>
-                                    <th scope="col">MONTANT</th>
+                                    <th scope="col">PRIX HT</th>
+                                    <th scope="col">MONTANT HT</th>
                                     <th scope="col">QUANTITE</th>
                                     <th scope="col">TAILLE</th>
                                 </tr>
@@ -123,16 +122,16 @@
                                 <s:iterator value="ligneDeCommandeList">
                                     <tr>
                                         <td><s:property value="designation"/></td>
-                                        <td><s:property value="prixUnit"/> €</td>
-                                        <td><s:property value="montant"/> €</td>
+                                        <td><s:property value="prixHt"/> €</td>
+                                        <td><s:property value="montantHt"/> €</td>
                                         <td><s:property value="quantite"/></td>
                                         <td><s:property value="taille"/></td>
                                     </tr>
                                 </s:iterator>
-                                <td><em class="lab">montant ht : </em><label class="lab"><s:property value="prixTotal"/> €</label></td>
+                                <td><em class="lab">Montant ht : </em><label class="lab"><s:property value="prixTotal"/> €</label></td>
                                 <td><em class="lab">TVA à 10% :  </em><label class="lab"><s:property value="tva"/> €</label></td>
-                                <td><em class="lab">livraison : </em><label class="lab"> 10 €</label></td>
-                                <td><em class="lab">Total payé : </em><label class="lab"><s:property value="totalPayer"/> €</label></td>
+                                <td><em class="lab">Livraison : </em><label class="lab"><s:property value="livraison"/> €</label></td>
+                                <td><em class="lab">TOTAL TTC : </em><label class="lab"><s:property value="totalPayer"/> €</label></td>
                                 </tbody>
                             </table>
                             <s:if test="!statut.equals('EN ATTENTE DE VALIDATION')">
@@ -195,11 +194,6 @@
                                     </div>
                                 </div>
                             </s:elseif>
-                            <s:if test="statut.equals('EN ATTENTE DE VALIDATION')">
-                                <div style="display:flex;width: 100%;justify-content: space-around;margin-top: 20px">
-                                    <s:a action="doRepriseCommande" class="btn btn-dark" style="font-size:0.7em;"><s:param value="id" name="commandeId"/>Reprendre ma commande</s:a>
-                                </div>
-                            </s:if>
                         </div>
                     </div>
                 </s:iterator>

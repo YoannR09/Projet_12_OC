@@ -97,6 +97,13 @@
             <result name="success">jsp/categorie/listArticle.jsp</result>
             <result name="error">jsp/error/error.jsp</result>
         </action>
+
+        <action name="review"
+                class="fr.yr.site.alegia.action.GestionPayPalAction"
+                method="doReview">
+            <result name="success">/jsp/commande/recapCommande.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
     </package>
 
     <package name="private" extends="base">
@@ -153,17 +160,31 @@
             <result name="error">/jsp/error/error.jsp</result>
         </action>
 
-        <action name="doDeleteContenu"
+        <action name="doMoinsContenu"
                 class="fr.yr.site.alegia.action.GestionPanierAction"
-                method="doDeleteContenu">
+                method="doMoinsContenu">
             <result name="success">/jsp/login/panier.jsp</result>
             <result name="error">/jsp/error/error.jsp</result>
         </action>
 
-        <action name="doRepriseCommande"
-                class="fr.yr.site.alegia.action.GestionCommandeAction"
-                method="doRepriseCommande">
-            <result name="success">/jsp/commande/adresseCommande.jsp</result>
+        <action name="doPlusContenu"
+                class="fr.yr.site.alegia.action.GestionPanierAction"
+                method="doPlusContenu">
+            <result name="success">/jsp/login/panier.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doConsulterPanier"
+                class="fr.yr.site.alegia.action.GestionPanierAction"
+                method="doConsulterPanier">
+            <result name="success">/jsp/login/panier.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doDeleteContenu"
+                class="fr.yr.site.alegia.action.GestionPanierAction"
+                method="doDeleteContenu">
+            <result name="success">/jsp/login/panier.jsp</result>
             <result name="error">/jsp/error/error.jsp</result>
         </action>
 
@@ -173,6 +194,14 @@
             <result name="success">/jsp/commande/paiementCommande.jsp</result>
             <result name="error">/jsp/error/error.jsp</result>
         </action>
+
+        <action name="doAdresseCommande"
+                class="fr.yr.site.alegia.action.GestionCommandeAction"
+                method="doConfirmAdresse">
+            <result name="success">/jsp/commande/paiementCommande.jsp</result>
+            <result name="error">/jsp/error/error.jsp</result>
+        </action>
+
 
         <action name="doFormNewAdresseCommande"
                 class="fr.yr.site.alegia.action.GestionCommandeAction"
@@ -206,13 +235,6 @@
                 class="fr.yr.site.alegia.action.GestionPayPalAction"
                 method="doExecute">
             <result name="success">/jsp/commande/confirmCommande.jsp</result>
-            <result name="error">/jsp/error/error.jsp</result>
-        </action>
-
-        <action name="review"
-                class="fr.yr.site.alegia.action.GestionPayPalAction"
-                method="doReview">
-            <result name="success">/jsp/commande/recapCommande.jsp</result>
             <result name="error">/jsp/error/error.jsp</result>
         </action>
 
@@ -315,6 +337,11 @@
         </action>
 
         <action name="doListCommande" class="fr.yr.site.alegia.action.GestionCommandeAdminAction" method="doListCommandeByStatut">
+            <result name="success">/jsp/gestion/commande/listCommande.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doVoirPlus" class="fr.yr.site.alegia.action.GestionCommandeAdminAction" method="doVoirPlus">
             <result name="success">/jsp/gestion/commande/listCommande.jsp</result>
             <result name="error">jsp/error/error.jsp</result>
         </action>

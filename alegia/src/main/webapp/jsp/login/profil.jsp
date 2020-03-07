@@ -77,7 +77,7 @@
         <div id="cadreLogin" style="margin-top: 100px;width: 450px">
             <label class="form-check-label textTop"> Mon profil </label>
             <em id="message" ><s:actionmessage/></em>
-            <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreLog">
+            <div class="col-12 container border border-secondary shadow p-3 mb-5 bgTran rounded" id="cadreLog">
                 <h5 class="titre"> Informations </h5>
                 <div class="col-12" style="text-align: left;  margin: 10px" >
                     <span class="label label-info"></span>
@@ -95,13 +95,15 @@
                         <div id="changeEmail">
                             <s:form action="doChangeEmail">
                                 <div class="form-group" style="margin: 20px;">
-                                    <label for="inputEmail">Nouvelle adresse électronique</label>
-                                    <input name="email" type="text" class="form-control" id="inputEmail" required>
+                                    <label for="email" style="color: black;">Adresse éléctronique</label>
+                                    <input name="email"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" size="30"
+                                           type="email" class="form-control" id="email" required>
                                 </div>
-                                <div class="form-group " style="margin: 20px">
-                                    <label for="inputEmailVerif">Confirmation de l'adresse</label>
-                                    <input name="verif" type="text"
-                                           class="form-control" id="inputEmailVerif" required>
+                                <div class="form-group" style="margin: 20px;">
+                                    <label for="verifEmail" style="color: black;">Confirmer l'adresse éléctronique</label>
+                                    <input pattern="[a-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 4}$" size="30"
+                                           name="verifEmail" class="form-control"
+                                           id="verifEmail" title="Le texte ne corréspond pas" required>
                                 </div>
                                 <div style="display: flex;justify-content: space-between">
                                     <button type="button" style="font-size: 0.6em"
@@ -132,13 +134,16 @@
                 </div>
                 <div id="changeMdp">
                     <s:form action="doChangeMdp">
-                        <div class="form-group" style="margin: 20px;">
-                            <label for="inputMdp">Nouveau mot de passe</label>
-                            <input name="motDePasse" type="password" class="form-control" id="inputMdp" required>
+                        <div class="form-group " style="margin: 20px">
+                            <label for="motDePasse" style="color: black;">Mot de passe</label>
+                            <input name="motDePasse" pattern="(?=.*[a-z])(?=.*[A-Z])(?=.*\d)^[a-zA-Z\d]{6,15}$"
+                                   type="password" class="form-control" id="motDePasse" required>
+                            <em style="font-size: 0.6em">1 majuscule, 1 chiffre, 6-15 charactères</em>
                         </div>
                         <div class="form-group " style="margin: 20px">
-                            <label for="inputMdpVerif">Confirmation du mot de passe</label>
-                            <input name="verif" type="password" class="form-control" id="inputMdpVerif" required>
+                            <label for="verifMdp" style="color: black;">Confirmer le mot de passe</label>
+                            <input type="password" name="verifMdp" class="form-control"
+                                   id="verifMdp" title="Le texte ne corréspond pas" required>
                         </div>
                         <div style="display: flex;justify-content: space-between">
                             <button type="button" style="font-size: 0.6em" id="btnCloseMdp"
@@ -198,10 +203,9 @@
                             <input name="ville" type="text" class="form-control" id="inputVille"
                                    required value="<s:property value="abonne.adresse.ville"/>">
                         </div>
-                        <div class="form-group" style="margin: 20px;">
-                            <label for="inputPays">Pays</label>
-                            <input name="pays" type="text" class="form-control" id="inputPays"
-                                   required value="<s:property value="abonne.adresse.pays"/>">
+                        <div class="form-group " style="margin: 20px">
+                            <label for="info" style="color: black;">Informations supplémentaire</label>
+                            <textarea name="info" id="info" class="form-control"  rows="3"></textarea>
                         </div>
                         <div style="display: flex;justify-content: space-between">
                             <button type="button" style="font-size: 0.6em"
@@ -248,6 +252,62 @@
         $('#changeMdp').slideUp(500);
         $('#changeEmail').slideUp(500);
         $('#changeAdresse').slideUp(500);
+    });
+    $(document).ready(function () {
+        $('#verifMdp').bind('paste', function (e) {
+            e.preventDefault();
+        });
+        $('#verifEmail').bind('paste', function (e) {
+            e.preventDefault();
+        });
+    });
+    $(window).click(function() {
+        $('#verifEmail').attr({
+            'pattern': $('#email').val()
+        });
+        $('#verifMdp').attr({
+            'pattern': $('#motDePasse').val()
+        });
+        if($('#motDePasse').val() != $('#verifMdp').val()){
+            $('#verifMdp').removeClass('is-valid');
+            $('#verifMdp').addClass('is-invalid');
+        }else if ($('#motDePasse').val() == $('#verifMdp').val() && $('#motDePasse').val() != '') {
+            $('#verifMdp').removeClass('is-invalid');
+            $('#verifMdp').addClass('is-valid');
+        }
+        if($('#email').val() != $('#verifEmail').val()){
+            $('#verifEmail').removeClass('is-valid');
+            $('#verifEmail').addClass('is-invalid');
+        }else if ($('#email').val() == $('#verifEmail').val() && $('#email').val() != '') {
+            $('#verifEmail').removeClass('is-invalid');
+            $('#verifEmail').addClass('is-valid');
+        }
+        var reg = new RegExp($('#email').attr("pattern"));
+        if (reg.test($('#email').val())){
+            $('#email').removeClass('is-invalid');
+            $('#email').addClass('is-valid');
+        }else if (!reg.test($('#email').val()) && $('#email').val() != ''){
+            $('#email').removeClass('is-valid');
+            $('#email').addClass('is-invalid');
+        }
+
+        var regPhone = new RegExp($('#numeroTelephone').attr("pattern"));
+        if (regPhone.test($('#numeroTelephone').val())){
+            $('#numeroTelephone').removeClass('is-invalid');
+            $('#numeroTelephone').addClass('is-valid');
+        }else if (!regPhone.test($('#numeroTelephone').val()) && $('#numeroTelephone').val() != ''){
+            $('#numeroTelephone').removeClass('is-valid');
+            $('#numeroTelephone').addClass('is-invalid');
+        }
+
+        var regMdp = new RegExp($('#motDePasse').attr("pattern"));
+        if (regMdp.test($('#motDePasse').val())){
+            $('#motDePasse').removeClass('is-invalid');
+            $('#motDePasse').addClass('is-valid');
+        }else if (!regMdp.test($('#motDePasse').val()) && $('#motDePasse').val() != ''){
+            $('#motDePasse').removeClass('is-valid');
+            $('#motDePasse').addClass('is-invalid');
+        }
     });
 </script>
 </html>

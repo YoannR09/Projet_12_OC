@@ -20,24 +20,11 @@
             text-align: center;
             font-size: 0.8em;
         }
-        #bottom
-        {
-            display: flex;
-            justify-content: space-around;
-            width: 100%;
-        }
-        #labelRecherche
-        {
-            left: 10px;
-            font-size: 1.5em;
-            margin: 10px;
-            font-weight: bold;
-        }
+
         #cadreArticle
         {
             width: 100%;
             border-radius: 4px;
-            background-color: whitesmoke;
             margin-bottom: 30px;
         }
         #cadreBtn
@@ -48,11 +35,16 @@
         .lab
         {
             font-size: 0.7em;
+            font-weight: bold;
         }
         .textTop
         {
             font-size: 1.3em;
             margin: 10px;
+        }
+        .disableLink {
+            pointer-events: none;
+            cursor: default;
         }
         .spanDonne
         {
@@ -74,11 +66,11 @@
                     <label style="font-size: 0.8em"><em>Votre panier est vide pour le moment.</em></label>
                 </s:if>
                 <s:iterator value="contenuList">
-                    <div class="col-12 container border shadow bg-white rounded" id="cadreArticle">
+                    <div class="col-12 container border border-secondary shadow bgTran rounded" id="cadreArticle">
                         <section class="row">
                             <div style="margin: 5px;text-align: center">
                                 <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
-                                    <div class="carousel-inner" style="height: 100%">
+                                    <div class="carousel-inner border rounded" style="height: 100%">
                                         <s:iterator value="article.imageList" status="imageList">
                                             <s:if test="%{#imageList.count == 1}">
                                                 <div class="carousel-item active border" style="width: 150px;height: 150px;">
@@ -98,12 +90,28 @@
                                      style="font-size:1em;font-weight: bold;margin-top:10px;">
                                     <s:param name="articleId" value="article.id"/>
                                     <s:property value="article.nom"/></s:a><br/>
-                                <em class="lab">taille :  </em>
+                                <em class="lab">Taille :  </em>
                                 <span class="spanDonne" style="font-weight: bold"><s:property value="taille.taille"/></span><br/>
-                                <em class="lab">prix :  </em>
+                                <em class="lab">Prix :  </em>
                                 <span class="spanDonne" style="font-weight: bold"><s:property value="article.prix"/> €</span><br/>
-                                <em class="lab">quantité :  </em>
-                                <span class="spanDonne" style="font-weight: bold"><s:property value="quantite"/></span><br/>
+                                <em class="lab">Quantité :  </em>
+                                <span class="spanDonne" style="font-weight: bold"><s:property value="quantite"/></span>
+                                <div class="badge badge-dark" style="margin-left: 10px">
+                                <s:a action="doPlusContenu" class="text-light" style="font-size:0.7em;margin-right:5px">
+                                    <s:param name="contenuId" value="id"/>
+                                    <i class="fas fa-plus"></i></s:a>
+                                <s:if test="quantite == 1">
+                                    <s:a class="text-light disableLink" action="doMoinsContenu" style="font-size:0.7em;">
+                                        <s:param name="contenuId" value="id"/>
+                                        <i class="fas fa-minus"></i></s:a>
+                                </s:if>
+                                <s:else>
+                                    <s:a action="doMoinsContenu" class="text-light" style="font-size:0.7em;">
+                                        <s:param name="contenuId" value="id"/>
+                                        <i class="fas fa-minus"></i></s:a>
+                                </s:else>
+                                </div>
+                                <br/>
                                 <span style="position: absolute;right: 10px;bottom: 10px"><s:a action="doDeleteContenu" style="font-size:0.7em;">
                                     <s:param name="contenuId" value="id"/>Supprimer</s:a></span>
                             </div>
@@ -111,25 +119,26 @@
                     </div>
                 </s:iterator>
             </div>
-            <div class="border shadow p-3 mb-5 bg-white rounded" style="width: 200px;height: 280px;
-            padding:15px;text-align: center;background-color: whitesmoke">
+            <div class="border border-secondary shadow p-3 mb-5 bgTran rounded" style="width: 230px;height: 280px;
+            padding:15px;text-align: center;">
                 <p><span style="width: 100%;text-align: center;font-size: 1.1em;font-weight: bold">Votre commande</span></p>
                 <span style="display:flex;justify-content: space-between">
-                <em class="lab">nombre d'article(s) : </em><label class="lab"><s:property value="countArticle"/></label>
+                <em class="lab">Nombre d'article(s) : </em><label class="lab"><s:property value="countArticle"/></label>
                     </span>
 
                 <span style="display:flex;justify-content: space-between">
-                    <em class="lab">montant ht : </em><label class="lab"><s:property value="totalPrix"/> €</label>
+                    <em class="lab">Montant HT : </em><label class="lab"><s:property value="totalPrix"/> €</label>
                 </span>
                 <span style="display:flex;justify-content: space-between">
                     <em class="lab">TVA à 10% : </em><label class="lab"><s:property value="tva"/> €</label>
                 </span>
                 <span style="display:flex;justify-content: space-between">
-                    <em class="lab">livraison : </em><label class="lab">10 €</label>
+                    <em class="lab">Livraison : </em><label class="lab"><s:property value="livraison"/> €</label>
                 </span><br/>
 
                 <p> <span style="display:flex;justify-content: space-between">
-                    <em class="lab" style="font-size: 0.9em;">Total à payer : </em><label class="lab"><s:property value="totalPayer"/> €</label>
+                    <em class="lab" style="font-size: 0.9em;">Total à payer TTC : </em>
+                    <label class="lab" style="font-size: 0.9em"><s:property value="totalPayer"/> €</label>
                 </span></p>
                 <s:if test="countArticle == 0">
                     <button class="btn btn-dark" style="font-size:0.8em;" disabled>Passer la commande</button>
@@ -149,7 +158,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
     $(function() {
-
+        $("#disablePlus").prop("disabled",true);
     });
 </script>
 </html>

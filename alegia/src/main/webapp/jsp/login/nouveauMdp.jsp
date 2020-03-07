@@ -55,7 +55,7 @@
         <div id="cadreLogin" style="margin-top: 100px;width: 350px">
             <label class="form-check-label textTop"> Réinitialiser votre mot de passe </label>
             <em id="message" ><s:actionmessage/></em>
-            <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreLog">
+            <div class="col-12 container border border-secondary shadow p-3 mb-5 bgTran rounded" id="cadreLog">
                 <s:form action="doNouveauMdp">
                     <div class="form-group" style="margin: 20px;">
                         <label for="inputEmail" >Adresse électronique du compte </label>

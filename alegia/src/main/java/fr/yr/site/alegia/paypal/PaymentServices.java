@@ -6,16 +6,18 @@ import com.opensymphony.xwork2.ActionContext;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.*;
 import fr.yr.site.alegia.beans.Commande;
+import fr.yr.site.alegia.beans.Compte;
 
 public class PaymentServices {
     private static final String CLIENT_ID = "AYo_q4WnsFJXB4p9OOBz8DWTFI4QCpx4sewNdxoZt_BJQqSzIJKbRb1doYApQWTHmRBbzKb4mbwb7TLC";
     private static final String CLIENT_SECRET = "EEFaVCyY3GWdx5QLXGl821eIfGrgL0TWJ-AqGmXnRIV4Yz4WdRA5xPfgeIcA6BF_JYoRVFvEbwLjRkRv";
     private static final String MODE = "sandbox";
 
-    public String authorizePayment(OrderDetail orderDetail)
+    public String authorizePayment(OrderDetail orderDetail, Compte compte)
             throws PayPalRESTException {
 
-        Payer payer = getPayerInformation();
+
+        Payer payer = getPayerInformation(compte);
         RedirectUrls redirectUrls = getRedirectURLs();
         List<Transaction> listTransaction = getTransactionInformation(orderDetail);
 
@@ -32,14 +34,14 @@ public class PaymentServices {
         return getApprovalLink(approvedPayment);
     }
 
-    private Payer getPayerInformation() {
+    private Payer getPayerInformation(Compte compte) {
         Payer payer = new Payer();
         payer.setPaymentMethod("paypal");
 
         PayerInfo payerInfo = new PayerInfo();
-        payerInfo.setFirstName("Yoann")
-                .setLastName("ROCHE")
-                .setEmail("Yocorps17@GMAIL.com");
+        payerInfo.setFirstName(compte.getPrenom())
+                .setLastName(compte.getNom())
+                .setEmail(compte.getEmail());
 
         payer.setPayerInfo(payerInfo);
 
@@ -48,7 +50,7 @@ public class PaymentServices {
 
     private RedirectUrls getRedirectURLs() {
         RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl("http://192.168.1.41:8080/index.action");
+        redirectUrls.setCancelUrl("http://192.168.1.41:8080/cancel.action");
         redirectUrls.setReturnUrl("http://192.168.1.41:8080/review.action");
 
         return redirectUrls;

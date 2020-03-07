@@ -121,7 +121,6 @@ public class GestionCommandeAdminTest {
         when(factory.getContenuProxy()).thenReturn(mock(MicroserviceContenuPanierProxy.class));
         when(factory.getLigneProxy()).thenReturn(mock(MicroserviceLigneDeCommandeProxy.class));
         when(factory.getPanierProxy()).thenReturn(mock(MicroservicePanierProxy.class));
-        when(factory.getNiveauAccesProxy()).thenReturn(mock(MicroserviceNiveauAccesProxy.class));
         logger = mock(Logger.class);
         doNothing().when(logger).error(anyString());
         doNothing().when(logger).warn(anyString());

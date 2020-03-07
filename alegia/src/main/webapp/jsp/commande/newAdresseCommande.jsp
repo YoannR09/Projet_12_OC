@@ -112,7 +112,7 @@
 <div id="blocCenter" style="display: flex;justify-content: center;">
     <div class="col-9" style="max-width: 500px">
         <label class="textTop">Nouvelle adresse de livraison</label>
-        <div class="col-12 container border shadow p-3 mb-5 bg-white rounded" id="cadreAutreAdresse">
+        <div class="col-12 container border border-secondary shadow p-3 mb-5 bgTran rounded" id="cadreAutreAdresse">
             <div style="margin: 10px" id="cadreNouvelleAdresse">
                 <s:form action="doNewAdresseCommande" >
                     <input name="commandeId" value="<s:property value="commandeId"/>" class="form-control" id="commandeId">

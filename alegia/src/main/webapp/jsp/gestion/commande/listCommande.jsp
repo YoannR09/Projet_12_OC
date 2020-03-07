@@ -67,21 +67,20 @@
 <%@ include file="../../_include/header.jsp"%>
 <div id="blocCenter" style="display: flex;justify-content: center;">
     <div class="col-9" style="max-width: 800px">
-        <s:if test="panierVide"><label class="textTop">Vous n'avez effectué aucune commande.</label></s:if>
-        <s:else><label class="textTop">Liste des commande "<em style="font-size: 0.8em"><s:property value="statutList" /></em> "</label></s:else>
+        <label class="textTop">Liste des commande "<em style="font-size: 0.8em"><s:property value="statutList" /></em> "</label>
         <div class="col-12 " style="display: flex;justify-content: space-around">
             <div style="width: 800px">
-                <table class="table table-bordered table-hover border shadow p-3 mb-5 bg-white rounded">
+                <table class="table table-hover border shadow p-3 mb-5 bgTran rounded">
                     <thead class="thead">
                     <tr style="max-height: 10px">
                         <th scope="col">COMMANDE EFFECTUEE LE</th>
                         <th scope="col">N° DE COMMANDE</th>
-                        <th scope="col">TOTAL</th>
+                        <th scope="col">TOTAL TTC</th>
                         <th scope="col"></th>
                     </tr>
                     </thead>
                     <tbody>
-                    <s:iterator value="commandeList">
+                    <s:iterator value="commandeListSize">
                         <tr>
                             <td><s:property value="date"/></td>
                             <td><s:property value="numero"/></td>
@@ -94,6 +93,19 @@
                     </s:iterator>
                     </tbody>
                 </table>
+                <div style="width: 100%;text-align: center">
+                    <s:if test="!max || max == null">
+                        <s:a action="doVoirPlus" class="btn btn-dark" style="font-size:0.8em">
+                            <s:param value="statut" name="statut"/>
+                            <s:param value="nom" name="nom"/>
+                            <s:param value="prenom" name="prenom"/>
+                            <s:param value="email" name="email"/>
+                            <s:param value="numero" name="numero"/>
+                            <s:param value="listSize" name="listSize"/>
+                            Voir plus
+                        </s:a>
+                    </s:if>
+                </div>
             </div>
         </div>
     </div>

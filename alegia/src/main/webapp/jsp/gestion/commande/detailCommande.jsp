@@ -74,7 +74,7 @@
         <label class="textTop">Détails de la commande</label>
         <div class="col-12" style="display: flex;justify-content: space-around">
             <div style="width: 800px">
-                <div class="col-12 container border shadow bg-white rounded" id="cadreArticle">
+                <div class="col-12 container border border-secondary shadow bgTran rounded" id="cadreArticle">
                     <div style="display: flex;justify-content: space-around;text-align: center">
                         <div style="margin-left: 20px;">
                             <em class="lab"></em><br/>
@@ -87,8 +87,8 @@
                             <tr style="max-height: 10px">
                                 <th scope="col">ARTICLE</th>
                                 <th scope="col">REFERENCE</th>
-                                <th scope="col">PRIX</th>
-                                <th scope="col">MONTANT</th>
+                                <th scope="col">PRIX HT</th>
+                                <th scope="col">MONTANT HT</th>
                                 <th scope="col">QUANTITE</th>
                                 <th scope="col">TAILLE</th>
                             </tr>
@@ -98,16 +98,16 @@
                                 <tr>
                                     <td><s:property value="designation"/></td>
                                     <td><s:property value="ref"/></td>
-                                    <td><s:property value="prixUnit"/> €</td>
-                                    <td><s:property value="montant"/> €</td>
+                                    <td><s:property value="prixHt"/> €</td>
+                                    <td><s:property value="montantHt"/> €</td>
                                     <td><s:property value="quantite"/></td>
                                     <td><s:property value="taille"/></td>
                                 </tr>
                             </s:iterator>
-                            <td>Montant ht : <s:property value="commande.prixTotal"/> €</td>
+                            <td>Montant HT : <s:property value="commande.prixTotal"/> €</td>
                             <td>TVA à 10% : + <s:property value="commande.tva"/> €</td>
                             <td>Livraison : + 10 €</td>
-                            <td>Total payé : <s:property value="commande.totalPayer"/> €</td>
+                            <td>Total TTC : <s:property value="commande.totalPayer"/> €</td>
                             </tbody>
 
                         </table>

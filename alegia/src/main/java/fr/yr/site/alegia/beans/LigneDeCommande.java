@@ -9,7 +9,9 @@ public class LigneDeCommande {
     private Integer commandeId;
     private String taille;
     private Float montant;
+    private String montantHt;
     private Float prixUnit;
+    private String prixHt;
 
 
     public Integer getQuantite() {
@@ -74,5 +76,21 @@ public class LigneDeCommande {
 
     public void setRef(String ref) {
         this.ref = ref;
+    }
+
+    public String getMontantHt() {
+        return montantHt;
+    }
+
+    public void setMontantHt(String montantHt) {
+        this.montantHt = montantHt;
+    }
+
+    public String getPrixHt() {
+        return prixHt;
+    }
+
+    public void setPrixHt(String prixHt) {
+        this.prixHt = prixHt;
     }
 }

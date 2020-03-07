@@ -42,15 +42,28 @@
     body {
         display : table;
         width: 100%;
-        /* background-image:url(/image/fondTest.png); */
+        background-image:url(/image/fondAlegia200.png);
+        background-repeat: repeat;
+        background-size: 50%;
         background-color: white;
-    }
-    footer {
-        display : table-row;
-        height: 100px;
+        position: relative;
     }
     label
     {
         font-weight: bold;
+    }
+    .bgTran
+    {
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+    footer {
+        margin-top: 150px;
+        width: 100%;
+        height: 100px;
+        position: absolute; bottom: 0;
+    }
+    #blocCenter,#page
+    {
+        margin-bottom: 200px;
     }
 </style>

@@ -4,8 +4,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.paypal.api.payments.*;
 import com.paypal.base.rest.PayPalRESTException;
-import fr.yr.site.alegia.beans.Categorie;
-import fr.yr.site.alegia.beans.Commande;
+import fr.yr.site.alegia.beans.*;
 import fr.yr.site.alegia.configuration.Factory;
 import fr.yr.site.alegia.configuration.GenerateMethod;
 import fr.yr.site.alegia.paypal.OrderDetail;
@@ -13,22 +12,30 @@ import fr.yr.site.alegia.paypal.PaymentServices;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.NumberFormat;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Classe qui gére le paiement avec PayPal
  * Fonctionne avec une API fournit par PayPal
  */
-public class GestionPayPalAction extends ActionSupport {
+public class GestionPayPalAction extends ActionSupport implements SessionAware {
 
     // Microseervices
     @Autowired
     private Factory factory;
 
     private GenerateMethod gm = new GenerateMethod();
+
+    @Override
+    public void setSession(Map<String, Object> map) {
+        this.session = map;
+    }
+    private Map<String, Object> session;
 
     private static final Logger logger = LogManager.getLogger();
     final NumberFormat instance = NumberFormat.getNumberInstance();
@@ -61,22 +68,24 @@ public class GestionPayPalAction extends ActionSupport {
      * @return
      */
     public String doPayPalAuth() {
-        instance.setMinimumFractionDigits(2);
-        instance.setMaximumFractionDigits(2);
-        commande = factory.getCommandeProxy().getCommande(commandeId);
-        float totalC = 0;
-        int count = 0;
-        gm.generateCommande(commande,count,totalC,factory);
-        String tax = String.valueOf(commande.getTotal()*1.1-commande.getTotal());
-        OrderDetail orderDetail = new OrderDetail(
-                commande.getNumero()
-                ,String.valueOf(commande.getTotal())
-                ,"10"
-                ,tax
-                ,String.valueOf(commande.getTotal()+10+Float.parseFloat(tax)));
         try {
+            instance.setMinimumFractionDigits(2);
+            instance.setMaximumFractionDigits(2);
+            commande = factory.getCommandeProxy().getCommande(commandeId);
+            float totalC = 0;
+            int count = 0;
+            gm.generateCommande(commande,count,totalC,factory);
+            String tax = String.valueOf(commande.getTotal()*1.1-commande.getTotal());
+            OrderDetail orderDetail = new OrderDetail(
+                    commande.getNumero()
+                    ,String.valueOf(commande.getTotal())
+                    ,"10"
+                    ,tax
+                    ,String.valueOf(commande.getTotal()+10+Float.parseFloat(tax)));
+
             PaymentServices paymentServices = new PaymentServices();
-            String approvalLink = paymentServices.authorizePayment(orderDetail);
+            Compte compte = factory.getCompteProxy().findById(commande.getCompteId());
+            String approvalLink = paymentServices.authorizePayment(orderDetail,compte);
             url = approvalLink;
 
             return ActionSupport.SUCCESS;
@@ -95,17 +104,22 @@ public class GestionPayPalAction extends ActionSupport {
         try {
             PaymentServices paymentServices = new PaymentServices();
             payment = paymentServices.getPaymentDetails(paymentId);
-
             payerInfo = payment.getPayer().getPayerInfo();
             commande = factory.getCommandeProxy().getCommandeByNumero(
                     payment.getTransactions().get(0).getDescription());
             transaction = payment.getTransactions().get(0);
             shippingAddress = transaction.getItemList().getShippingAddress();
-
-            if (ActionContext.getContext().getSession().get("email") != null){
-                countPanier = gm.generateCountPanier(factory
-                        ,(String) ActionContext.getContext().getSession().get("email"));
+            if (ActionContext.getContext().getSession().get("email") == null){
+                Compte compte = factory.getCompteProxy().findById(commande.getCompteId());
+                this.session.put("email", compte.getEmail());
+                if (compte.getNiveauAccesId() == 2) {
+                    this.session.put("admin", compte);
+                } else {
+                    this.session.put("user", compte);
+                }
             }
+            countPanier = gm.generateCountPanier(factory
+                    ,(String) this.session.get("email"));
             int count = 0;
             float total = 0;
             gm.generateCommande(commande,count,total, factory);
@@ -113,6 +127,7 @@ public class GestionPayPalAction extends ActionSupport {
 
             return ActionSupport.SUCCESS;
         } catch (PayPalRESTException ex) {
+            ex.printStackTrace();
             return ActionSupport.ERROR;
         }
     }
@@ -125,23 +140,33 @@ public class GestionPayPalAction extends ActionSupport {
      * @throws PayPalRESTException
      */
     public String doExecute() throws PayPalRESTException {
-
-        PaymentServices paymentServices = new PaymentServices();
-        commande = factory.getCommandeProxy().getCommande(commandeId);
-        payment = paymentServices.executePayment(paymentId, PayerID);
-        payerInfo = payment.getPayer().getPayerInfo();
-        transaction = payment.getTransactions().get(0);
-        int count = 0;
-        float total = 0;
-        gm.generateCommande(commande,count,total, factory);
-        commande.setStatutId(2);
-        factory.getCommandeProxy().update(commande);
-        if (ActionContext.getContext().getSession().get("email") != null){
-            countPanier = gm.generateCountPanier(factory
-                    ,(String) ActionContext.getContext().getSession().get("email"));
+        try {
+            String email = (String) ActionContext.getContext().getSession().get("email");
+            Compte compte = factory.getCompteProxy().findByEmail(email.toLowerCase());
+            Panier panier = factory.getPanierProxy().getPanierByCompteId(compte.getId());
+            List<Contenu> contenuList = factory.getContenuProxy().findByPanierId(panier.getId());
+            for (Contenu contenu : contenuList) {
+                factory.getContenuProxy().delete(contenu.getId());
+            }
+            PaymentServices paymentServices = new PaymentServices();
+            commande = factory.getCommandeProxy().getCommande(commandeId);
+            payment = paymentServices.executePayment(paymentId, PayerID);
+            payerInfo = payment.getPayer().getPayerInfo();
+            transaction = payment.getTransactions().get(0);
+            int count = 0;
+            float total = 0;
+            gm.generateCommande(commande, count, total, factory);
+            commande.setStatutId(2);
+            factory.getCommandeProxy().update(commande);
+            if (ActionContext.getContext().getSession().get("email") != null) {
+                countPanier = gm.generateCountPanier(factory
+                        , (String) ActionContext.getContext().getSession().get("email"));
+            }
+            categorieList = factory.getCategorieProxy().findByDispo(true);
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            return ActionSupport.ERROR;
         }
-        categorieList = factory.getCategorieProxy().findByDispo(true);
-        return ActionSupport.SUCCESS;
     }
 
     public String getProduct() {

@@ -48,6 +48,10 @@ public class GestionCommandeAction extends ActionSupport {
     private         Integer             countPanier;
 
 
+    /**
+     * Méthode pour générer le formulaire de création d'une adresse de livraison
+     * @return
+     */
     public String doFormNewAdresse(){
         try {
             countPanier = gm.generateCountPanier(factory,getEmail());
@@ -62,6 +66,10 @@ public class GestionCommandeAction extends ActionSupport {
         }
     }
 
+    /**
+     * Méthode pour supprimer une adresse de livraison.
+     * @return
+     */
     public String doSupprimerAdresseLivraison(){
         try {
             countPanier = gm.generateCountPanier(factory,getEmail());
@@ -85,6 +93,11 @@ public class GestionCommandeAction extends ActionSupport {
         }
     }
 
+    /**
+     * Méthode pour créer une nouvelle adresse de livraison.
+     * Si celle-ci existe déjà on récupère l'id.
+     * @return
+     */
     public String doConfirmNewAdresse(){
         try {
             countPanier = gm.generateCountPanier(factory,getEmail());
@@ -135,10 +148,35 @@ public class GestionCommandeAction extends ActionSupport {
         }
     }
 
+    /**
+     * Méthode qui définit l'adresse de la commande à l'adresse lié au compte
+     * @return
+     */
     public String doConfirmAdresseCompte(){
         try {
             countPanier = gm.generateCountPanier(factory,getEmail());
             commande = getFactory().getCommandeProxy().getCommande(commandeId);
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
+            return ActionSupport.ERROR;
+        }
+    }
+
+
+    /**
+     * Méthode qui définit une nouvelle adresse de livraison pour la commande
+     * @return
+     */
+    public String doConfirmAdresse(){
+        try {
+            countPanier = gm.generateCountPanier(factory,getEmail());
+            commande = getFactory().getCommandeProxy().getCommande(commandeId);
+            commande.setAdresseId(adresseId);
+            getFactory().getCommandeProxy().update(commande);
             categorieList = getFactory().getCategorieProxy().findByDispo(true);
             return ActionSupport.SUCCESS;
         }catch (Exception e){
@@ -171,6 +209,11 @@ public class GestionCommandeAction extends ActionSupport {
         }
     }
 
+    /**
+     * Création d'une commande à partir du contenu du panier.
+     * On définit
+     * @return
+     */
     public String doCommande(){
         try {
             String email = getEmail();
@@ -200,7 +243,6 @@ public class GestionCommandeAction extends ActionSupport {
                 contenu.setTaille(getFactory().getTailleProxy().findById(contenu.getTailleId()));
                 ligneDeCommande.setTaille(contenu.getTaille().getTaille());
                 getFactory().getLigneProxy().add(ligneDeCommande);
-                getFactory().getContenuProxy().delete(contenu.getId());
                 commandeId = factory.getCommandeProxy().getCommandeByNumero(numeroCommande).getId();
             }
             adresseList = new ArrayList<>();
@@ -221,30 +263,10 @@ public class GestionCommandeAction extends ActionSupport {
         }
     }
 
-
-    public String doRepriseCommande(){
-        try {
-            countPanier = gm.generateCountPanier(factory,getEmail());
-            String email = getEmail();
-            compte = getFactory().getCompteProxy().findByEmail(email.toLowerCase());
-            commande = getFactory().getCommandeProxy().getCommande(commandeId);
-            adresse = getFactory().getAdresseProxy().getAdresse(compte.getAdresseId());
-            adresseList = new ArrayList<>();
-            for (AdresseLivraison al:factory.getLivraisonProxy().findByCompteId(compte.getId())){
-                Adresse adresseAdd = factory.getAdresseProxy().getAdresse(al.getAdresseId());
-                adresseAdd.setAdresseLivraisonId(al.getId());
-                adresseList.add(adresseAdd);
-            }
-            categorieList = getFactory().getCategorieProxy().findAll();
-            return ActionSupport.SUCCESS;
-        }catch (Exception e){
-            this.addActionMessage("Un problème est survenu... ");
-            categorieList = getFactory().getCategorieProxy().findByDispo(true);
-            getLogger().error(e);
-            return ActionSupport.ERROR;
-        }
-    }
-
+    /**
+     * Méthode pour afficher le résumé de la commande.
+     * @return
+     */
     public String doConsulterCommande(){
         try {
             String email = getEmail();

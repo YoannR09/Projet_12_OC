@@ -26,7 +26,8 @@
         <!-- Navbar links -->
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
             <ul class="navbar-nav flex-column">
-                <s:a action="index" class="nav-link btnNav" style="background: transparent;margin-bottom:25px"> <img src="../../image/logo.jpg" width="100" height="100" alt="submit" /></s:a>
+                <s:a action="index" class="nav-link btnNav" style="background: transparent;margin-bottom:25px">
+                    <img src="../../image/alegiaLogo.png" height="100" alt="submit" /></s:a>
                 <s:iterator value="categorieList">
                     <li class="nav-item">
                         <s:a action="doListArticleByCategorieId" class="nav-link btnNav" style="font-size:0.9em;font-family: arial"><s:property value="nom"/><s:param name="categorieId" value="id"/></s:a>
@@ -41,22 +42,27 @@
         </div>
     </nav>
 </div>
-<s:if test="infoMessage != null">
-    <div id="cardInfo" class="card text-center border shadow" style="bottom: 200px;position: fixed;right: 40px;z-index: 1
-    ;width: 20rem;">
-        <div class="card-body">
-            <i class="fas fa-info-circle"></i>  <s:property value="infoMessage"/>
-        </div>
-        <div class="card-footer">
-            <button id="btnInfo" class="btn btn-dark" style="font-size: 0.6em;">Fermer</button>
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content text-center border shadow">
+            <div class="card-body">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <i class="fas fa-info-circle"></i>  <s:property value="infoMessage"/>
+            </div>
         </div>
     </div>
+</div>
+<s:if test="infoMessage != null">
+    <button type="button" id="btnModal" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+
+    </button>
 </s:if>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script>
     $(function() {
-        $(document).on('click', '#btnInfo', function () {
-            $('#cardInfo').slideUp(500);
-        });
+        $('#btnModal').hide();
+    $('#btnModal').click();
     });
 </script>
