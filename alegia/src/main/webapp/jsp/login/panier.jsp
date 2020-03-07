@@ -146,7 +146,6 @@
                 <s:else>
                     <s:a class="btn btn-dark" action="doCommande" style="font-size:0.8em;">Passer la commande</s:a>
                 </s:else>
-
             </div>
         </div>
     </div>

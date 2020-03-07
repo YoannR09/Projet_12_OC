@@ -15,7 +15,7 @@
         {
             display: flex;
             justify-content: center;
-            margin-top: 75px;
+            margin-top: 100px;
         }
 
         body
@@ -35,27 +35,21 @@
             font-family: 'Raleway' ;
             font-size: 0.8em;
         }
-        #actuArticle
-        {
-            border-top: orange 1px solid;
-            border-radius: 5px;
-        }
     </style>
 </head>
 <body>
 <%@ include file="./_include/header.jsp"%>
 <div id="blocCenter" style="display: flex;justify-content: center;z-index: 3">
-    <div class="nav-item" style="text-align: center;width: 660px;border-radius: 15px;
-    box-shadow: 0px 0px 30px -8px rgba(0,0,0,0.50);">
-        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel"
-             style="border-radius: 15px;">
+    <div class="nav-item" style="text-align: center;width: 550px;box-shadow: 0px 0px 30px -8px rgba(0,0,0,0.50);
+margin-right: 10px">
+        <div id="carouselExampleIndicators" class="carousel slide rounded" data-ride="carousel">
             <ol class="carousel-indicators">
                 <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
                 <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
                 <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
                 <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
             </ol>
-            <div class="carousel-inner" style="height: 100%;border-radius: 15px;">
+            <div class="carousel-inner rounded" style="height: 100%">
                 <div class="carousel-item active" style="width: 100%;height: 100%;">
                     <img class="d-block w-100" src="./image/index2.jpg"
                          alt="1 slide">
@@ -87,6 +81,16 @@
                 </div>
             </div>
         </div>
+    </div>
+    <div style="text-align: left;padding :5px;height:200px;width: 350px" class="border border-secondary shadow p-3 mb-5 bgTran rounded">
+        <h4 style="font-weight: bold">BIENVENUE SUR LE SITE DE L'ALEGIA</h4>
+        <h6>Ce que nous proposons</h6>
+        <p style="font-size: 0.8em;font-style: italic">Ce site propose un catalogue d'article à l'effigie de l'alegia.
+        </p>
+        <span style="margin-left: 240px">
+            <s:a action="" style="font-size:0.7em;">
+            En savoir plus</s:a>
+        </span>
     </div>
 </div>
 <footer>

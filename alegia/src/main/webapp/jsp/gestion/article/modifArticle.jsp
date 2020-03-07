@@ -68,11 +68,24 @@
                     </div>
                     <div style="display:flex;justify-content: center;margin-top: 15px;width: 100%">
                         <button type="button" class="btn btn-dark" data-toggle="modal"
-                                data-target="#modalAjouter" style="width: 200px">Ajouter une image</button>
+                                data-target="#modalAjouter" style="width: 200px;">Ajouter une image</button>
                     </div>
                     <div style="display:flex;justify-content: center;margin-top: 15px;width: 100%">
                         <button type="button" class="btn btn-dark" data-toggle="modal"
                                 data-target="#modalRetirer" style="width: 200px">Retirer une image</button>
+                    </div>
+                    <div class="form-group" style="margin: 20px;">
+                        <label for="tailles" style="color: black;">Liste des tailles</label>
+                        <div id="tailles">
+                            <s:iterator value="listTailles">
+                                <span style="font-weight: bold;margin: 5px"><s:property value="taille.taille"/></span>
+                            </s:iterator>
+                        </div>
+
+                    </div>
+                    <div style="display:flex;justify-content: center;margin-top: 15px;width: 100%">
+                        <button type="button" class="btn btn-dark" data-toggle="modal"
+                                data-target="#modalTaille" style="font-syze: 0.7em">Modifier la liste de tailles</button>
                     </div>
                     <s:form action="doModifArticle">
                         <input type="hidden" name="articleId" value="<s:property value="article.id"/>">
@@ -111,8 +124,36 @@
                 <s:form action="doAddImage" method="post" enctype="multipart/form-data">
                     <input id="idArticle" name="articleId" value="<s:property value="article.id"/>">
                     <input type = "file" name = "myFile" style="margin: 10px"/>
-                    <s:submit value="Confirmer" />
+                    <div style="display: flex;justify-content: center;margin: 10px">
+                        <button type="submit" style="font-size: 0.8em" class="btn btn-dark">Confirmer</button>
+                    </div>
                 </s:form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalTaille" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered " role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="motalTailleTitle">Modifier la liste de tailles</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" style="text-align: center;display: flex;justify-content: space-around">
+                <div>
+                <s:form action="doModifListTaille">
+                    <input type="hidden" name="articleId" value="<s:property value="article.id"/>">
+                    <s:checkboxlist list="tailleList" name="tailleSelect" labelposition="top"
+                                    listLabelKey="taille" listKey="taille" />
+
+                    <div style="display: flex;justify-content:space-around;padding-top: 10px">
+                        <s:submit value="Confimer" type="submit"
+                                  style="font-size: 0.7em;margin:15px" class="btn btn-dark"></s:submit>
+                    </div>
+                </s:form>
+                </div>
             </div>
         </div>
     </div>

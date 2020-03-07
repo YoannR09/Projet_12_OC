@@ -1,5 +1,5 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<div style="top: 20px;position: fixed;right: 10px;z-index: 1">
+<div style="top: 20px;position: fixed;right: 10px;z-index: 2;">
     <div>
         <s:if test="!#session.user && !#session.admin">
             <li>
@@ -17,7 +17,7 @@
         </s:if>
     </div>
 </div>
-<div class="container-fluid " style="top: 20px;position: fixed;left: 10px;">
+<div style="top: 20px;position: fixed;left: 10px;z-index: 1;">
     <nav class="navbar navbar-expand-sm">
         <!-- Toggler/collapsibe Button -->
         <button class="navbar-toggler menu" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">

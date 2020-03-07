@@ -59,7 +59,8 @@
                 <s:form action="doNouveauMdp">
                     <div class="form-group" style="margin: 20px;">
                         <label for="inputEmail" >Adresse électronique du compte </label>
-                        <input name="email" type="text" class="form-control" id="inputEmail" required>
+                        <input name="email" pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" size="30"
+                               type="text" class="form-control" id="inputEmail" required>
                     </div>
                     <div style="display: flex;justify-content: space-around;padding-top: 25px">
                         <button type="submit" style="font-size: 0.7em" class="btn btn-dark">Confirmer</button>

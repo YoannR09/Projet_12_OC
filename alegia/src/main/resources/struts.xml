@@ -316,6 +316,11 @@
             <result name="error">jsp/error/error.jsp</result>
         </action>
 
+        <action name="doModifListTaille" class="fr.yr.site.alegia.action.GestionArticleAction" method="doModifListTaille">
+            <result>/jsp/gestion/article/modifArticle.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
         <action name="doArticleSupprimer" class="fr.yr.site.alegia.action.GestionArticleAction" method="doSupprimer">
             <result>/jsp/gestion/article/gestionArticle.jsp</result>
             <result name="error">jsp/error/error.jsp</result>

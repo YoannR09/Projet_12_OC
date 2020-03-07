@@ -201,12 +201,56 @@ public class GestionArticleAction extends ActionSupport {
     }
 
     /**
+     * Méthode pour modifier la liste des tailles d'un article.
+     * @return
+     */
+    public String doModifListTaille(){
+        try {
+            if (tailleSelect != null) {
+                if (tailleSelect.size() != 0) {
+                    getFactory().getListTailleProxy().deleteByArticleId(articleId);
+                    for (String t : tailleSelect) {
+                        ListTaille lt = new ListTaille();
+                        Taille taille = getFactory().getTailleProxy().findByTaille(t);
+                        lt.setTailleId(taille.getId());
+                        lt.setArticleId(articleId);
+                        getFactory().getListTailleProxy().add(lt);
+                        infoMessage = "La liste de tailles a bien été modifiée";
+                    }
+                }else {
+                    infoMessage = "Vous devez sélectionner au moins une taille";
+                }
+            }
+            article = getFactory().getArticleProxy().getArticle(articleId);
+            gm.completeArticle(getFactory(),article);
+            listTailles = getFactory().getListTailleProxy().findByArticleId(article.getId());
+            tailleList = getFactory().getTailleProxy().findAll();
+            for (ListTaille lt : listTailles){
+                lt.setTaille(getFactory().getTailleProxy().findById(lt.getTailleId()));
+            }
+            countPanier = gm.generateCountPanier(factory,getEmail());
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
+            return ActionSupport.ERROR;
+        }
+    }
+
+    /**
      * Méthode pour afficher le formulaire de modification d'un article
      * @return
      */
     public String formModifArticle(){
         try {
+            tailleList = getFactory().getTailleProxy().findAll();
             article = getFactory().getArticleProxy().getArticle(articleId);
+            listTailles = getFactory().getListTailleProxy().findByArticleId(article.getId());
+            for (ListTaille lt : listTailles){
+                lt.setTaille(getFactory().getTailleProxy().findById(lt.getTailleId()));
+            }
             gm.completeArticle(getFactory(),article);
             categorieList = getFactory().getCategorieProxy().findByDispo(true);
             countPanier = gm.generateCountPanier(factory,getEmail());
@@ -235,6 +279,7 @@ public class GestionArticleAction extends ActionSupport {
             countPanier = gm.generateCountPanier(factory,getEmail());
             gm.completeArticle(getFactory(),article);
             categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            tailleList = getFactory().getTailleProxy().findAll();
             infoMessage = "L'article a bien été modifié";
             return ActionSupport.SUCCESS;
         }catch (Exception e){

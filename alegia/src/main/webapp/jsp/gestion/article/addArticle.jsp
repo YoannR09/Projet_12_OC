@@ -74,11 +74,11 @@
                             </select>
                         </div>
                         <label style="color: black;margin-left: 20px">Sélectionner les tailles</label>
-                        <s:checkboxlist list="tailleList" name="tailleSelect" style="font-size:0.8em;"
+                        <s:checkboxlist list="tailleList" name="tailleSelect" labelposition="top"
                                         listLabelKey="taille" listKey="taille" />
 
-                        <div style="display: flex;justify-content:space-around;padding-top: 25px">
-                            <s:submit value="Confimer" type="submit" style="font-size: 0.7em" class="btn btn-dark"></s:submit>
+                        <div style="display: flex;justify-content:space-around;padding-top: 10px">
+                            <s:submit value="Confimer" type="submit" style="font-size: 0.7em;margin:15px" class="btn btn-dark"></s:submit>
                         </div>
                     </s:form>
                 </div>
