@@ -112,7 +112,7 @@
 <%@ include file="../_include/header.jsp"%>
 <div id="blocCenter" style="display: flex;justify-content: center;">
     <div class="col-10" style="max-width: 600px">
-        <label class="textTop">Sélectionnez votre mode de paiement</label>
+        <label class="textTop">Mode de paiement</label>
         <div class="col-12 container border border-secondary shadow p-3 mb-5 bgTran rounded" id="cadreArticle">
             <div style="width: 100%">
                       <span style="font-size:0.9em;font-weight: bold;justify-content: space-between">

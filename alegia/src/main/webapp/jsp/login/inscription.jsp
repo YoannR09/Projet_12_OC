@@ -77,7 +77,7 @@
                         <label for="verifEmail" style="color: black;">Confirmer l'adresse éléctronique</label>
                         <input type="text" pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 4}$" size="30"
                                name="verifEmail" class="form-control"
-                               id="verifEmail" title="Le texte ne corréspond pas" required  autocomplete="new-email">
+                               id="verifEmail" required  autocomplete="new-email">
                     </div>
                     <div class="form-group " style="margin: 20px">
                         <label for="motDePasse" style="color: black;">Mot de passe</label>
@@ -88,7 +88,7 @@
                     <div class="form-group " style="margin: 20px">
                         <label for="verifMdp" style="color: black;">Confirmer le mot de passe</label>
                         <input autocomplete="off" type="password" name="verifMdp" class="form-control"
-                               id="verifMdp" title="Le texte ne corréspond pas" required>
+                               id="verifMdp" required>
                     </div>
 
                     Votre adresse

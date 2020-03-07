@@ -123,26 +123,26 @@
                         <s:iterator value="commande.ligneDeCommandeList">
                             <tr>
                                 <td><s:property value="designation"/></td>
-                                <td><s:property value="prixHt"/> €</td>
-                                <td><s:property value="montantHt"/> €</td>
-                                <td><s:property value="quantite"/></td>
+                                <td class="numberFont"><s:property value="prixHt"/> €</td>
+                                <td class="numberFont"><s:property value="montantHt"/> €</td>
+                                <td class="numberFont"><s:property value="quantite"/></td>
                                 <td><s:property value="taille"/></td>
                             </tr>
                         </s:iterator>
-                        <td><em class="lab">Montant HT : </em><label class="lab"><s:property value="commande.prixTotal"/> €</label></td>
-                        <td><em class="lab">TVA à 10% :  </em><label class="lab"><s:property value="commande.tva"/> €</label></td>
-                        <td><em class="lab">Livraison : </em><label class="lab"> 10 €</label></td>
-                        <td><em class="lab">TOTAL TTC : </em><label class="lab"><s:property value="commande.totalPayer"/> €</label></td>
+                        <td>Montant HT : </em><label class="numberFont"><s:property value="commande.prixTotal"/> €</label></td>
+                        <td>TVA à 10% :  </em><label class="numberFont"><s:property value="commande.tva"/> €</label></td>
+                        <td>Livraison : </em><label class="numberFont"><s:property value="livraison"/> €</label></td>
+                        <td>TOTAL TTC : </em><label class="numberFont"><s:property value="commande.totalPayer"/> €</label></td>
                         </tbody>
                     </table>
                     <div style="width: 100%">
                         <em class="lab">ADRESSE DE LIVRAISON</em><br/>
                         <div style="margin-bottom: 10px">
-                            <span style="font-weight: bold"><s:property value="commande.adresse.codePostal"/></span>
+                            <span class="numberFont" style="font-weight: bold"><s:property value="commande.adresse.codePostal"/></span>
                             <span style="font-weight: bold">  -  </span>
                             <span style="font-weight: bold"><s:property value="commande.adresse.ville"/></span>
                             <span style="font-weight: bold">  -  </span>
-                            <span style="font-weight: bold"><s:property value="commande.adresse.numero"/></span>
+                            <span class="numberFont" style="font-weight: bold"><s:property value="commande.adresse.numero"/></span>
                             <span style="font-weight: bold"><s:property value="commande.adresse.rue"/></span>
                         </div>
                     </div>

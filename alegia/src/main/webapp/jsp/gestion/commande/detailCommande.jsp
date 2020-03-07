@@ -78,7 +78,7 @@
                     <div style="display: flex;justify-content: space-around;text-align: center">
                         <div style="margin-left: 20px;">
                             <em class="lab"></em><br/>
-                            <span style="font-weight: bold">N° DE COMMANDE : <s:property value="commande.numero"/></span>
+                            <span  class="numberFont" style="font-weight: bold">N° DE COMMANDE : <s:property value="commande.numero"/></span>
                         </div>
                     </div>
                     <div class="divModal" style="padding: 10px;" id="commande<s:property value="id"/>">
@@ -97,29 +97,28 @@
                             <s:iterator value="commande.ligneDeCommandeList">
                                 <tr>
                                     <td><s:property value="designation"/></td>
-                                    <td><s:property value="ref"/></td>
-                                    <td><s:property value="prixHt"/> €</td>
-                                    <td><s:property value="montantHt"/> €</td>
-                                    <td><s:property value="quantite"/></td>
+                                    <td class="numberFont"><s:property value="ref"/></td>
+                                    <td class="numberFont"><s:property value="prixHt"/> €</td>
+                                    <td class="numberFont"><s:property value="montantHt"/> €</td>
+                                    <td class="numberFont"><s:property value="quantite"/></td>
                                     <td><s:property value="taille"/></td>
                                 </tr>
                             </s:iterator>
-                            <td>Montant HT : <s:property value="commande.prixTotal"/> €</td>
-                            <td>TVA à 10% : + <s:property value="commande.tva"/> €</td>
-                            <td>Livraison : + 10 €</td>
-                            <td>Total TTC : <s:property value="commande.totalPayer"/> €</td>
+                            <td>Montant HT : <span class="numberFont"><s:property value="commande.prixTotal"/> €</span></td>
+                            <td>TVA à 10% :  <span class="numberFont"><s:property value="commande.tva"/> €</span></td>
+                            <td>Livraison : <span class="numberFont"><s:property value="commande.livraison"/> €</span></td>
+                            <td>Total TTC : <span class="numberFont"><s:property value="commande.totalPayer"/> €</span></td>
                             </tbody>
-
                         </table>
                     </div>
                     <div style="width: 100%">
                         <em class="lab">ADRESSE DE LIVRAISON</em><br/>
                         <div style="margin-bottom: 10px">
-                            <span style="font-weight: bold"><s:property value="commande.adresse.codePostal"/></span>
+                            <span class="numberFont" style="font-weight: bold"><s:property value="commande.adresse.codePostal"/></span>
                             <span style="font-weight: bold">  -  </span>
                             <span style="font-weight: bold"><s:property value="commande.adresse.ville"/></span>
                             <span style="font-weight: bold">  -  </span>
-                            <span style="font-weight: bold"><s:property value="commande.adresse.numero"/></span>
+                            <span class="numberFont" style="font-weight: bold"><s:property value="commande.adresse.numero"/></span>
                             <span style="font-weight: bold"><s:property value="commande.adresse.rue"/></span>
                             <span style="font-weight: bold">  /  </span>
                             <span style="font-weight: bold"><s:property value="commande.adresse.info"/></span>
@@ -128,7 +127,7 @@
                     <div style="display: flex;justify-content: space-between">
                         <div>
                             <em class="lab">COMMANDE EFFECTUEE LE</em><br/>
-                            <span style="font-weight: bold"><s:property value="commande.date"/></span>
+                            <span class="numberFont" style="font-weight: bold"><s:property value="commande.date"/></span>
                         </div>
                         <div>
                             <em class="lab">CLIENT</em><br/>

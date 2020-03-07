@@ -85,7 +85,7 @@
                                 <div>
                                     <em class="lab">COMMANDE EFFECTUEE LE</em><br/>
                                     <s:if test="!statut.equals('EN ATTENTE DE VALIDATION')">
-                                        <span style="font-weight: bold"><s:property value="date"/></span>
+                                        <span  class="numberFont" style="font-weight: bold"><s:property value="date"/></span>
                                     </s:if>
                                     <s:else>
                                         <span style="font-weight: bold">En attente</span>
@@ -93,11 +93,11 @@
                                 </div>
                                 <div>
                                     <em class="lab">N° DE COMMANDE</em><br/>
-                                    <span style="font-weight: bold"><s:property value="numero"/></span>
+                                    <span class="numberFont" style="font-weight: bold"><s:property value="numero"/></span>
                                 </div>
                                 <div>
                                     <em class="lab">TOTAL</em><br/>
-                                    <span style="font-weight: bold"><s:property value="totalPayer"/>  €</span>
+                                    <span class="numberFont" style="font-weight: bold"><s:property value="totalPayer"/>  €</span>
                                 </div>
                                 <di>
                                     <em class="lab">STATUT</em><br/>
@@ -122,27 +122,27 @@
                                 <s:iterator value="ligneDeCommandeList">
                                     <tr>
                                         <td><s:property value="designation"/></td>
-                                        <td><s:property value="prixHt"/> €</td>
-                                        <td><s:property value="montantHt"/> €</td>
-                                        <td><s:property value="quantite"/></td>
+                                        <td class="numberFont"><s:property value="prixHt"/> €</td>
+                                        <td class="numberFont"><s:property value="montantHt"/> €</td>
+                                        <td class="numberFont"><s:property value="quantite"/></td>
                                         <td><s:property value="taille"/></td>
                                     </tr>
                                 </s:iterator>
-                                <td><em class="lab">Montant ht : </em><label class="lab"><s:property value="prixTotal"/> €</label></td>
-                                <td><em class="lab">TVA à 10% :  </em><label class="lab"><s:property value="tva"/> €</label></td>
-                                <td><em class="lab">Livraison : </em><label class="lab"><s:property value="livraison"/> €</label></td>
-                                <td><em class="lab">TOTAL TTC : </em><label class="lab"><s:property value="totalPayer"/> €</label></td>
+                                <td>Montant HT : <label class="numberFont"><s:property value="prixTotal"/> €</label></td>
+                                <td>TVA à 10% :  <label class="numberFont"><s:property value="tva"/> €</label></td>
+                                <td>Livraison : <label class="numberFont"><s:property value="livraison"/> €</label></td>
+                                <td>TOTAL TTC : <label class="numberFont"><s:property value="totalPayer"/> €</label></td>
                                 </tbody>
                             </table>
                             <s:if test="!statut.equals('EN ATTENTE DE VALIDATION')">
                             <div style="width: 100%">
                                 <em class="lab">ADRESSE DE LIVRAISON</em><br/>
                                 <div style="margin-bottom: 10px">
-                                    <span style="font-weight: bold"><s:property value="adresse.codePostal"/></span>
+                                    <span class="numberFont" style="font-weight: bold"><s:property value="adresse.codePostal"/></span>
                                     <span style="font-weight: bold">  -  </span>
                                     <span style="font-weight: bold"><s:property value="adresse.ville"/></span>
                                     <span style="font-weight: bold">  -  </span>
-                                    <span style="font-weight: bold"><s:property value="adresse.numero"/></span>
+                                    <span class="numberFont" style="font-weight: bold"><s:property value="adresse.numero"/></span>
                                     <span style="font-weight: bold"><s:property value="adresse.rue"/></span>
                                 </div>
                             </div>

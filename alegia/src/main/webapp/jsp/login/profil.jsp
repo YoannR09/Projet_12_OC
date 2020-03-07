@@ -103,7 +103,7 @@
                                     <label for="verifEmail" style="color: black;">Confirmer l'adresse éléctronique</label>
                                     <input pattern="[a-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2, 4}$" size="30"
                                            name="verifEmail" class="form-control"
-                                           id="verifEmail" title="Le texte ne corréspond pas" required>
+                                           id="verifEmail" required autocomplete="new-email">
                                 </div>
                                 <div style="display: flex;justify-content: space-between">
                                     <button type="button" style="font-size: 0.6em"
@@ -123,7 +123,7 @@
                         </p>
                         <p class="pText">
                             <em class="emDif"> Numéro de téléphone : </em>
-                            <label class="labelDif"><s:property value="compte.numeroTelephone"/></label>
+                            <label class="labelDif numberFont"><s:property value="compte.numeroTelephone"/></label>
                         </p>
                     </div>
                 </div>
@@ -143,7 +143,7 @@
                         <div class="form-group " style="margin: 20px">
                             <label for="verifMdp" style="color: black;">Confirmer le mot de passe</label>
                             <input type="password" name="verifMdp" class="form-control"
-                                   id="verifMdp" title="Le texte ne corréspond pas" required>
+                                   id="verifMdp" required>
                         </div>
                         <div style="display: flex;justify-content: space-between">
                             <button type="button" style="font-size: 0.6em" id="btnCloseMdp"
@@ -158,7 +158,7 @@
                     <div style="padding: 10px;width: 100%">
                         <p class="pText">
                             <em class="emDif"> Numero : </em>
-                            <label class="labelDif">
+                            <label class="labelDif numberFont">
                                 <s:property value="compte.adresse.numero"/>
                             </label>
                         </p>
@@ -167,7 +167,7 @@
                             <label class="labelDif"><s:property value="compte.adresse.rue"/></label>
                         </p>
                         <p class="pText">
-                            <em class="emDif"> Code postal : </em>
+                            <em class="emDif numberFont"> Code postal : </em>
                             <label class="labelDif"><s:property value="compte.adresse.codePostal"/></label>
                         </p>
                         <p class="pText">

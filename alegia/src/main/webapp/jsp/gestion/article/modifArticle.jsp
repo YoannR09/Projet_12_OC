@@ -40,6 +40,12 @@
             <div style="width: 400px">
                 <div class="col-12 container border border-secondary shadow bgTran" id="cadreLog">
                     <div class="col-12">
+                        <div class="form-group">
+                            <label for="tailles" style="color: black;">Réference de l'article</label>
+                            <div >
+                                    <span style="font-weight: bold;margin: 5px"><s:property value="article.reference"/></span>
+                            </div>
+                        </div>
                         <div id="carouselExampleControls" class="carousel slide" data-ride="carousel" style=" margin-bottom: 5px">
                             <div class="carousel-inner border rounded" style="height: 100%">
                                 <s:iterator value="article.imageList" status="imageList">
@@ -81,7 +87,6 @@
                                 <span style="font-weight: bold;margin: 5px"><s:property value="taille.taille"/></span>
                             </s:iterator>
                         </div>
-
                     </div>
                     <div style="display:flex;justify-content: center;margin-top: 15px;width: 100%">
                         <button type="button" class="btn btn-dark" data-toggle="modal"

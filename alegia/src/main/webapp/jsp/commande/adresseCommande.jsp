@@ -120,9 +120,9 @@
                 <em>Ville  :  </em>
                 <span class="spanAdresse">  <s:property value="adresse.ville"/></span><br/>
                 <em>Code postal  :  </em>
-                <span class="spanAdresse">  <s:property value="adresse.codePostal"/></span><br/>
+                <span class="spanAdresse numberFont">  <s:property value="adresse.codePostal"/></span><br/>
                 <em>Numéro  :  </em>
-                <span class="spanAdresse">  <s:property value="adresse.numero"/></span><br/>
+                <span class="spanAdresse numberFont">  <s:property value="adresse.numero"/></span><br/>
                 <em>Rue  :  </em>
                 <span class="spanAdresse">  <s:property value="adresse.rue"/></span><br/>
                 <em>Information  :  </em>
@@ -142,9 +142,9 @@
             <em>Ville  :  </em>
             <span class="spanAdresse">  <s:property value="ville"/></span><br/>
             <em>Code postal  :  </em>
-            <span class="spanAdresse">  <s:property value="codePostal"/></span><br/>
+            <span class="spanAdresse numberFont">  <s:property value="codePostal"/></span><br/>
             <em>Numéro  :  </em>
-            <span class="spanAdresse">  <s:property value="numero"/></span><br/>
+            <span class="spanAdresse numberFont">  <s:property value="numero"/></span><br/>
             <em>Rue  :  </em>
             <span class="spanAdresse">  <s:property value="rue"/></span><br/>
             <em>Information  :  </em>

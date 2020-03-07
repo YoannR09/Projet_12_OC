@@ -245,13 +245,6 @@
             <result name="error">/jsp/error/error.jsp</result>
         </action>
 
-        <action name="doAdresseCommande"
-                class="fr.yr.site.alegia.action.GestionCommandeAction"
-                method="doAdresseCommande">
-            <result name="success">/jsp/commande/adresseCommande.jsp</result>
-            <result name="error">jsp/error/error.jsp</result>
-        </action>
-
 
         <action name="doCommande"
                 class="fr.yr.site.alegia.action.GestionCommandeAction"

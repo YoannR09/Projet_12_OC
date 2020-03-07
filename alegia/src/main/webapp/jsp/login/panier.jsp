@@ -90,12 +90,12 @@
                                      style="font-size:1em;font-weight: bold;margin-top:10px;">
                                     <s:param name="articleId" value="article.id"/>
                                     <s:property value="article.nom"/></s:a><br/>
-                                <em class="lab">Taille :  </em>
+                                <span class="lab">Taille :  </span>
                                 <span class="spanDonne" style="font-weight: bold"><s:property value="taille.taille"/></span><br/>
-                                <em class="lab">Prix :  </em>
-                                <span class="spanDonne" style="font-weight: bold"><s:property value="article.prix"/> €</span><br/>
-                                <em class="lab">Quantité :  </em>
-                                <span class="spanDonne" style="font-weight: bold"><s:property value="quantite"/></span>
+                                <span class="lab">Prix :  </span>
+                                <span class="spanDonne numberFont" style="font-weight: bold"><s:property value="article.prix"/> €</span><br/>
+                                <span class="lab">Quantité :  </span>
+                                <span class="spanDonne numberFont" style="font-weight: bold"><s:property value="quantite"/></span>
                                 <div class="badge badge-dark" style="margin-left: 10px">
                                 <s:a action="doPlusContenu" class="text-light" style="font-size:0.7em;margin-right:5px">
                                     <s:param name="contenuId" value="id"/>
@@ -123,22 +123,22 @@
             padding:15px;text-align: center;">
                 <p><span style="width: 100%;text-align: center;font-size: 1.1em;font-weight: bold">Votre commande</span></p>
                 <span style="display:flex;justify-content: space-between">
-                <em class="lab">Nombre d'article(s) : </em><label class="lab"><s:property value="countArticle"/></label>
+                <span class="lab">Nombre d'article(s) : </span><label class="lab numberFont"><s:property value="countArticle"/></label>
                     </span>
 
                 <span style="display:flex;justify-content: space-between">
-                    <em class="lab">Montant HT : </em><label class="lab"><s:property value="totalPrix"/> €</label>
+                    <span class="lab">Montant HT : </span><label class="lab numberFont"><s:property value="totalPrix"/> €</label>
                 </span>
                 <span style="display:flex;justify-content: space-between">
-                    <em class="lab">TVA à 10% : </em><label class="lab"><s:property value="tva"/> €</label>
+                    <span class="lab">TVA à 10% : </span><label class="lab numberFont"><s:property value="tva"/> €</label>
                 </span>
                 <span style="display:flex;justify-content: space-between">
-                    <em class="lab">Livraison : </em><label class="lab"><s:property value="livraison"/> €</label>
+                    <span class="lab">Livraison : </span><label class="lab numberFont"><s:property value="livraison"/> €</label>
                 </span><br/>
 
                 <p> <span style="display:flex;justify-content: space-between">
-                    <em class="lab" style="font-size: 0.9em;">Total à payer TTC : </em>
-                    <label class="lab" style="font-size: 0.9em"><s:property value="totalPayer"/> €</label>
+                    <span class="lab" style="font-size: 0.9em;">Total à payer TTC : </span>
+                    <label class="lab numberFont" style="font-size: 0.9em"><s:property value="totalPayer"/> €</label>
                 </span></p>
                 <s:if test="countArticle == 0">
                     <button class="btn btn-dark" style="font-size:0.8em;" disabled>Passer la commande</button>
