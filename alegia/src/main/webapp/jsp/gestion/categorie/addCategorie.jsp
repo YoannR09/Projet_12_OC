@@ -39,7 +39,7 @@
 </header>
 <div id="blocCenter" style="display: flex;justify-content: center;">
     <div class="col-9" style="max-width: 600px">
-        <label class="textTop">Ajouter un article</label>
+        <label class="textTop">Ajouter une catégorie</label>
         <div class="col-12" style="display: flex;justify-content: space-around">
             <div style="width: 500px">
                 <div class="col-12 container border border-secondary shadow bgTran" id="cadreLog">

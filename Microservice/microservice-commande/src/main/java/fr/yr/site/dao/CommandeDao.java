@@ -14,7 +14,7 @@ public interface CommandeDao extends JpaRepository<Commande, Integer> {
     Commande findByNumero(String numero);
 
     @Query(value = "SELECT * FROM commande WHERE commande.compte_id = :compteId " +
-            " AND commande.statut_id != 1 ORDER BY id DESC", nativeQuery = true)
+            " AND commande.statut_id != 1 ORDER BY commande.id DESC", nativeQuery = true)
     List<Commande> findByCompteIdOrderByIdDesc(int compteId);
 
     List<Commande> findByStatutIdOrderByIdDesc(int statutId);
@@ -25,7 +25,7 @@ public interface CommandeDao extends JpaRepository<Commande, Integer> {
             " AND prenom LIKE %:prenom%" +
             " AND email LIKE %:email%" +
             " AND commande.compte_id = compte.id " +
-            " AND commande.statut_id != 1 ORDER BY id DESC", nativeQuery = true)
+            " AND commande.statut_id != 1 ORDER BY commande.id DESC", nativeQuery = true)
     List<Commande> findByNomPrenomEmail(@Param("nom") String nom,
                                         @Param("prenom") String prenom,
                                         @Param("email") String email);
@@ -34,19 +34,19 @@ public interface CommandeDao extends JpaRepository<Commande, Integer> {
     @Query(value = "SELECT * FROM commande,compte WHERE nom LIKE %:nom%"+
             " AND prenom LIKE %:prenom%" +
             " AND commande.compte_id = compte.id" +
-            " AND commande.statut_id != 1 ORDER BY id DESC", nativeQuery = true)
+            " AND commande.statut_id != 1 ORDER BY commande.id DESC", nativeQuery = true)
     List<Commande> findByNomPrenom(@Param("nom") String nom,
                                         @Param("prenom") String prenom);
 
 
     @Query(value = "SELECT * FROM commande,compte WHERE nom LIKE %:nom%"+
             " AND commande.compte_id = compte.id" +
-            " AND commande.statut_id != 1 ORDER BY id DESC", nativeQuery = true)
+            " AND commande.statut_id != 1 ORDER BY commande.id DESC", nativeQuery = true)
     List<Commande> findByNom(@Param("nom") String nom);
 
     @Query(value = "SELECT * FROM commande,compte WHERE prenom LIKE %:prenom%"+
             " AND commande.compte_id = compte.id" +
-            " AND commande.statut_id != 1 ORDER BY id DESC", nativeQuery = true)
+            " AND commande.statut_id != 1 ORDER BY commande.id DESC", nativeQuery = true)
     List<Commande> findByPrenom(@Param("prenom") String nom);
 
     @Query(value = "SELECT * FROM commande,compte WHERE email LIKE %:email%"+
@@ -58,7 +58,7 @@ public interface CommandeDao extends JpaRepository<Commande, Integer> {
     @Query(value = "SELECT * FROM commande,compte WHERE nom LIKE %:nom%"+
             " AND email LIKE %:email%" +
             " AND commande.compte_id = compte.id " +
-            " AND commande.statut_id != 1 ORDER BY id DESC", nativeQuery = true)
+            " AND commande.statut_id != 1 ORDER BY commande.id DESC", nativeQuery = true)
     List<Commande> findByNomEmail(@Param("nom") String nom,
                                         @Param("email") String email);
 
@@ -67,7 +67,7 @@ public interface CommandeDao extends JpaRepository<Commande, Integer> {
             " prenom LIKE %:prenom%" +
             " AND email LIKE %:email%" +
             " AND commande.compte_id = compte.id" +
-            " AND commande.statut_id != 1 ORDER BY id DESC", nativeQuery = true)
+            " AND commande.statut_id != 1 ORDER BY commande.id DESC", nativeQuery = true)
     List<Commande> findByPrenomEmail(@Param("prenom") String prenom,
                                         @Param("email") String email);
 

@@ -141,7 +141,7 @@ public class GestionPanierAction extends ActionSupport {
             categorieList = getFactory().getCategorieProxy().findAll();
             totalPrix = Float.toString(totalContenu);
             totalPrix = instance.format(totalContenu);
-
+            totalPayer = instance.format((totalContenu * 1.1) + 10);
             tva = instance.format((totalContenu*1.1)-totalContenu);
             return ActionSupport.SUCCESS;
         }catch (Exception e){

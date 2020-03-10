@@ -104,10 +104,10 @@
                                     <td><s:property value="taille"/></td>
                                 </tr>
                             </s:iterator>
-                            <td>Montant HT : <span class="numberFont"><s:property value="commande.prixTotal"/> €</span></td>
-                            <td>TVA à 10% :  <span class="numberFont"><s:property value="commande.tva"/> €</span></td>
-                            <td>Livraison : <span class="numberFont"><s:property value="commande.livraison"/> €</span></td>
-                            <td>Total TTC : <span class="numberFont"><s:property value="commande.totalPayer"/> €</span></td>
+                            <td>Montant HT<br/><span class="numberFont"><s:property value="commande.prixTotal"/> €</span></td>
+                            <td>TVA à 10%<br/><span class="numberFont"><s:property value="commande.tva"/> €</span></td>
+                            <td>Livraison<br/><span class="numberFont"><s:property value="commande.livraison"/> €</span></td>
+                            <td>Total TTC<br/><span class="numberFont"><s:property value="commande.totalPayer"/> €</span></td>
                             </tbody>
                         </table>
                     </div>

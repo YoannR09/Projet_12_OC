@@ -216,7 +216,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
             String email = getEmailContext();
             compte = getFactory().getCompteProxy().findByEmail(email.toLowerCase());
             compte.setAdresse(getFactory().getAdresseProxy().getAdresse(compte.getAdresseId()));
-            countPanier = gm.generateCountPanier(factory,getEmail());
+            countPanier = gm.generateCountPanier(factory,getEmailContext());
             categorieList = getFactory().getCategorieProxy().findAll();
             return ActionSupport.SUCCESS;
         }catch (Exception e){
@@ -251,7 +251,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
      */
     public String doChangeMotDePasse(){
         try {
-            countPanier = gm.generateCountPanier(factory,getEmail());
+            countPanier = gm.generateCountPanier(factory,getEmailContext());
             if (motDePasse.equals(verif)) {
                 String getEmail = getEmailContext();
                 compte = getFactory().getCompteProxy().findByEmail(getEmail.toLowerCase());
@@ -293,7 +293,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
 
     public String doChangeAdresse(){
         try {
-            countPanier = gm.generateCountPanier(factory,getEmail());
+            countPanier = gm.generateCountPanier(factory,getEmailContext());
             if (motDePasse != null && motDePasse.equals(verif)) {
                 String getEmail = getEmailContext();
                 compte = getFactory().getCompteProxy().findByEmail(getEmail.toLowerCase());
@@ -491,4 +491,6 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
     public void setVerifMdp(String verifMdp) {
         this.verifMdp = verifMdp;
     }
+
+
 }

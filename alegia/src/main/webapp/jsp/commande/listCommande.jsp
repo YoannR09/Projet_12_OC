@@ -128,10 +128,10 @@
                                         <td><s:property value="taille"/></td>
                                     </tr>
                                 </s:iterator>
-                                <td>Montant HT : <label class="numberFont"><s:property value="prixTotal"/> €</label></td>
-                                <td>TVA à 10% :  <label class="numberFont"><s:property value="tva"/> €</label></td>
-                                <td>Livraison : <label class="numberFont"><s:property value="livraison"/> €</label></td>
-                                <td>TOTAL TTC : <label class="numberFont"><s:property value="totalPayer"/> €</label></td>
+                                <td>Montant HT<br/><label class="numberFont"><s:property value="prixTotal"/> €</label></td>
+                                <td>TVA à 10%<br/><label class="numberFont"><s:property value="tva"/> €</label></td>
+                                <td>Livraison<br/><label class="numberFont"><s:property value="livraison"/> €</label></td>
+                                <td>TOTAL TTC<br/><label class="numberFont"><s:property value="totalPayer"/> €</label></td>
                                 </tbody>
                             </table>
                             <s:if test="!statut.equals('EN ATTENTE DE VALIDATION')">

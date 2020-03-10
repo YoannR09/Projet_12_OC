@@ -85,7 +85,7 @@ margin-right: 10px">
     <div style="text-align: left;padding :5px;height:200px;width: 350px" class="border border-secondary shadow p-3 mb-5 bgTran rounded">
         <h4 style="font-weight: bold">BIENVENUE SUR LE SITE DE L'ALEGIA</h4>
         <h6>Ce que nous proposons</h6>
-        <p style="font-size: 0.8em;font-style: italic">Ce site propose un catalogue d'article à l'effigie de l'alegia.
+        <p style="font-size: 0.8em;font-style: italic">Ce site propose un catalogue d'articles à l'effigie de l'alegia.
         </p>
         <span style="margin-left: 240px">
             <s:a action="" style="font-size:0.7em;">

@@ -4,24 +4,6 @@
 
    1. Faire un backup de la base de données avec le fichier SQL/backup.
     
-   #   Mettre en place bibliotheque-seveur :
-    
-####   Modifier les variables dans le fichier webapp/META-INF/context.xml :
-
-   1. Mettre l'url de la base de données.
-   2. Changer l'username.
-   3. Changer le password.
-   
-####   Modifier le path du fichier config.properties :
-    
-   1. Mettre en place le Path du fichier config.properties dans
-    les classes fr.oc.projet.webapp.action.AjouterPretAction fr.oc.projet.webapp.action.ConsulterPretAction.
-     <br/>
-    Modifier la variable propFile.
-    
-   ![automated like clockwork](doc/image/image5.png)
-    
-    
 
 #   Mettre en place les microservices :
 
@@ -53,25 +35,18 @@
    
    
    Pour faire fonctionner les microservices, vous devez lancer eureka dans un premier temps.
+   <br/>
+   Une fois les eureka et les microservices lancés vous pouvez lancer Zuul
    
    
-   # Mettre en place bibliotheque-client
+   # Mettre en place la partie client "alegia"
    
    
    1. Effectuer les mêmes actions que pour un microservice.
-   2. Chaques microservices doit-être lancé pour pouvoir lancer le client.
+   2. Les microservices doivent être lancés pour consulter le site.
    3. Modifier l'url des interfaces pour les microservices qui fonctionne avec l'ip d'un autre ordinateur,
    les remplacer par localhost.
-   
-   ####   Modifier le path du fichier config.properties :
-          
-   1. Mettre en place le Path du fichier config.properties dans
-          la classe
-          fr.oc.projet.bibliothequeclient.action.GestionPretAction
-           <br/>
-          Modifier la variable propFile.
-          
-   ![automated like clockwork](doc/image/image5.png)
+   4. Modifier la variable filePath dans la classe GestionSiteAction, remplacer par le chemin de votre ordinateur pour aller au projet
    
    
    
@@ -87,4 +62,4 @@
   - Installer Node.js 
   - Installer newman avec la commande suivante : npm install -g newman
   - Se placer dans le fichier principal du projet.
-  - Lancer la commande suivante : newman run tests/Bibliothèque_test.postman_collection.json
+  - Lancer la commande suivante : newman run tests/alegia_test.postman_collection.json

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Classe pour récupérer les données du MicroserviceContenuPanier
  */
-@FeignClient(name = "zuul-server", url = "192.168.1.61:9004")
+@FeignClient(name = "zuul-server", url = "localhost:9004")
 public interface MicroserviceContenuPanierProxy {
 
     @GetMapping(value = "/microservice-contenu/Contenu/{id}")

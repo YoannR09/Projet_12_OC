@@ -22,6 +22,9 @@ import java.util.Map;
 /**
  * Classe qui gére le paiement avec PayPal
  * Fonctionne avec une API fournit par PayPal
+ * Dans un premier temps on passe par une authentifaction de l'utilisateur et de la transaction
+ * Ensuite on demande la confirmation à l'utilisateur.
+ * Une fois que l'utilisateur confirme on effectue la transaction avec le service PayPal
  */
 public class GestionPayPalAction extends ActionSupport implements SessionAware {
 
@@ -46,6 +49,7 @@ public class GestionPayPalAction extends ActionSupport implements SessionAware {
     private         String              shipping;
     private         String              tax;
     private         String              total;
+    private         String              livraison;
     private         Integer             countPanier;
     private         Commande            commande;
     private         Integer             commandeId;
@@ -120,6 +124,7 @@ public class GestionPayPalAction extends ActionSupport implements SessionAware {
             }
             countPanier = gm.generateCountPanier(factory
                     ,(String) this.session.get("email"));
+            livraison = instance.format(10);
             int count = 0;
             float total = 0;
             gm.generateCommande(commande,count,total, factory);
@@ -311,5 +316,13 @@ public class GestionPayPalAction extends ActionSupport implements SessionAware {
 
     public void setCategorieList(List<Categorie> categorieList) {
         this.categorieList = categorieList;
+    }
+
+    public String getLivraison() {
+        return livraison;
+    }
+
+    public void setLivraison(String livraison) {
+        this.livraison = livraison;
     }
 }

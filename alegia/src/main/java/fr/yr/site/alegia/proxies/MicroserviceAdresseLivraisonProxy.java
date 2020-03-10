@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Classe pour récupérer les données du MicroserviceLivraison
  */
-@FeignClient(name = "zuul-server", url = "192.168.1.61:9004")
+@FeignClient(name = "zuul-server", url = "localhost:9004")
 public interface MicroserviceAdresseLivraisonProxy {
 
     @GetMapping(value = "/microservice-livraison/Livraison/{id}")

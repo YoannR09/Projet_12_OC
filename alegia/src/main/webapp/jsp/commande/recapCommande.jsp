@@ -15,28 +15,10 @@
             text-align: center;
             font-size: 0.8em;
         }
-        #bottom
-        {
-            display: flex;
-            justify-content: space-around;
-            width: 100%;
-        }
-        #labelRecherche
-        {
-            left: 10px;
-            font-size: 1.5em;
-            margin: 10px;
-            font-weight: bold;
-        }
         #cadreArticle,#cadreAutreAdresse
         {
             width: 100%;
             margin: 10px;
-        }
-        #cadreBtn
-        {
-            display: flex;
-            justify-content: space-around;
         }
         span
         {
@@ -47,40 +29,13 @@
             font-size: 1.3em;
             margin: 10px;
         }
-        .btnType
-        {
-            font-size: 0.7em;
-            margin: 10px;
-        }
         #blocCenter
         {
             display: flex;
             justify-content: center;
             margin-top: 75px;
         }
-        .btnUnder
-        {
-            margin-top : 5px;
-            margin-bottom : 5px;
-            font-size: 0.8em;
-            width: 100%;
-        }
-        #radio
-        {
-            display: flex;
-            justify-content: space-around;
-            width: 300px;
-        }
-        #btnRecherche
-        {
-            font-size: 0.8em;
-            height: 32px;
-            margin: auto;
-        }
-        #barreDeRecherche
-        {
-            padding: 15px;
-        }
+
         label,input
         {
             font-size: 0.7em;
@@ -129,10 +84,14 @@
                                 <td><s:property value="taille"/></td>
                             </tr>
                         </s:iterator>
-                        <td>Montant HT : </em><label class="numberFont"><s:property value="commande.prixTotal"/> €</label></td>
-                        <td>TVA à 10% :  </em><label class="numberFont"><s:property value="commande.tva"/> €</label></td>
-                        <td>Livraison : </em><label class="numberFont"><s:property value="livraison"/> €</label></td>
-                        <td>TOTAL TTC : </em><label class="numberFont"><s:property value="commande.totalPayer"/> €</label></td>
+                        <td>Montant HT<br/><label class="numberFont" style="font-size: 1em">
+                            <s:property value="commande.prixTotal"/> €</label></td>
+                        <td>TVA à 10%<br/><label class="numberFont" style="font-size: 1em">
+                            <s:property value="commande.tva"/> €</label></td>
+                        <td>Livraison<br/><label class="numberFont" style="font-size: 1em">
+                            <s:property value="livraison"/> €</label></td>
+                        <td>TOTAL TTC<br/><label class="numberFont" style="font-size: 1em">
+                            <s:property value="commande.totalPayer"/> €</label></td>
                         </tbody>
                     </table>
                     <div style="width: 100%">

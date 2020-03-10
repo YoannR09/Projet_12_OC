@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * Classe pour récupérer les données du MicroserviceListTaille
  */
-@FeignClient(name = "zuul-server", url = "192.168.1.61:9004")
+@FeignClient(name = "zuul-server", url = "localhost:9004")
 public interface MicroserviceListTaille {
 
     @GetMapping(value = "/microservice-list/ListTaille/{id}")
