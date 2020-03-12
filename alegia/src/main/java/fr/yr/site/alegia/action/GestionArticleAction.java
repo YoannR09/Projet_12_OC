@@ -290,14 +290,16 @@ public class GestionArticleAction extends ActionSupport {
         }
     }
 
+    /**
+     * Méthode pour mettre à jour un article dans la base de données.
+     * @param article
+     * @param dispo
+     */
     private void updateArticle(Article article, Boolean dispo) {
         getFactory().getArticleProxy().update(article);
         articleList = getFactory().getArticleProxy()
                 .findByCategorieIdAndDisponible(article.getCategorieId(),dispo);
-        categorieList = getFactory().getCategorieProxy().findAll();
         completeArticleList(articleList);
-
-        categorieList = getFactory().getCategorieProxy().findByDispo(true);
     }
 
     private void completeArticleList(List<Article> vList){

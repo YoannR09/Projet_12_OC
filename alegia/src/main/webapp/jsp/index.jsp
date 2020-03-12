@@ -11,13 +11,11 @@
 <head>
     <%@ include file="./_include/head.jsp"%>
     <style type="text/css">
-        #blocCenter
-        {
-            display: flex;
-            justify-content: center;
-            margin-top: 100px;
-        }
 
+        #bloc
+        {
+            margin-bottom: 100px;
+        }
         body
         {
             margin:0;
@@ -30,68 +28,33 @@
             font-weight: bold;
             font-family: 'Odibee Sans' ;
         }
-        .pImage
-        {
-            font-family: 'Raleway' ;
-            font-size: 0.8em;
-        }
     </style>
 </head>
 <body>
 <%@ include file="./_include/header.jsp"%>
-<div id="blocCenter" style="display: flex;justify-content: center;z-index: 3">
-    <div class="nav-item" style="text-align: center;width: 550px;box-shadow: 0px 0px 30px -8px rgba(0,0,0,0.50);
-margin-right: 10px">
-        <div id="carouselExampleIndicators" class="carousel slide rounded" data-ride="carousel">
-            <ol class="carousel-indicators">
-                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
-                <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
-            </ol>
-            <div class="carousel-inner rounded" style="height: 100%">
-                <div class="carousel-item active" style="width: 100%;height: 100%;">
-                    <img class="d-block w-100" src="./image/index2.jpg"
-                         alt="1 slide">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5 class="titreImage">UNE FAMILLE</h5>
-                        <p class="pImage">L'alegia c'est avant tout une famille</p>
-                    </div>
-                </div>
-                <div class="carousel-item" style="width: 100%;height: 100%;">
-                    <img style="opacity: 0.9;" class="d-block w-100" src="./image/index4.jpg" alt="2 slide">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5 class="titreImage">UN LIEU</h5>
-                        <p class="pImage">C'est un lieu pour passer un bon moment</p>
-                    </div>
-                </div>
-                <div class="carousel-item" style="width: 100%;height: 100%;">
-                    <img style="opacity: 0.9;" class="d-block w-100" src="./image/index3.jpg" alt="3 slide">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5 class="titreImage">DE LA MUSIQUE</h5>
-                        <p class="pImage">Une passion pour la musique</p>
-                    </div>
-                </div>
-                <div class="carousel-item" style="width: 100%;height: 100%;">
-                    <img class="d-block w-100" src="./image/index5.jpg" alt="4 slide">
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5 class="titreImage">UNE MARQUE</h5>
-                        <p class="pImage">Description de la marque</p>
-                    </div>
-                </div>
+<div id="bloc" style="display: flex;justify-content:center;z-index: 3">
+    <div id="carouselExampleIndicators" class="carousel slide"
+         data-ride="carousel" style="width: 100%;">
+        <ol class="carousel-indicators">
+            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+            <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+        </ol>
+        <div class="carousel-inner" style="height: 100%">
+            <div class="carousel-item active" style="width: 100%;height: 100%;">
+                <img class="d-block w-100" src="./image/fond_1.jfif"
+                     alt="1 slide">
+            </div>
+            <div class="carousel-item" style="width: 100%;height: 100%;">
+                <img style="opacity: 0.9;" class="d-block w-100" src="./image/fond_2.jfif" alt="2 slide">
             </div>
         </div>
     </div>
-    <div style="text-align: left;padding :5px;height:200px;width: 350px" class="border border-secondary shadow p-3 mb-5 bgTran rounded">
-        <h4 style="font-weight: bold">BIENVENUE SUR LE SITE DE L'ALEGIA</h4>
-        <h6>Ce que nous proposons</h6>
-        <p style="font-size: 0.8em;font-style: italic">Ce site propose un catalogue d'articles à l'effigie de l'alegia.
-        </p>
-        <span style="margin-left: 240px">
-            <s:a action="" style="font-size:0.7em;">
-            En savoir plus</s:a>
-        </span>
-    </div>
+</div>
+<div style="text-align: left;padding :5px;height:300px;width: 400px;position: absolute;top:150px;left: 250px;color: white">
+    <h2 style="font-weight: bold;text-shadow: 1px 1px #000000;">Bienvenue sur le site de l'alegia !</h2>
+    <h4 style="text-shadow: 1px 1px #000000;">Ce que nous proposons</h4>
+    <p style="font-size: 0.9em;font-style: italic;text-shadow: 1px 1px #000000;">Ce site propose un catalogue d'articles à l'effigie de l'alegia.
+    </p>
 </div>
 <footer>
     <%@ include file="_include/footer.jsp"%>

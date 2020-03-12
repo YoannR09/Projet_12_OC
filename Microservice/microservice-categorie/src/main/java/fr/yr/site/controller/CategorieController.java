@@ -106,6 +106,19 @@ public class CategorieController {
         }
     }
 
+    /**
+     * Méthode pour supprimer une catégorie via un id
+     * @param id
+     */
+    @DeleteMapping(value = "/Categorie/{id}")
+    public void delete(@PathVariable int id){
+        try {
+            getDao().deleteById(id);
+        }catch (Exception e){
+            logger.error(e);
+        }
+    }
+
     protected CategorieDao getDao() {
         return dao;
     }

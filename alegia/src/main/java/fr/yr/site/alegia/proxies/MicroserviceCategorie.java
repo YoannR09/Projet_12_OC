@@ -56,5 +56,8 @@ public interface MicroserviceCategorie {
      */
     @PutMapping(value = "/microservice-categorie/Categorie")
     void update(@RequestBody Categorie categorie);
+
+    @DeleteMapping(value = "/microservice-categorie/Categorie/{id}")
+    void delete(@PathVariable("id") int id);
 }
 

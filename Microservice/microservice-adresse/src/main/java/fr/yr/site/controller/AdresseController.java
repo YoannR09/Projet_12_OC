@@ -68,12 +68,14 @@ public class AdresseController {
      * @param rue
      * @return
      */
-    @GetMapping(value = "/Adresse/All/{ville},{codePostal},{numero},{rue}")
-    public Adresse findByVilleAndCodePostalAndNumeroAndRue(
-            @PathVariable String ville,@PathVariable String codePostal,
-            @PathVariable String numero,@PathVariable String rue){
+    @GetMapping(value = "/Adresse/All/{ville},{codePostal},{numero},{rue},{info}")
+    public Adresse findByVilleAndCodePostalAndNumeroAndRueAndInfo(
+            @PathVariable String ville,
+            @PathVariable String codePostal,
+            @PathVariable String numero,
+            @PathVariable String rue,@PathVariable String info){
         try {
-            return getDao().findByVilleAndCodePostalAndNumeroAndRue(ville, codePostal, numero, rue);
+            return getDao().findByVilleAndCodePostalAndNumeroAndRueAndInfo(ville,codePostal,numero,rue,info);
         }catch (Exception e){
             return null;
         }

@@ -105,7 +105,7 @@
 <%@ include file="../_include/header.jsp"%>
 <div id="blocCenter" style="display: flex;justify-content: center;">
     <div class="col-9" style="max-width: 600px">
-        <label class="textTop">Désolé nous avons rencontrer un problème</label>
+        <label class="textTop">Désolé un problème est survenu</label>
         <div class="col-12 container border border-secondary shadow p-3 mb-5 bgTran rounded" id="cadreArticle">
             <div>
                 <i class="fas fa-exclamation-circle text-danger" style="font-size: 2em"></i>

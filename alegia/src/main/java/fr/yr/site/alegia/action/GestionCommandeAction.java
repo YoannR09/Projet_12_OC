@@ -16,6 +16,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Classe qui gère les commandes coté utilisateur.
+ * Gère l'affichage de ses commandes déjà réalisés
+ * Gère la réalisation d'une commande.
+ */
 public class GestionCommandeAction extends ActionSupport {
 
 
@@ -115,20 +120,22 @@ public class GestionCommandeAction extends ActionSupport {
             newAdresse.setNumero(numero);
             newAdresse.setCodePostal(codePostal);
             if (getFactory().getAdresseProxy()
-                    .findByVilleAndCodePostalAndNumeroAndRue(
+                    .findByVilleAndCodePostalAndNumeroAndRueAndInfo(
                             ville
                             ,codePostal
                             ,numero
-                            ,rue) == null) {
+                            ,rue
+                            ,info) == null) {
                 getFactory().getAdresseProxy().add(newAdresse);
             }
             AdresseLivraison al = new AdresseLivraison();
             al.setAdresseId(getFactory().getAdresseProxy()
-                    .findByVilleAndCodePostalAndNumeroAndRue(
+                    .findByVilleAndCodePostalAndNumeroAndRueAndInfo(
                             ville
                             ,codePostal
                             ,numero
-                            ,rue).getId());
+                            ,rue
+                            ,info).getId());
             al.setCompteId(commande.getCompteId());
             getFactory().getLivraisonProxy().add(al);
             adresseList = new ArrayList<>();

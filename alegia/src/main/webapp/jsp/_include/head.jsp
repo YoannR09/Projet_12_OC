@@ -31,10 +31,13 @@
     .btnNav
     {
         color: orange;
+        letter-spacing: 1px;
+        font-family: 'Roboto', sans-serif;
     }
     .btnNav:hover
     {
         color: #FFCA51;
+        font-weight: bold;
     }
     *
     {
@@ -70,5 +73,26 @@
     #blocCenter,#page
     {
         margin-bottom: 200px;
+    }
+    .aNav:after {
+        background: none repeat scroll 0 0 transparent;
+        bottom: 0;
+        content: "";
+        display: block;
+        height: 1px;
+        left: 50%;
+        position: relative;
+        background: #FFCA51;
+        transition: width 0.5s ease 0s, left 0.5s ease 0s;
+        width: 0;
+    }
+    .aNav:hover:after {
+        width: 100%;
+        left: 0;
+    }
+    @media screen and (max-height: 300px) {
+        ul {
+            margin-top: 40px;
+        }
     }
 </style>

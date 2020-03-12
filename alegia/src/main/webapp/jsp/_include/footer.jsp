@@ -29,7 +29,6 @@ display: flex;justify-content: space-around;">
     </div>
     <div style="width: 25%;text-align: center;margin: 25px;">
         <div style="color: lightgray;width: 100%;text-align: center;margin-bottom: 17px;font-weight: bold"><em style="font-size: 0.6em"> Aide </em> </div>
-        <div class="text-warning"><em style="font-size: 0.6em;"><s:a action="" class="text-warning">Qui nous sommes ?</s:a>  </em> </div>
         <div class="text-warning"><em style="font-size: 0.6em"><s:a action="" class="text-warning">Conditions genérales de ventes</s:a>  </em> </div>
     </div>
 </div>

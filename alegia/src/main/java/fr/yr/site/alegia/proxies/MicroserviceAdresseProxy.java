@@ -27,10 +27,13 @@ public interface MicroserviceAdresseProxy {
      * @param rue
      * @return
      */
-    @GetMapping(value = "/microservice-adresse/Adresse/All/{ville},{codePostal},{numero},{rue}")
-    Adresse findByVilleAndCodePostalAndNumeroAndRue(
-            @PathVariable("ville") String ville,@PathVariable("codePostal") String codePostal,
-            @PathVariable("numero") String numero,@PathVariable("rue") String rue);
+    @GetMapping(value = "/microservice-adresse/Adresse/All/{ville},{codePostal},{numero},{rue},{info}")
+    Adresse findByVilleAndCodePostalAndNumeroAndRueAndInfo(
+            @PathVariable("ville") String ville,
+            @PathVariable("codePostal") String codePostal,
+            @PathVariable("numero") String numero,
+            @PathVariable("rue") String rue,
+            @PathVariable("info") String info);
 
     /**
      * Méthode pour récupérer une adresse via un id

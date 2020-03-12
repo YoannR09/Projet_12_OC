@@ -45,18 +45,19 @@ public class AdresseControllerTest {
         // GIVEN
         Adresse adresse = new Adresse();
         adresse.setCodePostal("83110");
-        when(controller.findByVilleAndCodePostalAndNumeroAndRue(
+        when(controller.findByVilleAndCodePostalAndNumeroAndRueAndInfo(
                 anyString()
                 ,anyString()
                 ,anyString()
-                ,anyString())).thenReturn(adresse);
+                ,anyString(),anyString())).thenReturn(adresse);
 
         // WHEN
-        Adresse adresseTest = controller.findByVilleAndCodePostalAndNumeroAndRue(
+        Adresse adresseTest = controller.findByVilleAndCodePostalAndNumeroAndRueAndInfo(
                 "Sanary",
                 "83110",
                 "24",
-                "Rue"
+                "Rue",
+                "Info"
         );
 
         // THEN

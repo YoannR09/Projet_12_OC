@@ -5,7 +5,6 @@ import com.opensymphony.xwork2.ActionSupport;
 import fr.yr.site.alegia.beans.Categorie;
 import fr.yr.site.alegia.beans.Commande;
 import fr.yr.site.alegia.beans.Compte;
-import fr.yr.site.alegia.beans.LigneDeCommande;
 import fr.yr.site.alegia.configuration.Factory;
 import fr.yr.site.alegia.configuration.GenerateMethod;
 import fr.yr.site.alegia.configuration.MailGestion;
@@ -14,9 +13,14 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
+/**
+ * Classe qui gère les commandes du coté administrateur.
+ * Gère la consultation des commandes réalisés par les clients.
+ * Gère l'évolution des commandes.
+ * Gérer
+ */
 public class GestionCommandeAdminAction extends ActionSupport {
 
     private static final Logger logger = LogManager.getLogger();
@@ -27,23 +31,29 @@ public class GestionCommandeAdminAction extends ActionSupport {
 
     private GenerateMethod gm = new GenerateMethod();
 
-    private List<Commande> commandeList;
-    private List<Commande> commandeListSize;
-    private List<Categorie> categorieList;
-    private boolean max;
-    private String nom;
-    private String prenom;
-    private String email;
-    private String statut;
-    private String statutList;
-    private Integer commandeId;
-    private Integer countPanier;
-    private Integer listSize;
-    private String numero;
-    private String infoMessage;
-    private Compte compte;
-    private Commande commande;
+    private         List<Commande>      commandeList;
+    private         List<Commande>      commandeListSize;
+    private         List<Categorie>     categorieList;
+    private         boolean             max;
+    private         String              nom;
+    private         String              prenom;
+    private         String              email;
+    private         String              statut;
+    private         String              statutList;
+    private         Integer             commandeId;
+    private         Integer             countPanier;
+    private         Integer             listSize;
+    private         String              numero;
+    private         String              infoMessage;
+    private         Compte              compte;
+    private         Commande            commande;
 
+    /**
+     * Méthode qui modifie le statut d'une commande réalisé par un client.
+     * Un mail est envoyé après un changement de statut.
+     * L'envoie de mail est géré par la classe MailGestion.
+     * @return
+     */
     public String doCommandeChangeStatut(){
         try {
             countPanier = gm.generateCountPanier(factory,getEmailContext());
@@ -122,7 +132,11 @@ public class GestionCommandeAdminAction extends ActionSupport {
         }
     }
 
-
+    /**
+     * Classe qui permet l'affichage des détails d'une commande
+     * qui a été sélectionné par l'administrateur.
+     * @return
+     */
     public String doDetailCommande(){
         try {
             countPanier = gm.generateCountPanier(factory,getEmailContext());
@@ -140,6 +154,10 @@ public class GestionCommandeAdminAction extends ActionSupport {
         }
     }
 
+    /**
+     * Méthode pour générer le contenu d'une commande.
+     * @param c
+     */
     private void generateCommande(Commande c) {
         c.setStatut(c.generateStatut());
         compte = getFactory().getCompteProxy().findById(c.getCompteId());
@@ -148,6 +166,13 @@ public class GestionCommandeAdminAction extends ActionSupport {
         gm.generateCommande(c,count,total, getFactory());
     }
 
+    /**
+     * Méthode pour afficher le formulaire de recherche d'une commande.
+     * Le formulaire de recherche contient deux types de recherche
+     * Une recherche via client (nom,pseudo,email).
+     * Une recherche via commande (numéro de commande).
+     * @return
+     */
     public String doRechercheForm(){
         try {
             countPanier = gm.generateCountPanier(factory,getEmailContext());
@@ -192,6 +217,10 @@ public class GestionCommandeAdminAction extends ActionSupport {
         }
     }
 
+    /**
+     * Méthode pour afficher une plus grande liste de commande.
+     * @return
+     */
     public String doVoirPlus(){
         try {
             commandeListSize = new ArrayList<>();
@@ -199,6 +228,9 @@ public class GestionCommandeAdminAction extends ActionSupport {
             if (statut != null && !statut.equals("")){
                 commandeList = getFactory().getCommandeProxy()
                         .getCOmmandeByStatutId(Integer.parseInt(statut));
+                for (Commande c:commandeList){
+                    generateCommande(c);
+                }
                 doListSize(commandeList);
                 if(Integer.parseInt(statut) == 2){
                     statutList = "EN COURS DE PREPARATION";
@@ -225,6 +257,10 @@ public class GestionCommandeAdminAction extends ActionSupport {
         }
     }
 
+    /**
+     * Méthode pour faire évoluer le nombre de commande affiché.
+     * @param commandeList
+     */
     public void doListSize(List<Commande> commandeList){
         if (listSize == null){
             listSize = 3;
@@ -238,6 +274,9 @@ public class GestionCommandeAdminAction extends ActionSupport {
         }
     }
 
+    /**
+     * Méthode qui recherche une liste de commande via un numéro de commande.
+     */
     public void rechercheByNumero(){
         commandeList = getFactory().getCommandeProxy().findCommandeByNumeroContaining(numero);
         statutList = "Numéro de la commande : "+numero;
@@ -247,6 +286,9 @@ public class GestionCommandeAdminAction extends ActionSupport {
         doListSize(commandeList);
     }
 
+    /**
+     * Méthode qui recherche un liste de commande via des informations client.
+     */
     public void rechercheByClient(){
         if (!nom.equals("") && !prenom.equals("") && !email.equals("")) {
             commandeList = getFactory().getCommandeProxy().findByNomPrenomEmail(nom, prenom, email);

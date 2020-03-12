@@ -58,9 +58,9 @@
             <div class="col-12 container border border-secondary shadow p-3 mb-5 bgTran rounded" id="cadreLog">
                 <s:form action="doNouveauMdp">
                     <div class="form-group" style="margin: 20px;">
-                        <label for="inputEmail" >Adresse électronique du compte </label>
+                        <label for="email" >Adresse électronique du compte </label>
                         <input name="email" pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" size="30"
-                               type="text" class="form-control" id="inputEmail" required>
+                               type="text" class="form-control" id="email" required>
                     </div>
                     <div style="display: flex;justify-content: space-around;padding-top: 25px">
                         <button type="submit" style="font-size: 0.7em" class="btn btn-dark">Confirmer</button>
@@ -73,5 +73,18 @@
 <footer>
     <%@ include file="../_include/footer.jsp"%>
 </footer>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $(window).click(function() {
+        var reg = new RegExp($('#email').attr("pattern"));
+        if (reg.test($('#email').val())){
+            $('#email').removeClass('is-invalid');
+            $('#email').addClass('is-valid');
+        }else if (!reg.test($('#email').val()) && $('#email').val() != ''){
+            $('#email').removeClass('is-valid');
+            $('#email').addClass('is-invalid');
+        }
+    });
+</script>
 </body>
 </html>

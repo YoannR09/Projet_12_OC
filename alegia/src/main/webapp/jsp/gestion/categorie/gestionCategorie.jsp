@@ -70,7 +70,7 @@
                         </s:a>
                     </s:else>
                     <s:if test="countArticle == 0">
-                        <s:a action="" class="btn btn-danger btnUnder">
+                        <s:a action="doCategorieDelete" class="btn btn-danger btnUnder">
                             Supprimer
                             <s:param name="categorieId" value="id"/>
                         </s:a>

@@ -54,6 +54,10 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
     private         String              codePostal;
     private         Compte              compte;
 
+    /**
+     * Méthode pour afficher la page de connexion
+     * @return
+     */
     public String pageLogin(){
         try {
             categorieList = getFactory().getCategorieProxy().findAll();
@@ -102,6 +106,15 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
         return vResult;
     }
 
+    /**
+     * Méthode pour créer un compte utilisateur.
+     * On vérifie les input du formulaire.
+     * On vérifie que l'adresse électronique n'est psa déjà utilisée.
+     * Création d'une adresse pour la lié au compte.
+     * Création d'un panier pour le lié au compte.
+     * Coté microservice le premier compte créé sera un compte adminstrateur.
+     * @return
+     */
     public String doInscription() {
         String vResult;
         categorieList = getFactory().getCategorieProxy().findAll();
@@ -109,15 +122,15 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
             if (email != null) {
                 if (email != null && email.equals(verifEmail) && motDePasse != null && motDePasse.equals(verifMdp)) {
                     if (getFactory().getCompteProxy().findByEmail(email) != null) {
-                        infoMessage = "Adresse éléctronique déjà utilisée";
+                        infoMessage = "Adresse éléctronique déjà associée à un autre compte";
                         vResult = ActionSupport.ERROR;
                     } else {
                         if (getFactory().getAdresseProxy()
-                                .findByVilleAndCodePostalAndNumeroAndRue(
+                                .findByVilleAndCodePostalAndNumeroAndRueAndInfo(
                                         ville
                                         , codePostal
                                         , numero
-                                        , rue) == null) {
+                                        , rue,info) == null) {
                             // Création de l'adresse
                             Adresse adresse = new Adresse();
                             adresse.setCodePostal(codePostal);
@@ -140,11 +153,12 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
                         compte.setPrenom(prenom.toUpperCase());
                         compte.setNumeroTelephone(numeroTelephone);
                         compte.setAdresseId(getFactory().getAdresseProxy()
-                                .findByVilleAndCodePostalAndNumeroAndRue(
+                                .findByVilleAndCodePostalAndNumeroAndRueAndInfo(
                                         ville
                                         , codePostal
                                         , numero
-                                        , rue).getId());
+                                        , rue
+                                        , info).getId());
                         getFactory().getCompteProxy().add(compte);
 
                         // Création du panier
@@ -270,17 +284,27 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
         }
     }
 
+    /**
+     * Méthode pour changer l'adresse électronique de l'utilisateur
+     * @return
+     */
     public String doChangeEmail(){
         try {
             if (email != null && email.equals(verifEmail)) {
-                String getEmail = getEmailContext();
-                compte = getFactory().getCompteProxy().findByEmail(getEmail.toLowerCase());
-                compte.setEmail(email);
-                categorieList = getFactory().getCategorieProxy().findAll();
-                getFactory().getCompteProxy().update(compte);
-                ActionContext.getContext().getSession().put("email", email);
-                countPanier = gm.generateCountPanier(factory,getEmail());
-                infoMessage = "Votre adresse éléctronique a été changé";
+                if (getFactory().getCompteProxy().findByEmail(email.toLowerCase()) != null) {
+                    String getEmail = getEmailContext();
+                    compte = getFactory().getCompteProxy().findByEmail(getEmail.toLowerCase());
+                    compte.setEmail(email);
+                    categorieList = getFactory().getCategorieProxy().findAll();
+                    getFactory().getCompteProxy().update(compte);
+                    ActionContext.getContext().getSession().put("email", email);
+                    countPanier = gm.generateCountPanier(factory, getEmail());
+                    infoMessage = "Votre adresse éléctronique a été changé";
+                }else {
+                    infoMessage = "Adresse électronique déjà associée à un autre compte";
+                    categorieList = getFactory().getCategorieProxy().findAll();
+                    countPanier = gm.generateCountPanier(factory, getEmail());
+                }
             }else {
                 this.addActionMessage("La vérification de l'adresse éléctronique est invalide");
             }
@@ -291,6 +315,11 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
         }
     }
 
+    /**
+     * Méthode pour changer l'adresse lié au compte.
+     * Si l'adresse est déjà existante on récupère l'id de celle-ci pour la lié au compte.
+     * @return
+     */
     public String doChangeAdresse(){
         try {
             countPanier = gm.generateCountPanier(factory,getEmailContext());
@@ -298,11 +327,12 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
                 String getEmail = getEmailContext();
                 compte = getFactory().getCompteProxy().findByEmail(getEmail.toLowerCase());
                 if (getFactory().getAdresseProxy()
-                        .findByVilleAndCodePostalAndNumeroAndRue(
+                        .findByVilleAndCodePostalAndNumeroAndRueAndInfo(
                                 ville
                                 ,codePostal
                                 ,numero
-                                ,rue) == null) {
+                                ,rue
+                                ,info) == null) {
                     // Création de l'adresse
                     Adresse adresse = new Adresse();
                     adresse.setRue(rue);
@@ -317,11 +347,12 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
                     getFactory().getAdresseProxy().add(adresse);
                 }
                 compte.setAdresseId(getFactory().getAdresseProxy()
-                        .findByVilleAndCodePostalAndNumeroAndRue(
+                        .findByVilleAndCodePostalAndNumeroAndRueAndInfo(
                                 ville
                                 ,codePostal
                                 ,numero
-                                ,rue).getId());
+                                ,rue
+                                ,info).getId());
                 compte.setAdresse(getFactory().getAdresseProxy().getAdresse(compte.getAdresseId()));
                 categorieList = getFactory().getCategorieProxy().findAll();
                 getFactory().getCompteProxy().update(compte);

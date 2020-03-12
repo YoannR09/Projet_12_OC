@@ -18,6 +18,9 @@ import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Classe qui permet la gestion du site via le role d'administrateur.
+ */
 public class GestionSiteAction extends ActionSupport {
 
     private static final Logger logger = LogManager.getLogger();
@@ -28,26 +31,26 @@ public class GestionSiteAction extends ActionSupport {
 
     private     GenerateMethod          gm = new GenerateMethod();
 
-    private     List<Categorie>         categorieList;
-    private     List<Categorie>         categories;
-    private     List<Article>           articleList;
-    private     List<Taille>            tailleList;
-    private     Article                 article;
-    private     Integer                 categorieId;
-    private     Integer                 articleId;
-    private     Integer                 imageId;
-    private     Integer                 countPanier;
-    private     String                  categorieSelect;
-    private     File                    myFile;
-    private     String                  myFileContentType;
-    private     String                  myFileFileName;
-    private     String                  descriptionImage;
-    private     String                  radio;
-    private     String                  infoMessage;
-    private     Part                    ficher;
-    private     List<String>            radioList = Arrays.asList("Disponible","Indisponible");
-    private     String                  filePath = "C:/Users/El-ra/Documents" +
-            "/Projet_12_OC/alegia/src/main/webapp/image/";
+    private         List<Categorie>         categorieList;
+    private         List<Categorie>         categories;
+    private         List<Article>           articleList;
+    private         List<Taille>            tailleList;
+    private         Article                 article;
+    private         Integer                 categorieId;
+    private         Integer                 articleId;
+    private         Integer                 imageId;
+    private         Integer                 countPanier;
+    private         String                  categorieSelect;
+    private         File                    myFile;
+    private         String                  myFileContentType;
+    private         String                  myFileFileName;
+    private         String                  descriptionImage;
+    private         String                  radio;
+    private         String                  infoMessage;
+    private         Part                    ficher;
+    private         List<String>            radioList = Arrays.asList("Disponible","Indisponible");
+    private         String                  filePath = "C:/Users/El-ra/Documents" +
+                                                        "/Projet_12_OC/alegia/src/main/webapp/image/";
 
 
     /**
@@ -158,6 +161,10 @@ public class GestionSiteAction extends ActionSupport {
         return vResult;
     }
 
+    /**
+     * Méthode pour ajouter une image à un article.
+     * @return
+     */
     public String doAjoutImage(){
         try {
             File destFile = new File(filePath+ "/", myFileFileName);

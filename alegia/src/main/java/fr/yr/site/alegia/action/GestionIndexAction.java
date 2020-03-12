@@ -14,6 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Classe qui gère l'affichage de la page d'acceuil et les pages vitrines.
+ */
 public class GestionIndexAction extends ActionSupport {
 
     private static final Logger logger = LogManager.getLogger();
@@ -31,8 +35,6 @@ public class GestionIndexAction extends ActionSupport {
 
     /**
      * Méthode pour afficher la page d'accueil du site
-     * On charge la liste des catégories existante, la liste
-     * des 5 derniers articles disponible créé
      * @return
      */
     public String accueil(){
@@ -48,6 +50,20 @@ public class GestionIndexAction extends ActionSupport {
             vResult = ActionSupport.ERROR;
         }
         return vResult;
+    }
+
+    /**
+     * Méthode pour afficher la page qui décrit la marque.
+     * @return
+     */
+    public String doConsulterLaMarque(){
+        try {
+            categorieList = getFactory().getCategorieProxy().findAll();
+            countPanier = gm.generateCountPanier(factory,getEmail());
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            return ActionSupport.ERROR;
+        }
     }
 
     protected Factory getFactory() {

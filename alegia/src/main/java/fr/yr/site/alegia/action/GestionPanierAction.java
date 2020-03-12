@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.text.NumberFormat;
 import java.util.List;
 
+/**
+ * Classe qui permet de gérer le panier de l'utilisateur
+ */
 public class GestionPanierAction extends ActionSupport {
 
     private static final Logger logger = LogManager.getLogger();
@@ -42,6 +45,12 @@ public class GestionPanierAction extends ActionSupport {
     private         Compte                  compte;
     private         Panier                  panier;
 
+    /**
+     * Méthode pour ajouter un article au panier
+     * Si un contenu du panier est déjà existant avec la même taille
+     * Alors la quantité augmente
+     * @return
+     */
     public String doAddPanier(){
         try {
             generateCompteAndPanier();
@@ -86,6 +95,10 @@ public class GestionPanierAction extends ActionSupport {
         }
     }
 
+    /**
+     * Méthode pour afficher le contenu du panier de l'utilsateur
+     * @return
+     */
     public String doConsulterPanier(){
         try{
             instance.setMinimumFractionDigits(2);
@@ -152,6 +165,10 @@ public class GestionPanierAction extends ActionSupport {
         }
     }
 
+    /**
+     * Méthode pour réduire la quantité d'un contenu du panier de l'utilsateur.
+     * @return
+     */
     public String doMoinsContenu(){
         try {
             Contenu contenu = getFactory().getContenuProxy().findById(contenuId);
@@ -185,6 +202,10 @@ public class GestionPanierAction extends ActionSupport {
         }
     }
 
+    /**
+     * Méthode pour augmenter la quantité d'un contenu du panier de l'utilisateur.
+     * @return
+     */
     public String doPlusContenu(){
         try {
             Contenu contenu = getFactory().getContenuProxy().findById(contenuId);
@@ -217,8 +238,6 @@ public class GestionPanierAction extends ActionSupport {
             return ActionSupport.ERROR;
         }
     }
-
-
 
     public void generateCompteAndPanier() {
         String email = getEmail();

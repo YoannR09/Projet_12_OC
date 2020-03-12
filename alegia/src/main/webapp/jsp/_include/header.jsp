@@ -25,17 +25,27 @@
         </button>
         <!-- Navbar links -->
         <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            <ul class="navbar-nav flex-column">
+            <ul class="navbar-nav flex-column" style="text-align: center">
                 <s:a action="index" class="nav-link btnNav" style="background: transparent;margin-bottom:25px">
                     <img src="../../image/alegiaLogo.png" height="100" alt="submit" /></s:a>
+                <li class="nav-item">
+                    <s:a action="index" class="nav-link btnNav aNav" style="font-size:0.8em">ACCUEIL</s:a>
+                </li>
+                <li class="nav-item">
+                    <s:a action="doLaMarque" class="nav-link btnNav aNav" style="font-size:0.8em">
+                        LA MARQUE</s:a>
+                </li>
+                <br/>
                 <s:iterator value="categorieList">
                     <li class="nav-item">
-                        <s:a action="doListArticleByCategorieId" class="nav-link btnNav" style="font-size:0.9em;font-family: arial"><s:property value="nom"/><s:param name="categorieId" value="id"/></s:a>
+                        <s:a action="doListArticleByCategorieId" class="nav-link btnNav aNav" style="font-size:0.8em;">
+                            <s:property value="nom"/><s:param name="categorieId" value="id"/></s:a>
                     </li>
                 </s:iterator>
+                <br/>
                 <s:if test="#session.admin">
                     <li class="nav-item" style="margin-top: 20px;'">
-                        <s:a action="gestion" class="nav-link btnNav" style="font-size:0.9em;font-family: arial;color:blue"> GESTION </s:a>
+                        <s:a action="gestion" class="nav-link btnNav text-info" style="font-size:0.8em;font-family: arial;"> GESTION </s:a>
                     </li>
                 </s:if>
             </ul>

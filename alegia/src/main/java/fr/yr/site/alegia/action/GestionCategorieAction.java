@@ -106,6 +106,7 @@ public class GestionCategorieAction extends ActionSupport {
             getFactory().getCategorieProxy().update(categorie);
             countPanier = gm.generateCountPanier(factory,getEmail());
             categories = getFactory().getCategorieProxy().findByDispo(false);
+            generateCountArticle(categories);
             categorieList = getFactory().getCategorieProxy().findAll();
             infoMessage = " La catégorie est maintenant disponible ";
             return ActionSupport.SUCCESS;
@@ -128,6 +129,7 @@ public class GestionCategorieAction extends ActionSupport {
             getFactory().getCategorieProxy().update(categorie);
             countPanier = gm.generateCountPanier(factory,getEmail());
             categories = getFactory().getCategorieProxy().findByDispo(true);
+            generateCountArticle(categories);
             categorieList = getFactory().getCategorieProxy().findAll();
             infoMessage = "La catégorie est maintenant indisponible";
             return ActionSupport.SUCCESS;
@@ -136,6 +138,33 @@ public class GestionCategorieAction extends ActionSupport {
             getLogger().error(e);
             categorieList = getFactory().getCategorieProxy().findByDispo(true);
             return ActionSupport.ERROR;
+        }
+    }
+
+    /**
+     * Méthode pour supprimer une catégorie ne contenant pas d'article
+     * @return
+     */
+    public String doSupprimer(){
+        try {
+            getFactory().getCategorieProxy().delete(categorieId);
+            countPanier = gm.generateCountPanier(factory,getEmail());
+            categories = getFactory().getCategorieProxy().findByDispo(true);
+            infoMessage = "La catégorie a été supprimée";
+            categorieList = getFactory().getCategorieProxy().findAll();
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            getLogger().error(e);
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            return ActionSupport.ERROR;
+        }
+    }
+
+    private void generateCountArticle(List<Categorie> vList){
+        for (Categorie cat:vList){
+            cat.setCountArticle(getFactory().getArticleProxy()
+                    .getArticleByCategorieId(cat.getId()).size());
         }
     }
 
@@ -215,7 +244,7 @@ public class GestionCategorieAction extends ActionSupport {
         return radioList;
     }
 
-    
+
     public void setRadioList(List<String> radioList) {
         this.radioList = radioList;
     }
