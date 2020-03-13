@@ -1,0 +1,35 @@
+language: 
+  - node_js
+  - java
+node_js:
+  - "8.2.1"
+jdk:
+  - openjdk8
+
+install :
+  - npm install newman
+
+services:
+  - docker
+
+before_install:
+  - cd docker/dev
+  - docker-compose up -d
+
+before script:
+  - node --version
+  - npm --version
+  - node_modules/.bin/newman --version
+  - cd ../../
+  - cd test
+
+script:
+  - node_modules/.bin/newman run test/Alegia.postman_collection.json
+  - cd ..
+  - cd Microservice/eureka
+  - mvn clean
+  - mvn package
+  - java -jar target/eureka-0.0.1-SNAPSHOT.jar
+  - mvn test
+
+

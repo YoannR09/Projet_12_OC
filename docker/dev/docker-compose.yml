@@ -11,3 +11,4 @@ services:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=Yocorps17
       
+
