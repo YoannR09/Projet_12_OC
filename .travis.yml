@@ -20,15 +20,23 @@ before script:
   - node --version
   - npm --version
   - cd ../../
-  - cd test
+  
 
 script:
-  - newman run test/Alegia.postman_collection.json
-  - cd ..
   - cd Microservice/eureka
   - mvn clean
   - mvn package
+  - mvn build
   - java -jar target/eureka-0.0.1-SNAPSHOT.jar
   - mvn test
+  - cd ..
+  - cd microservice-adresse
+  - mvn clean
+  - mvn package
+  - mvn build
+  - java -jar target/eureka-0.0.1-SNAPSHOT.jar
+  - cd ../../
+  - cd test
+  - newman run Alegia.postman_collection.json
 
 
