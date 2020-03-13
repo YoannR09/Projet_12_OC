@@ -26,14 +26,14 @@ script:
   - cd Microservice/eureka
   - mvn clean
   - mvn package
-  - mvn build
+  - mvn install
   - java -jar target/eureka-0.0.1-SNAPSHOT.jar
   - mvn test
   - cd ..
   - cd microservice-adresse
   - mvn clean
   - mvn package
-  - mvn build
+  - mvn install
   - java -jar target/eureka-0.0.1-SNAPSHOT.jar
   - cd ../../
   - cd test
