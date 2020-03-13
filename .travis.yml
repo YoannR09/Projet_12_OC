@@ -27,14 +27,14 @@ script:
   - mvn clean
   - mvn package
   - mvn install
-  - java -jar target/eureka-0.0.1-SNAPSHOT.jar
+  - start "Eureka" java -jar target/eureka-0.0.1-SNAPSHOT.jar
   - mvn test
   - cd ..
   - cd microservice-adresse
   - mvn clean
   - mvn package
   - mvn install
-  - java -jar target/eureka-0.0.1-SNAPSHOT.jar
+  - start "Microservice-Adresse" java -jar target/microservice-adresse-0.0.1-SNAPSHOT.jar
   - cd ../../
   - cd test
   - newman run Alegia.postman_collection.json
