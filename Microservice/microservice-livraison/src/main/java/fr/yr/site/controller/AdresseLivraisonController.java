@@ -5,6 +5,7 @@ import fr.yr.site.model.AdresseLivraison;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -12,6 +13,15 @@ public class AdresseLivraisonController {
 
     @Autowired
     private AdresseLivraisonDao dao;
+
+    @GetMapping(value = "/Livraison")
+    public List<AdresseLivraison> findAll(){
+        try {
+            return dao.findAll();
+        }catch (Exception e){
+            return new ArrayList<>();
+        }
+    }
 
     @GetMapping(value = "/Livraison/{id}")
     public AdresseLivraison findById(@PathVariable int id){

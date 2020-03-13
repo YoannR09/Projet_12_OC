@@ -1,0 +1,243 @@
+{
+	"info": {
+		"_postman_id": "ccac3542-b948-4633-a7fc-6f9db57cbcdf",
+		"name": "Alegia",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/microservice-adresse/Adresse",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9004/microservice-adresse/Adresse",
+					"host": [
+						"localhost"
+					],
+					"port": "9004",
+					"path": [
+						"microservice-adresse",
+						"Adresse"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/microservice-article/Article",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9004/microservice-article/Article",
+					"host": [
+						"localhost"
+					],
+					"port": "9004",
+					"path": [
+						"microservice-article",
+						"Article"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/microservice-categorie/Categorie",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9004/microservice-categorie/Categorie",
+					"host": [
+						"localhost"
+					],
+					"port": "9004",
+					"path": [
+						"microservice-categorie",
+						"Categorie"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/microservice-compte/Compte",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9004/microservice-compte/Compte",
+					"host": [
+						"localhost"
+					],
+					"port": "9004",
+					"path": [
+						"microservice-compte",
+						"Compte"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/microservice-contenu/Contenu",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9004/microservice-contenu/Contenu",
+					"host": [
+						"localhost"
+					],
+					"port": "9004",
+					"path": [
+						"microservice-contenu",
+						"Contenu"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/microservice-ligne/Ligne",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9004/microservice-ligne/Ligne",
+					"host": [
+						"localhost"
+					],
+					"port": "9004",
+					"path": [
+						"microservice-ligne",
+						"Ligne"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/microservice-list/ListTaille/Article/1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9004/microservice-list/ListTaille/Article/1",
+					"host": [
+						"localhost"
+					],
+					"port": "9004",
+					"path": [
+						"microservice-list",
+						"ListTaille",
+						"Article",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/microservice-livraison/Livraison",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9004/microservice-livraison/Livraison",
+					"host": [
+						"localhost"
+					],
+					"port": "9004",
+					"path": [
+						"microservice-livraison",
+						"Livraison"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/microservice-panier/Panier/Compte/1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9004/microservice-panier/Panier/Compte/1",
+					"host": [
+						"localhost"
+					],
+					"port": "9004",
+					"path": [
+						"microservice-panier",
+						"Panier",
+						"Compte",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/microservice-panier/Panier/Compte/1",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "localhost:9004/microservice-taille/Taille",
+					"host": [
+						"localhost"
+					],
+					"port": "9004",
+					"path": [
+						"microservice-taille",
+						"Taille"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "basic",
+		"basic": [
+			{
+				"key": "password",
+				"value": "123",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "user",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "e09fdbde-fc70-4937-b582-3aeb20aaaaaa",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "b9f31c64-b05e-405e-a101-d9c57d715dcb",
+				"type": "text/javascript",
+				"exec": [
+					"pm.test(\"Status code is 200\", function () {",
+					"    pm.response.to.have.status(200);",
+					"});"
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
