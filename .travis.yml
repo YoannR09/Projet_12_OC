@@ -19,12 +19,11 @@ before_install:
 before script:
   - node --version
   - npm --version
-  - node_modules/.bin/newman --version
   - cd ../../
   - cd test
 
 script:
-  - node_modules/.bin/newman run test/Alegia.postman_collection.json
+  - newman run test/Alegia.postman_collection.json
   - cd ..
   - cd Microservice/eureka
   - mvn clean
