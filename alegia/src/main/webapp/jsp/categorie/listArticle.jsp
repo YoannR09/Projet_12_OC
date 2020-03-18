@@ -45,13 +45,13 @@
                         </div>
                     </div>
                     <p style="font-size: 0.8em;font-weight: bolder"> <s:property value="nom"/> </p>
-                    <p class="numberFont" style="font-size: 0.8em;"> <s:property value="prix"/> €</p>
+                    <p class="numberFont" style="font-size: 0.8em;"> <s:property value="prixAffichage"/> €</p>
                 </li>
             </s:iterator>
         </section>
     </div>
 </div>
-<footer>
+<footer id="footer">
     <%@ include file="../_include/footer.jsp"%>
 </footer>
 </body>

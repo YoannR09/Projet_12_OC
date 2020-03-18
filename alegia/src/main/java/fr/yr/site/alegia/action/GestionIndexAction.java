@@ -4,26 +4,36 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import fr.yr.site.alegia.beans.Article;
 import fr.yr.site.alegia.beans.Categorie;
+import fr.yr.site.alegia.beans.Compte;
 import fr.yr.site.alegia.beans.Image;
 import fr.yr.site.alegia.configuration.Factory;
 import fr.yr.site.alegia.configuration.GenerateMethod;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
+import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 /**
  * Classe qui gère l'affichage de la page d'acceuil et les pages vitrines.
  */
-public class GestionIndexAction extends ActionSupport {
+public class GestionIndexAction extends ActionSupport implements SessionAware, ServletResponseAware, ServletRequestAware {
 
     private static final Logger logger = LogManager.getLogger();
 
     @Autowired
     private     Factory             factory;
+
+    private     Map<String, Object> session;
 
     private     GenerateMethod      gm = new GenerateMethod();
 
@@ -32,6 +42,7 @@ public class GestionIndexAction extends ActionSupport {
     private     Integer             countPanier;
     private     List<Article>       articleList;
     private     List<Article>       actuArticleList;
+    private     String              token;
 
     /**
      * Méthode pour afficher la page d'accueil du site
@@ -62,6 +73,41 @@ public class GestionIndexAction extends ActionSupport {
             countPanier = gm.generateCountPanier(factory,getEmail());
             return ActionSupport.SUCCESS;
         }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
+            return ActionSupport.ERROR;
+        }
+    }
+
+    /**
+     * Méthode si l'utilisateur cancel sa commande
+     * Méthode appelée après la redirection du service Paypal
+     * Par sécurité le token de la transaction Paypal est demandé.
+     * @return
+     */
+    public String redirectIndex(){
+        try{
+            if (token != null){
+                for(Cookie c : servletRequest.getCookies()) {
+                    if (c.getName().equals("compteEmail")) {
+                        Compte compte = getFactory().getCompteProxy().findByEmail(c.getValue());
+                        this.session.put("email", compte.getEmail());
+                        if (compte.getNiveauAccesId() == 1) {
+                            this.session.put("user", compte);
+                        } else {
+                            this.session.put("admin", compte);
+                        }
+                        countPanier = gm.generateCountPanier(factory, getEmail());
+                    }
+                }
+            }
+            categorieList = getFactory().getCategorieProxy().findAll();
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
             return ActionSupport.ERROR;
         }
     }
@@ -116,7 +162,32 @@ public class GestionIndexAction extends ActionSupport {
         return countPanier;
     }
 
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     public void setCountPanier(Integer countPanier) {
         this.countPanier = countPanier;
+    }
+
+    protected HttpServletResponse servletResponse;
+    @Override
+    public void setServletResponse(HttpServletResponse servletResponse) {
+        this.servletResponse = servletResponse;
+    }
+
+    protected HttpServletRequest servletRequest;
+    @Override
+    public void setServletRequest(HttpServletRequest servletRequest) {
+        this.servletRequest = servletRequest;
+    }
+
+    @Override
+    public void setSession(Map<String, Object> map) {
+        this.session = map;
     }
 }

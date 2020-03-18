@@ -37,7 +37,7 @@ public class EncryptionUtil {
         try
         {
             setKey(secret);
-            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
+            Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING");
             cipher.init(Cipher.ENCRYPT_MODE, secretKey);
             return Base64.getEncoder().encodeToString(cipher.doFinal(strToEncrypt.getBytes("UTF-8")));
         }
@@ -60,8 +60,8 @@ public class EncryptionUtil {
         catch (Exception e)
         {
             System.out.println("Error while decrypting: " + e.toString());
+            return null;
         }
-        return null;
     }
 }
 

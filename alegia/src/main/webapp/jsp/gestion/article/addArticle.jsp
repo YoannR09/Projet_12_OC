@@ -63,7 +63,7 @@
                         </div>
                         <div class="form-group " style="margin: 20px">
                             <label for="prix" style="color: black;">Prix</label>
-                            <input name="prix" class="form-control" type="number" value="0" id="prix">
+                            <input name="prix" class="form-control" id="prix">
                         </div>
                         <div class="form-group " style="margin: 20px">
                             <label for="selectCategorie" style="color: black;">Sélectionner la catégorie</label>
@@ -86,7 +86,7 @@
         </div>
     </div>
 </div>
-<footer>
+<footer id="footer">
     <%@ include file="../../_include/footer.jsp"%>
 </footer>
 </body>

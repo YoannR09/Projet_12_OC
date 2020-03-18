@@ -13,16 +13,21 @@ import fr.yr.site.alegia.configuration.MailGestion;
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.apache.struts2.interceptor.ServletRequestAware;
+import org.apache.struts2.interceptor.ServletResponseAware;
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Map;
 
 /**
  * Classe qui gère la connexion en tant que visiteur ou administrateur
  */
-public class GestionLoginAction extends ActionSupport implements SessionAware{
+public class GestionLoginAction extends ActionSupport implements SessionAware, ServletResponseAware, ServletRequestAware {
 
     private static final Logger logger = LogManager.getLogger();
 
@@ -74,7 +79,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
      * Méthode pour connecter à un compte client ou administrateur.
      * @return
      */
-    public String doLogin() throws Exception {
+    public String doLogin(){
 
         String vResult = ActionSupport.ERROR;
 
@@ -90,6 +95,8 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
             if (compte != null) {
                 if (motDePasse.equals(EncryptionUtil.decrypt(compte.getMotDePasse(),secretKey))) {
                     this.session.put("email", compte.getEmail());
+                    Cookie compteEmail = new Cookie("compteEmail", compte.getEmail());
+                    servletResponse.addCookie(compteEmail);
                     if (compte.getNiveauAccesId() == 2) {
                         this.session.put("admin", compte);
                     } else {
@@ -121,10 +128,13 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
         try {
             if (email != null) {
                 if (email != null && email.equals(verifEmail) && motDePasse != null && motDePasse.equals(verifMdp)) {
-                    if (getFactory().getCompteProxy().findByEmail(email) != null) {
+                    if (getFactory().getCompteProxy().findByEmail(email.toLowerCase()) != null) {
                         infoMessage = "Adresse éléctronique déjà associée à un autre compte";
                         vResult = ActionSupport.ERROR;
                     } else {
+                        if (info.equals("") || info == null) {
+                            info = "Aucune information";
+                        }
                         if (getFactory().getAdresseProxy()
                                 .findByVilleAndCodePostalAndNumeroAndRueAndInfo(
                                         ville
@@ -134,14 +144,10 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
                             // Création de l'adresse
                             Adresse adresse = new Adresse();
                             adresse.setCodePostal(codePostal);
-                            if (info.equals("") || info == null) {
-                                adresse.setInfo("Aucune information");
-                            } else {
-                                adresse.setInfo(info);
-                            }
                             adresse.setNumero(numero);
                             adresse.setRue(rue);
                             adresse.setVille(ville);
+                            adresse.setInfo(info);
                             getFactory().getAdresseProxy().add(adresse);
                         }
                         // Création du compte
@@ -195,7 +201,7 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
     public String doNouveauMotDePasse(){
         try {
             if (email != null){
-                compte = getFactory().getCompteProxy().findByEmail(getEmailContext().toLowerCase());
+                compte = getFactory().getCompteProxy().findByEmail(email.toLowerCase());
                 if (compte != null) {
                     String newMdp = RandomStringUtils.randomAlphanumeric(10);
                     MailGestion mailGestion = new MailGestion();
@@ -205,8 +211,9 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
                     compte.setMotDePasse(EncryptionUtil.encrypt(newMdp, secretKey));
                     getFactory().getCompteProxy().update(compte);
                     infoMessage = "Un email contenant le nouveau mot de passe vous a été transmis";
+                }else {
+                    infoMessage = "Il n'existe pas de compte avec cette adresse électronique";
                 }
-                countPanier = gm.generateCountPanier(factory,getEmail());
                 categorieList = getFactory().getCategorieProxy().findAll();
                 return ActionSupport.SUCCESS;
             }else {
@@ -376,6 +383,18 @@ public class GestionLoginAction extends ActionSupport implements SessionAware{
 
     protected Logger getLogger() {
         return logger;
+    }
+
+    protected HttpServletResponse servletResponse;
+    @Override
+    public void setServletResponse(HttpServletResponse servletResponse) {
+        this.servletResponse = servletResponse;
+    }
+
+    protected HttpServletRequest servletRequest;
+    @Override
+    public void setServletRequest(HttpServletRequest servletRequest) {
+        this.servletRequest = servletRequest;
     }
 
 

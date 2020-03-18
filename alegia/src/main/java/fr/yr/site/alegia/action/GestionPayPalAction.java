@@ -11,7 +11,6 @@ import fr.yr.site.alegia.paypal.OrderDetail;
 import fr.yr.site.alegia.paypal.PaymentServices;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import org.apache.struts2.interceptor.SessionAware;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -79,13 +78,15 @@ public class GestionPayPalAction extends ActionSupport implements SessionAware {
             float totalC = 0;
             int count = 0;
             gm.generateCommande(commande,count,totalC,factory);
-            String tax = String.valueOf(commande.getTotal()*1.1-commande.getTotal());
+            String tax = instance.format(commande.getTotal()*10/100).replaceAll(",",".");
+            String totalHt = instance.format(commande.getTotal()-(commande.getTotal()*10/100));
+            String totalTtc = instance.format(commande.getTotal()+10);
             OrderDetail orderDetail = new OrderDetail(
                     commande.getNumero()
-                    ,String.valueOf(commande.getTotal())
+                    ,totalHt.replaceAll(",",".")
                     ,"10"
                     ,tax
-                    ,String.valueOf(commande.getTotal()+10+Float.parseFloat(tax)));
+                    ,totalTtc.replaceAll(",","."));
 
             PaymentServices paymentServices = new PaymentServices();
             Compte compte = factory.getCompteProxy().findById(commande.getCompteId());

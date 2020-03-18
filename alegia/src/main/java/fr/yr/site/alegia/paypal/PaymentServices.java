@@ -50,9 +50,8 @@ public class PaymentServices {
 
     private RedirectUrls getRedirectURLs() {
         RedirectUrls redirectUrls = new RedirectUrls();
-        redirectUrls.setCancelUrl("http://192.168.1.41:8080/cancel.action");
+        redirectUrls.setCancelUrl("http://192.168.1.41:8080/redirectIndex.action");
         redirectUrls.setReturnUrl("http://192.168.1.41:8080/review.action");
-
         return redirectUrls;
     }
 

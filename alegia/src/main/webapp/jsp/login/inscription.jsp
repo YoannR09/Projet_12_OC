@@ -65,8 +65,8 @@
                     </div>
                     <div class="form-group" style="margin: 20px;">
                         <label for="numeroTelephone" style="color: black;">Numéro de téléphone</label>
-                        <input name="numeroTelephone" type="tel" class="form-control"
-                               id="numeroTelephone"  pattern="[0-9]{10}" required>
+                        <input name="numeroTelephone" class="form-control numberFont"
+                               id="numeroTelephone"  pattern="((\+)33|0)[1-9](\d{2}){4}$" required>
                     </div>
                     <div class="form-group" style="margin: 20px;">
                         <label for="email" style="color: black;">Adresse éléctronique</label>
@@ -121,7 +121,7 @@
         </div>
     </div>
 </div>
-<footer>
+<footer id="footer">
     <%@ include file="../_include/footer.jsp"%>
 </footer>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>

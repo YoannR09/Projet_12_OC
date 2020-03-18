@@ -68,6 +68,11 @@
             <result name="error">jsp/error/error.jsp</result>
         </action>
 
+        <action name="redirectIndex" class="fr.yr.site.alegia.action.GestionIndexAction" method="redirectIndex">
+            <result name="success">jsp/index.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
         <action name="login" class="fr.yr.site.alegia.action.GestionLoginAction" method="pageLogin">
             <interceptor-ref name="store">
                 <param name="operationMode">STORE</param>

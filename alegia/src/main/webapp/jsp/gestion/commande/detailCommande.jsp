@@ -87,8 +87,8 @@
                             <tr style="max-height: 10px">
                                 <th scope="col">ARTICLE</th>
                                 <th scope="col">REFERENCE</th>
-                                <th scope="col">PRIX HT</th>
-                                <th scope="col">MONTANT HT</th>
+                                <th scope="col">PRIX</th>
+                                <th scope="col">MONTANT</th>
                                 <th scope="col">QUANTITE</th>
                                 <th scope="col">TAILLE</th>
                             </tr>
@@ -199,7 +199,7 @@
         </div>
     </div>
 </div>
-<footer>
+<footer id="footer">
     <%@ include file="../../_include/footer.jsp"%>
 </footer>
 </body>

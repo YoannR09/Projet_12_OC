@@ -93,7 +93,7 @@
                                 <span class="lab">Taille :  </span>
                                 <span class="spanDonne" style="font-weight: bold"><s:property value="taille.taille"/></span><br/>
                                 <span class="lab">Prix :  </span>
-                                <span class="spanDonne numberFont" style="font-weight: bold"><s:property value="article.prix"/> €</span><br/>
+                                <span class="spanDonne numberFont" style="font-weight: bold"><s:property value="article.prixAffichage"/> €</span><br/>
                                 <span class="lab">Quantité :  </span>
                                 <span class="spanDonne numberFont" style="font-weight: bold"><s:property value="quantite"/></span>
                                 <div class="badge badge-dark" style="margin-left: 10px">
@@ -127,9 +127,9 @@
                     </span>
 
                 <span style="display:flex;justify-content: space-between">
-                    <span class="lab">Montant HT : </span><label class="lab numberFont"><s:property value="totalPrix"/> €</label>
+                    <span class="lab">Montant TTC : </span><label class="lab numberFont"><s:property value="totalPrix"/> €</label>
                 </span>
-                <span style="display:flex;justify-content: space-between">
+                <span style="display:flex;justify-content: space-between;font-size: 0.8em;color: darkslategray">
                     <span class="lab">TVA à 10% : </span><label class="lab numberFont"><s:property value="tva"/> €</label>
                 </span>
                 <span style="display:flex;justify-content: space-between">
@@ -150,7 +150,7 @@
         </div>
     </div>
 </div>
-<footer>
+<footer id="footer">
     <%@ include file="../_include/footer.jsp"%>
 </footer>
 </body>

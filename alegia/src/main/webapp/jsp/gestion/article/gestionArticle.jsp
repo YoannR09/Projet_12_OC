@@ -100,7 +100,7 @@
         </section>
     </div>
 </div>
-<footer>
+<footer id="footer">
     <%@ include file="../../_include/footer.jsp"%>
 </footer>
 </body>

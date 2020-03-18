@@ -29,8 +29,42 @@ script:
   - cd microservice-adresse
   - mvn clean install test -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
   - cd ..
-  - cd test
-  - java -jar eureka/target/eureka-0.0.1-SNAPSHOT.jar ; java -jar microservice-adresse/target/microservice-adresse-0.0.1-SNAPSHOT.jar ; newman run Alegia.postman_collection.json
+  - cd microservice-article
+  - mvn clean install test -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+  - cd ..
+  - cd microservice-categorie
+  - mvn clean install test -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+  - cd ..
+  - cd microservice-commande
+  - mvn clean install test -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+  - cd ..
+  - cd microservice-compte
+  - mvn clean install test -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+  - cd ..
+  - cd microservice-contenu
+  - mvn clean install test -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+  - cd ..
+  - cd microservice-image
+  - mvn clean install test -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+  - cd ..
+  - cd microservice-ligne
+  - mvn clean install test -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+  - cd ..
+  - cd microservice-list
+  - mvn clean install test -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+  - cd ..
+  - cd microservice-livraison
+  - mvn clean install test -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+  - cd ..
+  - cd microservice-panier
+  - mvn clean install test -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+  - cd ..
+  - cd microservice-taille
+  - mvn clean install test -B -Dorg.slf4j.simpleLogger.log.org.apache.maven.cli.transfer.Slf4jMavenTransferListener=warn
+  - cd ..
+ # - java -jar eureka/target/eureka-0.0.1-SNAPSHOT.jar 
+ # - java -jar microservice-adresse/target/microservice-adresse-0.0.1-SNAPSHOT.jar 
+ # - cd test newman run Alegia.postman_collection.json
 
 
 

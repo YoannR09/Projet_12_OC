@@ -7,6 +7,7 @@ public class Article {
     private String nom;
     private String description;
     private String reference;
+    private String prixAffichage;
     private Integer id;
     private Integer categorieId;
     private Float prix;
@@ -84,5 +85,13 @@ public class Article {
 
     public void setReference(String reference) {
         this.reference = reference;
+    }
+
+    public String getPrixAffichage() {
+        return prixAffichage;
+    }
+
+    public void setPrixAffichage(String prixAffichage) {
+        this.prixAffichage = prixAffichage;
     }
 }

@@ -17,12 +17,14 @@
         list-style:none;
         display: flex;
     }
+    html
+    {
+        height: 100%;
+    }
     html, body {
         width: 100%;
-        height: 100%;
         margin: 0; padding: 0;
-        min-width: 1200px;
-        min-height: 100%;
+        position: relative;
     }
     li
     {
@@ -48,13 +50,16 @@
         font-family: 'Roboto', sans-serif;
     }
     body {
-        display : table;
         width: 100%;
         background-image:url(/image/fondAlegia200.png);
         background-repeat: repeat;
         background-size: 50%;
         background-color: white;
-        position: relative;
+        min-height: 100%;
+        height: 100%;
+        position: relative; display: table;
+        min-width: 340px;
+
     }
     label
     {
@@ -65,10 +70,15 @@
         background-color: rgba(255, 255, 255, 0.5);
     }
     footer {
-        margin-top: 150px;
+        display: table-row;
         width: 100%;
-        height: 100px;
-        position: absolute; bottom: 0;
+        height: 100%;
+        min-height: 100%;
+        bottom: 0;
+        position: relative;
+        height: 100%;
+        margin: auto;
+        overflow: hidden;
     }
     #blocCenter,#page
     {

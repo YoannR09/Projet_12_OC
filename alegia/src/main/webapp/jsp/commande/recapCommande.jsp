@@ -68,8 +68,8 @@
                         <thead class="thead">
                         <tr style="max-height: 10px">
                             <th scope="col">ARTICLE</th>
-                            <th scope="col">PRIX</th>
-                            <th scope="col">MONTANT</th>
+                            <th scope="col">PRIX TTC</th>
+                            <th scope="col">MONTANT TTC</th>
                             <th scope="col">QUANTITE</th>
                             <th scope="col">TAILLE</th>
                         </tr>
@@ -90,7 +90,7 @@
                             <s:property value="commande.tva"/> €</label></td>
                         <td>Livraison<br/><label class="numberFont" style="font-size: 1em">
                             <s:property value="livraison"/> €</label></td>
-                        <td>TOTAL TTC<br/><label class="numberFont" style="font-size: 1em">
+                        <td>TOTAL TTC<br/><label class="numberFont" style="font-size: 0.9em">
                             <s:property value="commande.totalPayer"/> €</label></td>
                         </tbody>
                     </table>
@@ -118,7 +118,7 @@
         </div>
     </div>
 </div>
-<footer>
+<footer id="footer">
     <%@ include file="../_include/footer.jsp"%>
 </footer>
 

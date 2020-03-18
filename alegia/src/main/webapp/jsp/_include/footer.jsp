@@ -1,7 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<div style="box-shadow: 0px -5px 50px -3px rgba(0,0,0,0.49);background: url(../../image/black.png);
-display: flex;justify-content: space-around;">
-    <div style="width: 25%;text-align: center;margin: 25px">
+<div id="bas" class="row" style="height: 100%;box-shadow: 0px -5px 50px -3px rgba(0,0,0,0.49);background: url(../../image/black.png);margin: auto;justify-content: center">
+    <div style="width: 25%;text-align: center;margin: 25px;">
         <div style="color: lightgray;width: 100%;text-align: center;margin-bottom: 17px"><em style="font-size: 0.6em;font-weight: bold"> Réseaux sociaux </em> </div>
         <a href="https://www.facebook.com/Alegia-1428352727440625/?epa=SEARCH_BOX" class="text-warning" style="margin: 20px;font-size: 1.2em">
             <i class="fab fa-facebook">
@@ -32,3 +31,14 @@ display: flex;justify-content: space-around;">
         <div class="text-warning"><em style="font-size: 0.6em"><s:a action="" class="text-warning">Conditions genérales de ventes</s:a>  </em> </div>
     </div>
 </div>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    $(function() {
+        var h = $('#footer').height();
+        $('#bas').height(h);
+    });
+    $( window ).resize(function() {
+        var h = $('#footer').height();
+        $('#bas').height(h);
+    });
+</script>

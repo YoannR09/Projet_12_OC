@@ -14,8 +14,11 @@ public class GenerateMethod {
      * @param vList
      */
     public void completeArticleList(Factory factory,List<Article> vList){
+        instance.setMinimumFractionDigits(2);
+        instance.setMaximumFractionDigits(2);
         if (vList != null) {
             for (Article a : vList) {
+                a.setPrixAffichage(instance.format(a.getPrix()));
                 a.setImageList(factory.getImageProxy().findByArticleId(a.getId()));
                 if (a.getImageList().size() == 0) {
                     Image image = new Image();
@@ -53,12 +56,12 @@ public class GenerateMethod {
         }
         commande.setTotal(total);
         commande.setAdresse(factory.getAdresseProxy().getAdresse(commande.getAdresseId()));
-        commande.setTva(instance.format((total*1.1)-total));
+        commande.setTva(instance.format(total*10/100));
         commande.setLivraison(instance.format(10));
-        String totalP = instance.format(total+10+(total*1.1)-total);
+        String totalP = instance.format(total+10);
         commande.setTotalPayer(totalP);
         commande.setCountArticle(count);
-        commande.setPrixTotal(instance.format(total));
+        commande.setPrixTotal(instance.format(total-(total*10/100)));
     }
 
     /**
@@ -66,8 +69,11 @@ public class GenerateMethod {
      * @param a
      */
     public void completeArticle(Factory factory,Article a){
+        instance.setMinimumFractionDigits(2);
+        instance.setMaximumFractionDigits(2);
         a.setImageList(factory.getImageProxy().findByArticleId(a.getId()));
         a.setSupprimable(true);
+        a.setPrixAffichage(instance.format(a.getPrix()));
         if (a.getImageList().size() == 0) {
             Image image = new Image();
             image.setUrl("indisponible.jpg");

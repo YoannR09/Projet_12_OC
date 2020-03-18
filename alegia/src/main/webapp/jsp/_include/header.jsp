@@ -1,6 +1,27 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<div style="top: 20px;position: fixed;right: 10px;z-index: 2;">
-    <div>
+<div style="top: 20px;position: fixed;right: 10px;z-index: 2;text-align: right">
+    <button id="btnLoginTop" class="navbar-toggler menu text-warning" type="button" style="margin-top: 6px"
+            data-toggle="collapse" data-target="#multiCollapseExample2" aria-expanded="false" aria-controls="multiCollapseExample2"><i class="fas fa-user"></i></button>
+    <div class="collapse multi-collapse" id="multiCollapseExample2" style="margin-top: 20px">
+        <s:if test="!#session.user && !#session.admin">
+            <li>
+                <s:a action="login" class="nav-link btnNav text-warning" style="font-size:0.8em;"><i class="fas fa-user-circle" style="margin-right: 10px"></i>  Se connecter </s:a>
+            </li>
+        </s:if>
+        <s:if test="#session.user || #session.admin">
+            <li>
+                <s:a action="doConsulterPanier" class="nav-link btnNav" style="font-size:0.8em;"><i class="fas fa-shopping-cart" style="margin-right: 10px"></i> Mon panier
+                    <span class="badge badge-pill badge-warning numberFont" style="color: white;position: relative;top:-10px;right: -1px;font-size: 0.9em"><s:property value="countPanier"/></span></s:a>
+                <br/>
+                <s:a action="doConsulterCommande" class="nav-link btnNav" style="font-size:0.8em;"> <i class="fas fa-shopping-bag" style="margin-right: 10px"></i> Mes commandes </s:a>
+                <br/>
+                <s:a action="doProfil" class="nav-link btnNav" style="font-size:0.8em;"><i class="fas fa-user-circle" style="margin-right: 10px"></i> Mon profil</s:a>
+                <br/>
+                <s:a action="logout" class="nav-link btnNav" style="font-size:0.8em;"><i class="fas fa-sign-out-alt" style="margin-right: 10px"></i> Se déconnecter</s:a>
+            </li>
+        </s:if>
+    </div>
+    <div id="cadreLoginLarge">
         <s:if test="!#session.user && !#session.admin">
             <li>
                 <s:a action="login" class="nav-link btnNav" style="font-size:0.8em;"><i class="fas fa-user-circle" style="margin-right: 10px"></i>  Se connecter </s:a>
@@ -20,7 +41,7 @@
 <div style="top: 20px;position: fixed;left: 10px;z-index: 1;">
     <nav class="navbar navbar-expand-sm">
         <!-- Toggler/collapsibe Button -->
-        <button class="navbar-toggler menu" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <button class="navbar-toggler menu text-warning" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
             <span class="fas fa-bars"></span>
         </button>
         <!-- Navbar links -->
@@ -73,6 +94,28 @@
 <script>
     $(function() {
         $('#btnModal').hide();
-    $('#btnModal').click();
+        $('#btnModal').click();
+        $('#multiCollapseExample2').hide();
+        var width = $( window ).width();
+        if (width < 500){
+            $('#btnLoginTop').show()
+            $('#cadreLoginLarge').hide();
+        } else {
+            $('#btnLoginTop').hide()
+        }
+    });
+    $( window ).resize(function() {
+        var width = $( window ).width();
+        if (width < 680){
+           $('#btnLoginTop').show()
+            $('#cadreLoginLarge').hide();
+        } else {
+            $('#btnLoginTop').hide()
+            $('#cadreLoginLarge').show();
+            $('#multiCollapseExample2').hide();
+        }
+    });
+    $(document).on('click', '#btnLoginTop', function () {
+        $('#multiCollapseExample2').show();
     });
 </script>

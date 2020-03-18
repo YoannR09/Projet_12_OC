@@ -2,7 +2,34 @@
    
 ####  1) Créer la base de données :
 
-   1. Faire un backup de la base de données avec le fichier SQL/backup.
+##### Pour lancer la base de données, deux solutions sont disponible.
+##### Une première avec Docker qui permet d'avoir une base de données neuve sans démo.
+##### Une autre avec un backup de la base de données contenant une démo.
+
+### Docker :
+
+    1. Ce rendre dans le fichier docker/dev et execturer la commande suivante : 
+    docker-compose up
+
+### Backup :
+
+    1. Entrer dans pgAdmin
+    2. Faire un clique droit sur "databases"
+   
+   ![automated like clockwork](doc/image/image_pgAdmin_add.png)
+    
+    3. Nom de la base de données : alegia
+    4. Sélectionner 'postgres' comme owner
+   
+   ![automated like clockwork](doc/image/create_db_pgAdmin.png)
+
+    5. Faire un clique droit sur la base de données créé et faire un 'backup'
+   
+   ![automated like clockwork](doc/image/image_pgAdmin_backup.png)
+   
+    6. Définir l'encoding en 'UTF-8'
+    7. Définir le role name avec 'postgres'
+    8. Faire un backup de la base de données avec le fichier bdd/backup.
     
 
 #   Mettre en place les microservices :

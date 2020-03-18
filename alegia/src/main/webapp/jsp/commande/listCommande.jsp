@@ -64,7 +64,10 @@
             border-right: 1px solid lightgray;
 
         }
-
+        .blocTopText
+        {
+            margin-right: 75px;
+        }
 
     </style>
 </head>
@@ -81,8 +84,8 @@
                 <s:iterator value="commandeList">
                     <div class="col-12 container border border-secondary shadow p-3 mb-5 bgTran rounded" id="cadreArticle">
                         <section class="row">
-                            <div class="col" style="display:flex;justify-content: space-around;padding: 5px">
-                                <div>
+                            <div class="col" style="display:flex;justify-content: left;padding: 5px">
+                                <div class="blocTopText" style="margin-left: 30px">
                                     <em class="lab">COMMANDE EFFECTUEE LE</em><br/>
                                     <s:if test="!statut.equals('EN ATTENTE DE VALIDATION')">
                                         <span  class="numberFont" style="font-weight: bold"><s:property value="date"/></span>
@@ -91,11 +94,11 @@
                                         <span style="font-weight: bold">En attente</span>
                                     </s:else>
                                 </div>
-                                <div>
+                                <div class="blocTopText">
                                     <em class="lab">N° DE COMMANDE</em><br/>
                                     <span class="numberFont" style="font-weight: bold"><s:property value="numero"/></span>
                                 </div>
-                                <div>
+                                <div class="blocTopText">
                                     <em class="lab">TOTAL</em><br/>
                                     <span class="numberFont" style="font-weight: bold"><s:property value="totalPayer"/>  €</span>
                                 </div>
@@ -112,8 +115,8 @@
                                 <thead class="thead">
                                 <tr style="max-height: 10px">
                                     <th scope="col">ARTICLE</th>
-                                    <th scope="col">PRIX HT</th>
-                                    <th scope="col">MONTANT HT</th>
+                                    <th scope="col">PRIX</th>
+                                    <th scope="col">MONTANT</th>
                                     <th scope="col">QUANTITE</th>
                                     <th scope="col">TAILLE</th>
                                 </tr>
@@ -128,10 +131,18 @@
                                         <td><s:property value="taille"/></td>
                                     </tr>
                                 </s:iterator>
-                                <td>Montant HT<br/><label class="numberFont"><s:property value="prixTotal"/> €</label></td>
-                                <td>TVA à 10%<br/><label class="numberFont"><s:property value="tva"/> €</label></td>
-                                <td>Livraison<br/><label class="numberFont"><s:property value="livraison"/> €</label></td>
-                                <td>TOTAL TTC<br/><label class="numberFont"><s:property value="totalPayer"/> €</label></td>
+                                <td style="font-size: 0.8em">Montant HT<br/>
+                                    <label class="numberFont"><s:property value="prixTotal"/> €</label>
+                                </td>
+                                <td style="font-size: 0.8em">TVA à 10%<br/>
+                                    <label class="numberFont"><s:property value="tva"/> €</label>
+                                </td>
+                                <td style="font-size: 0.8em">Livraison<br/>
+                                    <label class="numberFont"><s:property value="livraison"/> €</label>
+                                </td>
+                                <td class="border border-secondary" style="background-color: whitesmoke;font-size: 0.9em">
+                                    TOTAL TTC<br/><label class="numberFont"><s:property value="totalPayer"/> €</label>
+                                </td>
                                 </tbody>
                             </table>
                             <s:if test="!statut.equals('EN ATTENTE DE VALIDATION')">
@@ -201,7 +212,7 @@
         </div>
     </div>
 </div>
-<footer>
+<footer id="footer">
     <%@ include file="../_include/footer.jsp"%>
 </footer>
 </body>

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.NumberFormat;
 import java.util.Arrays;
 import java.util.List;
 
@@ -23,6 +24,7 @@ import java.util.List;
 public class GestionArticleAction extends ActionSupport {
 
     private static final Logger logger = LogManager.getLogger();
+    final NumberFormat instance = NumberFormat.getNumberInstance();
 
     // --- Microservices ---
     @Autowired
@@ -56,7 +58,10 @@ public class GestionArticleAction extends ActionSupport {
      */
     public String doDetailArticle(){
         try {
+            instance.setMinimumFractionDigits(2);
+            instance.setMaximumFractionDigits(2);
             article = getFactory().getArticleProxy().getArticle(articleId);
+            article.setPrixAffichage(instance.format(article.getPrix()));
             listTailles = getFactory().getListTailleProxy().findByArticleId(articleId);
             imageList = getFactory().getImageProxy().findByArticleId(articleId);
             gm.imageListSizeNull(imageList);
