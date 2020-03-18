@@ -48,7 +48,7 @@
                 </a>
             </div>
         </div>
-        <div class="border border-secondary shadow p-3 bgTran rounded" style="height: 315px;min-width: 250px;margin-left: 20px">
+        <div class="border border-secondary shadow p-3 bgTran rounded" style="height: 320px;min-width: 250px;margin-left: 20px">
             <s:form action="addPanier" id="formAddPanier">
                 <input id="idArticle" name="articleId" class="form-control" type="number" value="<s:property value="article.id"/>" style="width: 100px;font-size: 0.8em;visibility: revert">
                 <p style="font-size: 1.1em;font-weight: bolder"><s:property value="article.nom"/></p>

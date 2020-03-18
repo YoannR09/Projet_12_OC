@@ -37,6 +37,7 @@ public class GestionPanierAction extends ActionSupport {
     private         Integer                 countArticle;
     private         Integer                 countPanier;
     private         String                  totalPrix;
+    private         String                  totalPrixTtc;
     private         String                  infoMessage;
     private         List<Contenu>           contenuList;
     private         List<Categorie>         categorieList;
@@ -115,7 +116,8 @@ public class GestionPanierAction extends ActionSupport {
             }
             livraison = instance.format(10);
             countPanier = gm.generateCountPanier(factory,getEmail());
-            totalPrix = instance.format(totalContenu);
+            totalPrix = instance.format(totalContenu-(totalContenu*10/100));
+            totalPrixTtc = instance.format(totalContenu);
             tva = instance.format(totalContenu*10/100);
             totalPayer = instance.format(totalContenu+10);
             categorieList = getFactory().getCategorieProxy().findAll();
@@ -152,8 +154,9 @@ public class GestionPanierAction extends ActionSupport {
             countPanier = gm.generateCountPanier(factory,getEmail());
             livraison = instance.format(10);
             categorieList = getFactory().getCategorieProxy().findAll();
-            totalPrix = instance.format(totalContenu);
+            totalPrix = instance.format(totalContenu-(totalContenu*10/100));
             totalPayer = instance.format(totalContenu+10);
+            totalPrixTtc = instance.format(totalContenu);
             tva = instance.format(totalContenu*10/100);
             return ActionSupport.SUCCESS;
         }catch (Exception e){
@@ -170,7 +173,6 @@ public class GestionPanierAction extends ActionSupport {
      */
     public String doMoinsContenu(){
         try {
-
             Contenu contenu = getFactory().getContenuProxy().findById(contenuId);
             contenu.setQuantite(contenu.getQuantite() - 1);
             getFactory().getContenuProxy().update(contenu);
@@ -187,11 +189,12 @@ public class GestionPanierAction extends ActionSupport {
                 countArticle = countArticle + c.getQuantite();
             }
             countPanier = gm.generateCountPanier(factory, getEmail());
-            totalPrix = instance.format(totalContenu);
+            totalPrix = instance.format(totalContenu-(totalContenu*10/100));
             livraison = instance.format(10);
             categorieList = getFactory().getCategorieProxy().findAll();
             tva = instance.format(totalContenu*10/100);
             totalPayer = instance.format(totalContenu+10);
+            totalPrixTtc = instance.format(totalContenu);
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
@@ -222,8 +225,9 @@ public class GestionPanierAction extends ActionSupport {
                 totalContenu = totalContenu + (c.getArticle().getPrix() * c.getQuantite());
                 countArticle = countArticle + c.getQuantite();
             }
-            totalPrix = instance.format(totalContenu);
+            totalPrix = instance.format(totalContenu-(totalContenu*10/100));
             countPanier = gm.generateCountPanier(factory, getEmail());
+            totalPrixTtc = instance.format(totalContenu);
             livraison = instance.format(10);
             tva = instance.format(totalContenu*10/100);
             categorieList = getFactory().getCategorieProxy().findAll();
@@ -396,5 +400,13 @@ public class GestionPanierAction extends ActionSupport {
 
     public void setLivraison(String livraison) {
         this.livraison = livraison;
+    }
+
+    public String getTotalPrixTtc() {
+        return totalPrixTtc;
+    }
+
+    public void setTotalPrixTtc(String totalPrixTtc) {
+        this.totalPrixTtc = totalPrixTtc;
     }
 }

@@ -88,6 +88,8 @@
                             <s:property value="commande.prixTotal"/> €</label></td>
                         <td>TVA à 10%<br/><label class="numberFont" style="font-size: 1em">
                             <s:property value="commande.tva"/> €</label></td>
+                        <td>Montant TTC<br/><label class="numberFont" style="font-size: 1em">
+                            <s:property value="commande.prixTotalTtc"/> €</label></td>
                         <td>Livraison<br/><label class="numberFont" style="font-size: 1em">
                             <s:property value="livraison"/> €</label></td>
                         <td>TOTAL TTC<br/><label class="numberFont" style="font-size: 0.9em">

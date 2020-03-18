@@ -106,6 +106,7 @@
                             </s:iterator>
                             <td>Montant HT<br/><label class="numberFont"><s:property value="commande.prixTotal"/> €</label></td>
                             <td>TVA à 10%<br/><label class="numberFont"><s:property value="commande.tva"/> €</label></td>
+                            <td>Montant HT<br/><label class="numberFont"><s:property value="commande.prixTotalTtc"/> €</label></td>
                             <td>Livraison<br/><label class="numberFont"><s:property value="commande.livraison"/> €</label></td>
                             <td>Total TTC<br/><label class="numberFont"><s:property value="commande.totalPayer"/> €</label></td>
                             </tbody>

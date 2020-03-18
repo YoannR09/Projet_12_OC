@@ -17,6 +17,7 @@ public class Commande {
     private Integer statutId;
     private Integer adresseId;
     private String  prixTotal;
+    private String  prixTotalTtc;
     private String  totalPayer;
     private String livraison;
     private Float   total;
@@ -148,6 +149,14 @@ public class Commande {
 
     public void setLivraison(String livraison) {
         this.livraison = livraison;
+    }
+
+    public String getPrixTotalTtc() {
+        return prixTotalTtc;
+    }
+
+    public void setPrixTotalTtc(String prixTotalTtc) {
+        this.prixTotalTtc = prixTotalTtc;
     }
 
     public String generateStatut(){

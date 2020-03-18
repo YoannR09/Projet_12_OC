@@ -62,6 +62,7 @@ public class GenerateMethod {
         commande.setTotalPayer(totalP);
         commande.setCountArticle(count);
         commande.setPrixTotal(instance.format(total-(total*10/100)));
+        commande.setPrixTotalTtc(instance.format(total));
     }
 
     /**

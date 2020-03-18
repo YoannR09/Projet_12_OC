@@ -137,10 +137,13 @@
                                 <td style="font-size: 0.8em">TVA à 10%<br/>
                                     <label class="numberFont"><s:property value="tva"/> €</label>
                                 </td>
+                                <td style="font-size: 0.8em">Montant TTC<br/>
+                                    <label class="numberFont"><s:property value="prixTotalTtc"/> €</label>
+                                </td>
                                 <td style="font-size: 0.8em">Livraison<br/>
                                     <label class="numberFont"><s:property value="livraison"/> €</label>
                                 </td>
-                                <td class="border border-secondary" style="background-color: whitesmoke;font-size: 0.9em">
+                                <td class="border border-secondary">
                                     TOTAL TTC<br/><label class="numberFont"><s:property value="totalPayer"/> €</label>
                                 </td>
                                 </tbody>

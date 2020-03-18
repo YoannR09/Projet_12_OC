@@ -119,7 +119,7 @@
                     </div>
                 </s:iterator>
             </div>
-            <div class="border border-secondary shadow p-3 mb-5 bgTran rounded" style="width: 230px;height: 280px;
+            <div class="border border-secondary shadow p-3 mb-5 bgTran rounded" style="width: 230px;height: 320px;
             padding:15px;text-align: center;">
                 <p><span style="width: 100%;text-align: center;font-size: 1.1em;font-weight: bold">Votre commande</span></p>
                 <span style="display:flex;justify-content: space-between">
@@ -127,15 +127,17 @@
                     </span>
 
                 <span style="display:flex;justify-content: space-between">
-                    <span class="lab">Montant TTC : </span><label class="lab numberFont"><s:property value="totalPrix"/> €</label>
+                    <span class="lab">Montant HT : </span><label class="lab numberFont"><s:property value="totalPrix"/> €</label>
                 </span>
                 <span style="display:flex;justify-content: space-between;font-size: 0.8em;color: darkslategray">
-                    <span class="lab">TVA à 10% : </span><label class="lab numberFont"><s:property value="tva"/> €</label>
+                    <span class="lab">TVA à 10 : </span><label class="lab numberFont"><s:property value="tva"/> €</label>
+                </span>
+                <span style="display:flex;justify-content: space-between">
+                    <span class="lab">Montant TTC : </span><label class="lab numberFont"><s:property value="totalPrixTtc"/> €</label>
                 </span>
                 <span style="display:flex;justify-content: space-between">
                     <span class="lab">Livraison : </span><label class="lab numberFont"><s:property value="livraison"/> €</label>
                 </span><br/>
-
                 <p> <span style="display:flex;justify-content: space-between">
                     <span class="lab" style="font-size: 0.9em;">Total à payer TTC : </span>
                     <label class="lab numberFont" style="font-size: 0.9em"><s:property value="totalPayer"/> €</label>
