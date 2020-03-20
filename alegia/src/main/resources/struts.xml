@@ -108,6 +108,16 @@
             <result name="error">jsp/error/error.jsp</result>
         </action>
 
+        <action name="doPlusListArticle" class="fr.yr.site.alegia.action.GestionCategorieAction" method="doPlusList">
+            <result name="success">jsp/categorie/listArticle.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
+        <action name="doMoinsListArticle" class="fr.yr.site.alegia.action.GestionCategorieAction" method="doMoinsList">
+            <result name="success">jsp/categorie/listArticle.jsp</result>
+            <result name="error">jsp/error/error.jsp</result>
+        </action>
+
         <action name="review"
                 class="fr.yr.site.alegia.action.GestionPayPalAction"
                 method="doReview">

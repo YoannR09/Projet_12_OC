@@ -80,8 +80,10 @@
    # Informations supplémentaire
    
    Mot de passe du certificat de SSL : Yocorps17  <br/>
-   Compte employé : el-rambo-poto@hotmail.fr  <br/>
-   mot de passe : 123  <br/>
+   <br/>
+   Si vous avez effectué un backup de la base de données <br/>
+   Compte administrateur : alegia.shop@gmail.com  <br/>
+   Mot de passe : Administrateur1  <br/>
    
   
   # Test d'intégrations
@@ -89,4 +91,4 @@
   - Installer Node.js 
   - Installer newman avec la commande suivante : npm install -g newman
   - Se placer dans le fichier principal du projet.
-  - Lancer la commande suivante : newman run tests/alegia_test.postman_collection.json
+  - Lancer la commande suivante : newman run test/alegia.postman_collection.json

@@ -55,14 +55,14 @@ public class ContenuControllerTest {
         contenu2.setId(2);
         vList.add(contenu1);
         vList.add(contenu2);
-        when(dao.findByPanierId(anyInt())).thenReturn(vList);
+        when(dao.findByPanierIdOrderById(anyInt())).thenReturn(vList);
 
         // WHEN
         List<Contenu> vListTest = controller.findByPanierId(2);
 
         //THEN
         assertEquals(vListTest.size(),2);
-        when(dao.findByPanierId(anyInt()))
+        when(dao.findByPanierIdOrderById(anyInt()))
                 .then((Answer<Void>) invocationOnMock -> {
                     throw new NotFoundException("Erreur");
                 });

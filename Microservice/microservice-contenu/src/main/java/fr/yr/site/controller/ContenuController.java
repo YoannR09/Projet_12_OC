@@ -40,7 +40,7 @@ public class ContenuController {
     @GetMapping(value = "/Contenu/Panier/{panierId}")
     public List<Contenu> findByPanierId(@PathVariable int panierId){
         try {
-            return getDao().findByPanierId(panierId);
+            return getDao().findByPanierIdOrderById(panierId);
         }catch (Exception e){
             getLogger().error(e);
             return null;

@@ -22,7 +22,7 @@
         <div style="color: lightgray;margin-bottom: 17px"><em style="font-size: 0.6em;font-weight: bold"> Contact </em> </div>
         <div class="text-warning">
             <i class="fas fa-envelope"></i> <em style="font-size: 0.6em">
-            <s:a action="" class="text-warning"> Nous contacter </s:a>
+             alegia.shop@gmail.com
         </em>
         </div>
     </div>

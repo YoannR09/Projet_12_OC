@@ -28,10 +28,22 @@
 <%@ include file="../_include/header.jsp"%>
 <div id="blocCenter" style="display: flex;justify-content: center">
     <div>
-    <div class="border border-secondary shadow bgTran rounded" style="padding: 15px">
-        <p><i class="fas fa-tools text-dark" style="font-size: 2em"></i></p>
-        <p style="font-weight: bold"> En cours de construction ! </p>
-    </div>
+        <div id="list-example" class="list-group border border-secondary shadow">
+            <a class="list-group-item list-group-item-action" href="#list-item-1">Une famille</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-2">De la musique</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-3">Un lieu</a>
+            <a class="list-group-item list-group-item-action" href="#list-item-4">Une marque</a>
+        </div>
+        <div data-spy="scroll" data-target="#list-example" data-offset="0" class="scrollspy-example">
+            <h4 id="list-item-1">Une famille</h4>
+            <p>...</p>
+            <h4 id="list-item-2">De la musique</h4>
+            <p>...</p>
+            <h4 id="list-item-3">Un lieu</h4>
+            <p>...</p>
+            <h4 id="list-item-4">Une marque</h4>
+            <p>...</p>
+        </div>
     </div>
 </div>
 <footer id="footer">

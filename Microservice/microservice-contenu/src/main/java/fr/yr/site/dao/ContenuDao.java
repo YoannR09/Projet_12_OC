@@ -9,5 +9,5 @@ public interface ContenuDao extends JpaRepository<Contenu,Integer> {
 
     Contenu findById(int id);
 
-    List<Contenu> findByPanierId(int panierId);
+    List<Contenu> findByPanierIdOrderById(int panierId);
 }

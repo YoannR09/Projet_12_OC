@@ -127,7 +127,7 @@
             </div>
             <div class="modal-body" style="text-align: center;">
                 <s:form action="doAddImage" method="post" enctype="multipart/form-data">
-                    <input id="idArticle" name="articleId" value="<s:property value="article.id"/>">
+                    <input type="hidden" id="idArticle" name="articleId" value="<s:property value="article.id"/>">
                     <input type = "file" name = "myFile" style="margin: 10px"/>
                     <div style="display: flex;justify-content: center;margin: 10px">
                         <button type="submit" style="font-size: 0.8em" class="btn btn-dark">Confirmer</button>

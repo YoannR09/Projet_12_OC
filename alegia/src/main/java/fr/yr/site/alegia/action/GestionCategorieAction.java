@@ -11,7 +11,10 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -38,6 +41,10 @@ public class GestionCategorieAction extends ActionSupport {
     private         String                  labelle;
     private         String                  radio;
     private         String                  infoMessage;
+    private         Integer                 listSize;
+    private         Integer                 countPage;
+    private         Integer                 page;
+    private         Boolean                 max;
     private         List<String>            radioList = Arrays.asList("Disponible","Indisponible");
 
     /**
@@ -46,14 +53,86 @@ public class GestionCategorieAction extends ActionSupport {
      */
     public String doListArticleByCategorieId(){
         try {
-            articleList = getFactory().getArticleProxy()
+            List<Article> vList = getFactory().getArticleProxy()
                     .findByCategorieIdAndDisponible(categorieId,true);
-            gm.completeArticleList(getFactory(),articleList);
+            double resultPage = (double) vList.size()/6;
+            countPage = (int) Math.ceil(resultPage);
+            listSize = 6;
+            articleList = new ArrayList<>();
+            if (listSize > vList.size()){
+                listSize = vList.size();
+                max = true;
+            }else {
+                max = false;
+            }
+            for(int i = 0;i<listSize;i++){
+                articleList.add(vList.get(i));
+            }
             categorieList = getFactory().getCategorieProxy().findAll();
+            gm.completeArticleList(getFactory(),articleList);
             if (getEmail() != null){
                 countPanier = gm.generateCountPanier(factory
                         ,(String) ActionContext.getContext().getSession().get("email"));
             }
+            page = 1;
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
+            return ActionSupport.ERROR;
+        }
+    }
+
+    public String doMoinsList(){
+        try {
+            List<Article> vList = getFactory().getArticleProxy()
+                    .findByCategorieIdAndDisponible(categorieId,true);
+            articleList = new ArrayList<>();
+            int oldListSize = listSize;
+            listSize -= 12;
+            double resultPage = (double) vList.size()/6;
+            countPage = (int) Math.ceil(resultPage);
+            for(int i = listSize;i<oldListSize-6;i++){
+                articleList.add(vList.get(i));
+            }
+            listSize += 6;
+            page -= 1;
+            gm.completeArticleList(getFactory(),articleList);
+            categorieList = getFactory().getCategorieProxy().findAll();
+            return ActionSupport.SUCCESS;
+        }catch (Exception e){
+            this.addActionMessage("Un problème est survenu... ");
+            categorieList = getFactory().getCategorieProxy().findByDispo(true);
+            getLogger().error(e);
+            return ActionSupport.ERROR;
+        }
+    }
+
+    public String doPlusList(){
+        try {
+            List<Article> vList = getFactory().getArticleProxy()
+                    .findByCategorieIdAndDisponible(categorieId,true);
+            articleList = new ArrayList<>();
+            int oldListSize = listSize;
+            listSize += 6;
+            if (listSize > vList.size()){
+                listSize = vList.size();
+                max = true;
+            }else {
+                max = false;
+            }
+            page += 1;
+            double resultPage = (double) vList.size()/6;
+            countPage = (int) Math.ceil(resultPage);
+            for(int i = oldListSize;i<listSize;i++){
+                articleList.add(vList.get(i));
+            }
+            if (max){
+                listSize = oldListSize+6;
+            }
+            categorieList = getFactory().getCategorieProxy().findAll();
+            gm.completeArticleList(getFactory(),articleList);
             return ActionSupport.SUCCESS;
         }catch (Exception e){
             this.addActionMessage("Un problème est survenu... ");
@@ -266,5 +345,35 @@ public class GestionCategorieAction extends ActionSupport {
         this.countPanier = countPanier;
     }
 
+    public Integer getListSize() {
+        return listSize;
+    }
 
+    public void setListSize(Integer listSize) {
+        this.listSize = listSize;
+    }
+
+    public Integer getPage() {
+        return page;
+    }
+
+    public void setPage(Integer page) {
+        this.page = page;
+    }
+
+    public Boolean getMax() {
+        return max;
+    }
+
+    public void setMax(Boolean max) {
+        this.max = max;
+    }
+
+    public Integer getCountPage() {
+        return countPage;
+    }
+
+    public void setCountPage(Integer countPage) {
+        this.countPage = countPage;
+    }
 }
